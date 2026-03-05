@@ -1,0 +1,108 @@
+/* ========================================= */
+/* ESTILOS DE MIS PEDIDOS (DAILY DOSE)       */
+/* ========================================= */
+
+.pedidos-container {
+    max-width: 900px;
+    margin: 120px auto 60px auto;
+    padding: 0 20px;
+}
+
+/* Tarjeta individual de cada pedido */
+.pedido-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 25px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pedido-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px var(--cristal-sombra);
+}
+
+/* Información del pedido (izquierda) */
+.info-pedido h3 {
+    margin: 0;
+    font-family: 'CooperBold', sans-serif;
+    color: var(--rojo-japones);
+    font-size: 1.4rem;
+}
+
+.info-pedido p {
+    margin: 8px 0;
+    color: var(--texto-principal);
+    font-size: 0.95rem;
+}
+
+.info-pedido strong {
+    color: var(--verde-pastel-oscuro);
+    font-size: 1.1rem;
+}
+
+/* Badges de Estado (derecha) */
+.estado-badge {
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    min-width: 120px;
+}
+
+/* Colores dinámicos según el estado */
+.PENDIENTE {
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    border: 1px solid #ffc107;
+}
+
+.EN_PREPARACION {
+    background: rgba(0, 123, 255, 0.15);
+    color: #007bff;
+    border: 1px solid #007bff;
+}
+
+.LISTO {
+    background: rgba(40, 167, 69, 0.15);
+    color: #28a745;
+    border: 1px solid #28a745;
+    animation: pulse-verde 2s infinite; /* Para que el cliente vea que ya puede ir a por él */
+}
+
+.ENTREGADO {
+    background: rgba(128, 128, 128, 0.1);
+    color: #888;
+    border: 1px solid #888;
+}
+
+.CANCELADO {
+    background: rgba(220, 53, 69, 0.15);
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+/* Animación para cuando el pedido está LISTO */
+@keyframes pulse-verde {
+    0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
+}
+
+/* Responsivo para móviles */
+@media (max-width: 600px) {
+    .pedido-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+    
+    .estado-badge {
+        width: 100%;
+    }
+}

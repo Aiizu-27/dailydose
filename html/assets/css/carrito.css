@@ -1,0 +1,150 @@
+/* ========================================= */
+/* ESTILOS DEL CARRITO (DAILY DOSE STYLE)    */
+/* ========================================= */
+
+.carrito-container {
+    max-width: 1100px;
+    margin: 120px auto 60px auto; /* Margen superior para que no lo tape el header */
+    padding: 0 20px;
+    color: var(--texto-principal);
+    font-family: 'Poppins', sans-serif;
+}
+
+.cabecera-carrito {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.cabecera-carrito h1 {
+    color: var(--rojo-japones);
+    font-family: 'CooperBold', sans-serif; /* Tu fuente corporativa */
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+/* Tarjeta con efecto Cristal (Glassmorphism) */
+.tarjeta-cristal {
+    background: var(--cristal-fondo);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--cristal-borde);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 8px 32px var(--cristal-sombra);
+}
+
+/* Layout en dos columnas */
+.carrito-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+/* Si el carrito está vacío */
+.carrito-vacio {
+    text-align: center;
+    max-width: 500px;
+    margin: 40px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.carrito-vacio svg {
+    width: 80px;
+    color: var(--rojo-japones);
+    opacity: 0.6;
+}
+
+/* Lista de productos */
+.lista-productos h3, .resumen-pedido h3 {
+    margin-top: 0;
+    color: var(--rojo-japones);
+    font-family: 'CooperBold', sans-serif;
+    border-bottom: 1px solid var(--cristal-borde);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.item-carrito {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.item-carrito:last-child {
+    border-bottom: none;
+}
+
+.item-info h4 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--texto-principal);
+}
+
+.item-precio {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.item-subtotal {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--verde-pastel-oscuro);
+}
+
+/* Resumen de pago */
+.fila-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.precio-total {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--rojo-japones);
+}
+
+/* Botones y formularios */
+.form-checkout {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.w-100 { width: 100%; }
+
+.btn-peligro {
+    background: transparent;
+    border: 1px solid #ff4d4d;
+    color: #ff4d4d;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+.btn-peligro:hover {
+    background: #ff4d4d;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+    .carrito-layout {
+        grid-template-columns: 1fr;
+    }
+    .carrito-container {
+        margin-top: 100px;
+    }
+}

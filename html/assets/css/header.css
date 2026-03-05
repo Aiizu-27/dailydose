@@ -262,3 +262,49 @@ header {
     text-align: left;
   }
 }
+
+/* ============================= */
+/* ICONO DE CARRITO Y CONTADOR */
+/* ============================= */
+.iconoCarrito {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--rojo-japones);
+    cursor: pointer;
+    transition: transform 0.3s, color 0.3s;
+    text-decoration: none;
+    margin-right: 15px; /* Separación con el toggle del sol/luna */
+}
+
+.iconoCarrito:hover {
+    color: var(--verde-pastel-oscuro);
+    transform: scale(1.1);
+}
+
+/* El número de productos */
+.badge-carrito {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background-color: var(--rojo-japones);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--fondo);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    /* Para que los números queden centrados perfectamente */
+    line-height: 1;
+}
+
+/* Adaptación del borde en modo oscuro */
+body.dark-mode .badge-carrito {
+    border-color: var(--fondo); 
+}

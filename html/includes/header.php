@@ -22,11 +22,34 @@ if (!defined('BASE_URL')) {
         <li><a href="<?php echo BASE_URL; ?>index.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'activo' : ''; ?>">Inicio</a></li>
         <li><a href="<?php echo BASE_URL; ?>carta.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'carta.php' ? 'activo' : ''; ?>">Carta</a></li>
         <li><a href="<?php echo BASE_URL; ?>promociones.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'promociones.php' ? 'activo' : ''; ?>">Promociones</a></li>
+        
+        <?php if (isset($_SESSION['ID_USUARIO'])): ?>
+            <li><a href="<?php echo BASE_URL; ?>mis_pedidos.php" class="<?php echo basename($_SERVER['PHP_SELF']) == 'mis_pedidos.php' ? 'activo' : ''; ?>">Mis Pedidos</a></li>
+        <?php endif; ?>
       </ul>
     </nav>
   </div>
 
   <div class="header-right">
+    
+    <a href="<?php echo BASE_URL; ?>carrito.php" class="iconoCarrito" title="Ver mi carrito">
+      <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+      </svg>
+      
+      <?php 
+        $cantidad_total = 0;
+        if(isset($_SESSION['carrito'])) {
+            // Sumamos la cantidad de cada producto (no solo los productos distintos)
+            foreach($_SESSION['carrito'] as $item) {
+                $cantidad_total += $item['cantidad'];
+            }
+        }
+      ?>
+      <?php if($cantidad_total > 0): ?>
+          <span class="badge-carrito"><?= $cantidad_total ?></span>
+      <?php endif; ?>
+    </a>
     <label class="switch">
       <input type="checkbox" id="toggleTema">
       <span class="slider">

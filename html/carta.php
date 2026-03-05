@@ -124,7 +124,7 @@ if ($resultProductos && $resultProductos->num_rows > 0) {
         if (isset($_SESSION['ROL']) && strtolower($_SESSION['ROL']) === 'cliente') {
             
             // SI ES CLIENTE: Mostramos el botón de añadir al carrito
-            echo "<form class='form-carrito' method='POST' action='carrito.php'>
+            echo "<form class='form-carrito' method='POST' action='actions/add_carrito.php'>
                     <input type='hidden' name='id_producto' value='" . $row['ID_PRODUCTO'] . "'>
                     <input type='hidden' name='producto' value='" . htmlspecialchars($row['NOMBRE']) . "'>
                     <input type='hidden' name='precio' value='" . $row['PRECIO'] . "'>

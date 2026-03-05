@@ -94,8 +94,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Redirigir según rol
                 if(data.rol === "cliente"){
                     window.location.href = "panel/dashboard_cliente.php";
-                } else if(data.rol === "empleado"){
-                    window.location.href = "panel/dashboard_empleado.php";
+                } else if(data.rol === "trabajador"){
+                    window.location.href = "panel/dashboard_trabajador.php";
                 } else if(data.rol === "admin"){
                     window.location.href = "panel/dashboard_admin.php";
                 } else {
