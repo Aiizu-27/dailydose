@@ -12,6 +12,10 @@ Este proyecto forma parte de un Trabajo de Fin de Ciclo (TFC) y se centra en el 
   </a>
 </p>
 
+<p align="center">
+  <img src="https://img.shields.io/badge/En%20desarrollo-C7E3D4?style=for-the-badge" />
+</p>
+
 ---
 
 ## Objetivo
