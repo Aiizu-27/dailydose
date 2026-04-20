@@ -7,7 +7,7 @@ DailyDose es una aplicación web diseñada para la gestión integral de un entor
 Este proyecto forma parte de un Trabajo de Fin de Ciclo (TFC) y se centra en el desarrollo de la aplicación web y el diseño de la base de datos relacional.
 
 <p align="center">
-  <a href="https://deaily-dose.es" target="_blank">
+  <a href="https://daily-dose.es" target="_blank">
     <img src="https://img.shields.io/badge/DailyDose-Abrir%20Web-f42b1d?style=for-the-badge&logo=googlechrome&logoColor=white" />
   </a>
 </p>
