@@ -11,7 +11,7 @@ USE dailydose_db;
 -- =============================================================================
 -- 👤 USUARIO 1: EL ADMINISTRADOR DEL SISTEMA (Tú / Root)
 -- =============================================================================
--- WHO: root@localhost
+-- WHO: admin_DD@localhost
 -- ¿QUIÉN ES?: El dueño de la infraestructura (Sysadmin).
 -- ROLES Y RESPONSABILIDADES:
 --   - Diseñar, alterar y destruir la estructura de la base de datos (DDL).
@@ -39,7 +39,7 @@ USE dailydose_db;
 DROP USER IF EXISTS 'daily_app'@'localhost';
 
 -- 2. Creamos el usuario asignándole una contraseña robusta de desarrollo
-CREATE USER 'daily_app'@'localhost' IDENTIFIED BY 'D4ily_D0s3_M4st3r_2026!';
+CREATE USER 'daily_app'@'localhost' IDENTIFIED BY 'D4ily_D0s3_M4st3r';
 
 -- 3. Otorgamos permisos de manipulación de datos (DML) y lectura (DQL) sobre las tablas
 GRANT SELECT, INSERT, UPDATE, DELETE ON dailydose_db.* TO 'daily_app'@'localhost';
@@ -66,7 +66,7 @@ GRANT EXECUTE ON dailydose_db.* TO 'daily_app'@'localhost';
 DROP USER IF EXISTS 'daily_reader'@'localhost';
 
 -- 2. Creamos la cuenta de solo lectura
-CREATE USER 'daily_reader'@'localhost' IDENTIFIED BY 'D4ily_R34d_0nly_2026!';
+CREATE USER 'daily_reader'@'localhost' IDENTIFIED BY 'D4ily_R34d_0nly';
 
 -- 3. Le permitimos UNICAMENTE leer datos de las tablas y visualizar las vistas analíticas
 GRANT SELECT, SHOW VIEW ON dailydose_db.* TO 'daily_reader'@'localhost';
