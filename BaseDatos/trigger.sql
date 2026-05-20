@@ -138,3 +138,25 @@ BEGIN
 END //
 
 DELIMITER ;
+
+
+DELIMITER //
+
+DROP TRIGGER IF EXISTS tg_notificar_nuevo_pedido; //
+
+CREATE TRIGGER tg_notificar_pedido_a_empleados
+AFTER INSERT ON PEDIDOS
+FOR EACH ROW
+BEGIN
+    -- Insertamos en cascada la alerta para TODOS los ID_USUARIO que sean empleados
+    INSERT INTO NOTIFICACIONES (ID_USUARIO, MENSAJE, TIPO, LEIDO, FECHA_CREACION)
+    SELECT 
+        e.ID_USUARIO, 
+        CONCAT('¡Nuevo pedido recibido! Mesa #', NEW.ID_MESA, ' (Pedido #', NEW.ID_PEDIDO, '). Total comanda: ', NEW.TOTAL, '€'), 
+        'Pedido', 
+        FALSE, 
+        NOW()
+    FROM EMPLEADOS e;
+END //
+
+DELIMITER ;
