@@ -193,25 +193,22 @@ INSERT INTO PROVEEDORES (ID_PROVEEDOR, NOMBRE, TELEFONO, EMAIL, DIRECCION) VALUE
 -- REPOBLADO DE LA TABLA: MESAS (NUEVA NOMENCLATURA POR ZONAS OPERATIVAS)
 -- =============================================================================
 
--- Inyección de la sala organizada por códigos de zona para el frontend
+-- Inyección de las 7 mesas oficiales de DailyDose
 INSERT INTO MESAS (ID_MESA, NUMERO_MESA, CAPACIDAD, UBICACION, ESTADO) VALUES
--- Zona de Ventanales (Ideal para parejas o clientes con portátiles)
-(1, 1, 2, 'INTERIOR - Ventanal V1', 'LIBRE'),
-(2, 2, 2, 'INTERIOR - Ventanal V2', 'LIBRE'),
+-- Mesas con código QR en la zona inferior
+(1, 1, 2, 'SALA - Ventanal QR-M1', 'LIBRE'),
+(2, 2, 2, 'SALA - Ventanal QR-M2', 'LIBRE'),
 
--- Sala Principal (Mesas estándar y zona de cafetería general)
-(3, 3, 4, 'SALA - Mesa Central M3', 'LIBRE'),
-(4, 4, 4, 'SALA - Mesa Central M4', 'LIBRE'),
-(5, 5, 6, 'SALA - Sofá Group S5', 'LIBRE'),
+-- Mesas de la zona central (Cargas USB y adyacentes)
+(3, 3, 4, 'SALA - Centro USB-M3', 'LIBRE'),
+(4, 4, 4, 'SALA - Centro M4', 'LIBRE'),
+(5, 5, 2, 'SALA - Lateral M5', 'LIBRE'),
 
--- Barra de Especialidad (Puestos individuales altos para consumo rápido)
-(6, 6, 1, 'BARRA - Puesto Alto P1', 'LIBRE'),
-(7, 7, 1, 'BARRA - Puesto Alto P2', 'LIBRE'),
+-- Mesa de la zona de confort / Sofás del fondo
+(6, 6, 4, 'SALA - Espacio Lounge S6', 'LIBRE'),
 
--- Terraza Exterior (Espacio abierto del establecimiento)
-(8, 8, 4, 'TERRAZA - Mesa Exterior T1', 'LIBRE'),
-(9, 9, 4, 'TERRAZA - Mesa Exterior T2', 'LIBRE');
-
+-- Sala de Reuniones / Espacio exclusivo (Zona superior derecha del plano)
+(7, 7, 8, 'SALA DE REUNIONES - Mesa Presidencial', 'LIBRE');
 
 
 -- =============================================================================

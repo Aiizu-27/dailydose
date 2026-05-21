@@ -2,45 +2,59 @@
 session_start();
 require_once "../includes/config.php";
 
-// Reporte de errores activado
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
-    $id_pedido = intval($_POST['id']);
-    $nuevo_estado = $_POST['estado'];
-    $id_empleado = !empty($_POST['id_empleado']) ? intval($_POST['id_empleado']) : null;
+// ===== SEGURIDAD: solo empleados y admins =====
+if (!isset($_SESSION['ID_USUARIO'])) {
+    echo json_encode(["status" => "no_autenticado"]);
+    exit;
+}
 
-    try {
-        // Aseguramos que el autocommit esté activado para que guarde al momento
-        $conn->autocommit(TRUE);
+if (!in_array($_SESSION['ROL'], ['EMPLEADO', 'ADMIN'])) {
+    echo json_encode(["status" => "sin_permiso"]);
+    exit;
+}
 
-        if ($nuevo_estado == 'EN PREPARACION' && $id_empleado) {
-            // Caso 1: Pasamos a preparación y asignamos empleado
-            $sql = "UPDATE PEDIDOS SET ESTADO = ?, ID_EMPLEADO = ? WHERE ID_PEDIDO = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("sii", $nuevo_estado, $id_empleado, $id_pedido);
-        } else {
-            // Caso 2: Otros cambios de estado
-            $sql = "UPDATE PEDIDOS SET ESTADO = ? WHERE ID_PEDIDO = ?";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("si", $nuevo_estado, $id_pedido);
-        }
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['id'])) {
+    echo json_encode(["status" => "peticion_invalida"]);
+    exit;
+}
 
-        if ($stmt->execute()) {
-            // FORZAMOS EL GUARDADO FÍSICO
-            $conn->query("COMMIT"); 
-            $stmt->close();
-            
-            // En lugar de mostrar pantalla blanca, redirigimos directamente
-            // para que veas el cambio al instante
-            header("Location: ../panel/dashboard_trabajador.php?status=success");
-            exit();
-        }
+$id_pedido    = intval($_POST['id']);
+$nuevo_estado = $_POST['estado'] ?? '';
+$id_empleado  = !empty($_POST['id_empleado']) ? intval($_POST['id_empleado']) : null;
 
-    } catch (Exception $e) {
-        die("Error en la BD: " . $e->getMessage());
-    }
+// ===== VALIDAR ESTADO =====
+$estados_validos = ['PENDIENTE', 'EN_PREPARACION', 'LISTO', 'ENTREGADO', 'CANCELADO'];
+if (!in_array($nuevo_estado, $estados_validos)) {
+    echo json_encode(["status" => "estado_invalido"]);
+    exit;
+}
+
+if ($id_pedido <= 0) {
+    echo json_encode(["status" => "pedido_invalido"]);
+    exit;
+}
+
+// ===== LLAMADA AL SP =====
+$stmt = $conn->prepare("CALL sp_cambiar_estado_pedido(?, ?, ?)");
+if (!$stmt) {
+    error_log("Error prepare cambiar_estado: " . $conn->error);
+    echo json_encode(["status" => "error_servidor"]);
+    exit;
+}
+
+$stmt->bind_param("isi", $id_pedido, $nuevo_estado, $id_empleado);
+$stmt->execute();
+$resultado = $stmt->get_result();
+$fila      = $resultado->fetch_assoc();
+
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+$conn->close();
+
+if ($fila && $fila['filas_afectadas'] > 0) {
+    echo json_encode(["status" => "ok"]);
 } else {
-    header("Location: ../panel/dashboard_trabajador.php");
-    exit();
+    echo json_encode(["status" => "pedido_no_encontrado"]);
 }

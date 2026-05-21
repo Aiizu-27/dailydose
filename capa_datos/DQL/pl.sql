@@ -129,3 +129,78 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+/*pl estados de pedido*/
+DELIMITER $$
+
+CREATE PROCEDURE sp_cambiar_estado_pedido(
+    IN p_id_pedido   INT,
+    IN p_nuevo_estado ENUM('PENDIENTE','EN_PREPARACION','LISTO','ENTREGADO','CANCELADO'),
+    IN p_id_empleado INT
+)
+BEGIN
+    IF p_nuevo_estado = 'EN_PREPARACION' AND p_id_empleado IS NOT NULL THEN
+        UPDATE PEDIDOS 
+        SET ESTADO = p_nuevo_estado, ID_EMPLEADO = p_id_empleado 
+        WHERE ID_PEDIDO = p_id_pedido;
+    ELSE
+        UPDATE PEDIDOS 
+        SET ESTADO = p_nuevo_estado
+        WHERE ID_PEDIDO = p_id_pedido;
+    END IF;
+
+    SELECT ROW_COUNT() AS filas_afectadas;
+END$$
+
+DELIMITER ;
+
+
+
+/*dashboard_trabajador*/
+DELIMITER $$
+
+CREATE PROCEDURE sp_obtener_empleados()
+BEGIN
+    SELECT e.ID_EMPLEADO, u.NOMBRE 
+    FROM EMPLEADOS e 
+    JOIN USUARIOS u ON e.ID_USUARIO = u.ID_USUARIO
+    ORDER BY u.NOMBRE ASC;
+END$$
+
+
+CREATE PROCEDURE sp_obtener_pedidos_activos()
+BEGIN
+    SELECT 
+        p.ID_PEDIDO,
+        p.FECHA,
+        p.TOTAL,
+        p.ESTADO,
+        p.ID_EMPLEADO,
+        m.NUMERO_MESA,
+        u.NOMBRE        AS CLIENTE_NOMBRE,
+        emp_u.NOMBRE    AS BARISTA
+    FROM PEDIDOS p
+    LEFT JOIN CLIENTES c    ON p.ID_CLIENTE   = c.ID_CLIENTE
+    LEFT JOIN USUARIOS u    ON c.ID_USUARIO   = u.ID_USUARIO
+    LEFT JOIN EMPLEADOS e   ON p.ID_EMPLEADO  = e.ID_EMPLEADO
+    LEFT JOIN USUARIOS emp_u ON e.ID_USUARIO  = emp_u.ID_USUARIO
+    LEFT JOIN MESAS m       ON p.ID_MESA      = m.ID_MESA
+    WHERE p.ESTADO IN ('PENDIENTE', 'EN_PREPARACION', 'LISTO')
+    ORDER BY p.FECHA ASC;
+END$$
+
+
+CREATE PROCEDURE sp_obtener_detalle_pedido(IN p_id_pedido INT)
+BEGIN
+    SELECT 
+        pr.NOMBRE       AS PRODUCTO,
+        dp.CANTIDAD,
+        dp.PRECIO_UNITARIO,
+        dp.SUBTOTAL
+    FROM DETALLE_PEDIDO dp
+    JOIN PRODUCTOS pr ON dp.ID_PRODUCTO = pr.ID_PRODUCTO
+    WHERE dp.ID_PEDIDO = p_id_pedido;
+END$$
+
+DELIMITER ;
