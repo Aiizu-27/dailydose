@@ -2,75 +2,78 @@
 session_start();
 require_once "../includes/config.php";
 
-// 1. SEGURIDAD: Si no hay sesión o el carrito está vacío, fuera.
 if (!isset($_SESSION['ID_USUARIO']) || empty($_SESSION['carrito'])) {
     header("Location: ../index.php");
     exit();
 }
 
-$id_usuario = $_SESSION['ID_USUARIO'];
-$numero_mesa = !empty($_POST['numero_mesa']) ? intval($_POST['numero_mesa']) : null;
+$id_usuario  = $_SESSION['ID_USUARIO'];
+$id_mesa     = !empty($_POST['id_mesa']) ? intval($_POST['id_mesa']) : null;
 $total_pedido = 0;
-$fecha_actual = date("Y-m-d");
 
-// A. Necesitamos el ID_CLIENTE (que es distinto al ID_USUARIO)
-$stmt_cli = $conn->prepare("SELECT ID_CLIENTE FROM CLIENTES WHERE ID_USUARIO = ?");
-$stmt_cli->bind_param("i", $id_usuario);
-$stmt_cli->execute();
-$res_cli = $stmt_cli->get_result();
-$cliente = $res_cli->fetch_assoc();
+// ===== OBTENER ID_CLIENTE =====
+$stmt = $conn->prepare("SELECT ID_CLIENTE FROM CLIENTES WHERE ID_USUARIO = ?");
+if (!$stmt) {
+    error_log("Error prepare get_cliente: " . $conn->error);
+    header("Location: ../carrito.php?error=servidor");
+    exit();
+}
+$stmt->bind_param("i", $id_usuario);
+$stmt->execute();
+$cliente    = $stmt->get_result()->fetch_assoc();
+$stmt->close();
+
+if (!$cliente) {
+    header("Location: ../index.php");
+    exit();
+}
 $id_cliente = $cliente['ID_CLIENTE'];
 
-// B. Calculamos el total
+// ===== CALCULAR TOTAL Y PUNTOS =====
 foreach ($_SESSION['carrito'] as $item) {
     $total_pedido += ($item['precio'] * $item['cantidad']);
 }
-
-// C. Calculamos puntos (1€ = 1 punto)
+$total_pedido  = round($total_pedido, 2);
 $puntos_ganados = floor($total_pedido);
 
-// INICIAMOS TRANSACCIÓN
+// ===== TRANSACCIÓN =====
 $conn->begin_transaction();
 
 try {
-    // 2. INSERTAR EN TABLA PEDIDOS
-    // Nota: Dejamos ID_EMPLEADO como NULL porque aún no lo ha aceptado nadie
-    $stmt = $conn->prepare("INSERT INTO PEDIDOS (FECHA, TOTAL, ID_CLIENTE, NUMERO_MESA, ESTADO) VALUES (?, ?, ?, ?, 'PENDIENTE')");
-    $stmt->bind_param("sdii", $fecha_actual, $total_pedido, $id_cliente, $numero_mesa);
-    $stmt->execute();
-    $id_pedido = $conn->insert_id;
+    // 1. Crear pedido y sumar puntos
+    $stmt = $conn->prepare("CALL sp_procesar_pedido(?, ?, ?, ?)");
+    if (!$stmt) throw new Exception("Error prepare sp_procesar_pedido: " . $conn->error);
 
-    // 3. INSERTAR EN TABLA DETALLE_PEDIDO Y ACTUALIZAR STOCK
-    $stmt_det = $conn->prepare("INSERT INTO DETALLE_PEDIDO (ID_PEDIDO, ID_PRODUCTO, CANTIDAD, PRECIO_UNITARIO, SUBTOTAL) VALUES (?, ?, ?, ?, ?)");
-    $stmt_stock = $conn->prepare("UPDATE PRODUCTOS SET STOCK = STOCK - ? WHERE ID_PRODUCTO = ?");
+    $stmt->bind_param("iidi", $id_cliente, $id_mesa, $total_pedido, $puntos_ganados);
+    $stmt->execute();
+    $resultado = $stmt->get_result();
+    $fila      = $resultado->fetch_assoc();
+    $id_pedido = $fila['ID_PEDIDO'];
+
+    while ($stmt->more_results()) $stmt->next_result();
+    $stmt->close();
+
+    // 2. Insertar detalle línea a línea
+    $stmt_det = $conn->prepare("CALL sp_insertar_detalle_pedido(?, ?, ?, ?, ?)");
+    if (!$stmt_det) throw new Exception("Error prepare sp_detalle: " . $conn->error);
 
     foreach ($_SESSION['carrito'] as $id_prod => $item) {
-        $subtotal = $item['precio'] * $item['cantidad'];
-        
-        // Insertar detalle
+        $subtotal = round($item['precio'] * $item['cantidad'], 2);
         $stmt_det->bind_param("iiidd", $id_pedido, $id_prod, $item['cantidad'], $item['precio'], $subtotal);
         $stmt_det->execute();
-
-        // Restar stock
-        $stmt_stock->bind_param("ii", $item['cantidad'], $id_prod);
-        $stmt_stock->execute();
+        while ($stmt_det->more_results()) $stmt_det->next_result();
     }
+    $stmt_det->close();
 
-    // 4. ACTUALIZAR PUNTOS DEL CLIENTE
-    $stmt_pts = $conn->prepare("UPDATE CLIENTES SET PUNTOS = PUNTOS + ? WHERE ID_CLIENTE = ?");
-    $stmt_pts->bind_param("ii", $puntos_ganados, $id_cliente);
-    $stmt_pts->execute();
-
-    // TODO OK: Confirmamos cambios
     $conn->commit();
 
-    // Limpiamos carrito
     unset($_SESSION['carrito']);
-
     header("Location: ../index.php?pedido=ok&puntos=" . $puntos_ganados);
     exit();
 
 } catch (Exception $e) {
     $conn->rollback();
-    die("Error crítico: " . $e->getMessage());
+    error_log("Error procesar_carrito: " . $e->getMessage());
+    header("Location: ../carrito.php?error=servidor");
+    exit();
 }
