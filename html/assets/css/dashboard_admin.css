@@ -1,198 +1,172 @@
-/* ========================================= */
-/* ESTILOS DEL PANEL DE ADMIN (GLASSMORPHISM) */
-/* ========================================= */
+/* =========================================================
+   DAILY DOSE — CENTRAL DE CONTROL ADMINISTRATIVO
+   Estilo unificado con el ecosistema de trabajadores
+   ========================================================= */
 
-.container {
-    max-width: 1000px;
-    margin: 100px auto 40px auto; /* Margen superior para el header */
-    padding: 30px;
-    background: var(--cristal-fondo);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid var(--cristal-borde);
-    border-radius: 15px;
-    box-shadow: 0 8px 32px var(--cristal-sombra);
+.admin-body {
+    background-color: var(--fondo);
     color: var(--texto-principal);
+    font-family: 'CooperBold', sans-serif;
+    min-height: 100vh;
+    padding-top: 0;
 }
 
-.container h2 {
-    color: var(--rojo-japones);
+.admin-container {
+    max-width: 1200px;
+    margin: 110px auto 50px auto;
+    padding: 0 1.5rem;
+    box-sizing: border-box;
+}
+
+.admin-container h2 {
     font-family: 'CooperBold', sans-serif;
-    font-size: 2.2rem;
+    color: var(--rojo-japones);
+    font-size: 2rem;
     margin-bottom: 5px;
 }
 
-/* ========================================= */
-/* ACORDEONES (DETAILS & SUMMARY) */
-/* ========================================= */
-details {
-    margin-bottom: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid var(--cristal-borde);
-    border-radius: 10px;
-    overflow: hidden;
-    transition: all 0.3s ease;
+.admin-subtitle {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-bottom: 2rem;
+    font-weight: normal;
 }
 
-body.dark-mode details {
-    background: rgba(0, 0, 0, 0.2);
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
 }
+
+.stat-card {
+    background: var(--cristal-fondo);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--cristal-borde);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 16px var(--cristal-sombra);
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.stat-card:hover {
+    background: var(--cristal-hover);
+    transform: translateY(-3px);
+}
+
+.stat-card h3 {
+    font-size: 2rem;
+    margin-bottom: 4px;
+}
+
+.stat-card p {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+details {
+    background: var(--cristal-fondo);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--cristal-borde);
+    border-radius: 16px;
+    margin-bottom: 1.25rem;
+    box-shadow: 0 4px 16px var(--cristal-sombra);
+    overflow: hidden;
+}
+
+details[open] { background: var(--cristal-hover); }
 
 summary {
-    padding: 15px 20px;
+    padding: 1.25rem 1.5rem;
+    font-size: 1.1rem;
     cursor: pointer;
-    font-weight: bold;
-    font-size: 1.1em;
-    list-style: none;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.03);
+    user-select: none;
+    outline: none;
     color: var(--texto-principal);
-    transition: background 0.3s;
 }
 
-body.dark-mode summary {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-summary:hover {
-    background: rgba(0, 0, 0, 0.08);
-}
-
-body.dark-mode summary:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-summary::-webkit-details-marker {
-    display: none;
-}
-
-summary:after {
-    content: "▼";
-    font-size: 0.8em;
-    color: var(--rojo-japones);
-    transition: transform 0.3s;
-}
-
-details[open] summary:after {
-    transform: rotate(180deg);
-}
+summary:hover { color: var(--rojo-japones); }
 
 .details-content {
-    padding: 20px;
+    padding: 1.5rem;
     border-top: 1px solid var(--cristal-borde);
+    background: rgba(0, 0, 0, 0.02);
 }
 
-/* ========================================= */
-/* TABLAS DE GESTIÓN */
-/* ========================================= */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-}
+.table-wrapper { overflow-x: auto; border-radius: 8px; }
 
-th, td {
-    padding: 15px 10px;
-    text-align: center;
-    border-bottom: 1px solid var(--cristal-borde);
-}
+table { width: 100%; border-collapse: collapse; text-align: left; }
 
 th {
-    color: var(--verde-pastel-oscuro);
-    font-weight: bold;
+    font-size: 0.85rem;
+    color: var(--rojo-japones);
+    padding: 12px 14px;
+    border-bottom: 2px solid var(--cristal-borde);
     text-transform: uppercase;
-    font-size: 0.9em;
-    letter-spacing: 1px;
 }
 
-body.dark-mode th {
-    color: var(--verde-pastel);
+td {
+    padding: 12px 14px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    font-family: sans-serif;
+    font-weight: normal;
+    color: var(--texto-principal);
+    vertical-align: middle;
 }
 
-/* ========================================= */
-/* FORMULARIOS E INPUTS */
-/* ========================================= */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-select {
+tr:hover { background: rgba(255, 255, 255, 0.12); }
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+input, select {
     width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.5);
+    padding: 10px 14px;
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid var(--cristal-borde);
     border-radius: 8px;
     color: var(--texto-principal);
-    font-size: 1em;
+    font-family: sans-serif;
+    font-size: 0.9rem;
     box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-body.dark-mode input,
-body.dark-mode select {
-    background: rgba(0, 0, 0, 0.3);
-    color: white;
 }
 
 input:focus, select:focus {
     outline: none;
     border-color: var(--rojo-japones);
-    box-shadow: 0 0 8px rgba(244, 43, 29, 0.3);
+    background: rgba(255, 255, 255, 0.35);
 }
 
-/* ========================================= */
-/* BOTONES */
-/* ========================================= */
 button {
+    font-family: 'CooperBold', sans-serif;
     cursor: pointer;
     padding: 10px 20px;
-    background: var(--rojo-japones);
-    color: white;
+    background-color: var(--rojo-japones);
+    color: white !important;
     border: none;
     border-radius: 8px;
-    font-weight: bold;
-    transition: 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
 
-button:hover {
-    background: var(--rojo-oscuro);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+button:hover { background-color: var(--rojo-oscuro); }
+
+.btn-danger {
+    background-color: transparent !important;
+    border: 1px solid #dc3545 !important;
+    color: #dc3545 !important;
 }
 
-button.btn-danger {
-    background: transparent;
-    border: 2px solid #dc3545;
-    color: #dc3545;
+.btn-danger:hover {
+    background-color: #dc3545 !important;
+    color: white !important;
 }
 
-button.btn-danger:hover {
-    background: #dc3545;
-    color: white;
-}
-
-/* ========================================= */
-/* BOTÓN DE LOGOUT ADMIN */
-/* ========================================= */
-.logout-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 200px;
-    margin: 40px auto 0;
-    background: transparent;
-    border: 2px solid var(--texto-principal);
-    color: var(--texto-principal);
-    padding: 12px;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: 0.3s;
-}
-
-.logout-btn:hover {
-    background: var(--texto-principal);
-    color: var(--fondo);
-}
+.logout-container { text-align: center; margin-top: 3rem; }
+.logout-btn { color: var(--rojo-japones); font-family: 'CooperBold', sans-serif; }
