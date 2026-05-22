@@ -1,20 +1,44 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
-    // ---------- Toggle Dark Mode ----------
-    const toggleTema = document.getElementById("toggleTema");
-    if(toggleTema){
-        const solIcon = document.querySelector(".header-right .sol");
-        const lunaIcon = document.querySelector(".header-right .luna");
-        const circle = document.querySelector(".header-right .circle");
+// ---------- Toggle Dark Mode con Persistencia ----------
+const toggleTema = document.getElementById("toggleTema");
+if(toggleTema){
+    const solIcon = document.querySelector(".header-right .sol");
+    const lunaIcon = document.querySelector(".header-right .luna");
+    const circle = document.querySelector(".header-right .circle");
 
-        toggleTema.addEventListener("change", () => {
-            body.classList.toggle("dark-mode", toggleTema.checked);
-            solIcon.style.opacity = toggleTema.checked ? "0" : "1";
-            lunaIcon.style.opacity = toggleTema.checked ? "1" : "0";
-            circle.style.transform = toggleTema.checked ? "translateX(26px)" : "translateX(0)";
-        });
+    // 1. COMPROBACIÓN AL CARGAR LA PÁGINA: ¿Ya activó el modo oscuro antes?
+    const temaGuardado = localStorage.getItem("tema_daily_dose");
+    
+    if (temaGuardado === "dark") {
+        body.classList.add("dark-mode");
+        toggleTema.checked = true;
+        // Ajustamos la interfaz visual para que el botón refleje que está encendido
+        if(solIcon) solIcon.style.opacity = "0";
+        if(lunaIcon) lunaIcon.style.opacity = "1";
+        if(circle) circle.style.transform = "translateX(26px)";
     }
+
+    // 2. ESCUCHAR LOS CAMBIOS: Guardamos la elección cada vez que pulse el botón
+    toggleTema.addEventListener("change", () => {
+        if (toggleTema.checked) {
+            body.classList.add("dark-mode");
+            localStorage.setItem("tema_daily_dose", "dark"); // Guarda "dark" en el navegador
+            
+            if(solIcon) solIcon.style.opacity = "0";
+            if(lunaIcon) lunaIcon.style.opacity = "1";
+            if(circle) circle.style.transform = "translateX(26px)";
+        } else {
+            body.classList.remove("dark-mode");
+            localStorage.setItem("tema_daily_dose", "light"); // Guarda "light" en el navegador
+            
+            if(solIcon) solIcon.style.opacity = "1";
+            if(lunaIcon) lunaIcon.style.opacity = "0";
+            if(circle) circle.style.transform = "translateX(0)";
+        }
+    });
+}
 
     // ---------- Menú hamburguesa ----------
     const menuBtn = document.getElementById('menuBtn');
