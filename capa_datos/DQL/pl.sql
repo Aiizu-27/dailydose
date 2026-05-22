@@ -204,3 +204,71 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+
+DELIMITER $$
+
+CREATE PROCEDURE sp_obtener_turnos_semanas(IN p_fecha_inicio DATE)
+BEGIN
+    -- Devuelve 4 semanas desde la fecha dada
+    SELECT 
+        t.ID_TURNO,
+        t.DIA,
+        t.TURNO,
+        e.ID_EMPLEADO,
+        u.NOMBRE,
+        u.APELLIDOS
+    FROM TURNOS t
+    JOIN EMPLEADOS e ON t.ID_EMPLEADO = e.ID_EMPLEADO
+    JOIN USUARIOS u  ON e.ID_USUARIO  = u.ID_USUARIO
+    WHERE t.DIA BETWEEN p_fecha_inicio AND DATE_ADD(p_fecha_inicio, INTERVAL 27 DAY)
+    ORDER BY t.DIA ASC, u.NOMBRE ASC;
+END$$
+
+
+CREATE PROCEDURE sp_asignar_turno(
+    IN p_id_empleado INT,
+    IN p_dia         DATE,
+    IN p_turno       ENUM('MAÑANA','TARDE')
+)
+BEGIN
+    INSERT INTO TURNOS (ID_EMPLEADO, DIA, TURNO)
+    VALUES (p_id_empleado, p_dia, p_turno)
+    ON DUPLICATE KEY UPDATE TURNO = p_turno;
+
+    SELECT ROW_COUNT() AS filas_afectadas;
+END$$
+
+
+CREATE PROCEDURE sp_eliminar_turno(IN p_id_turno INT)
+BEGIN
+    DELETE FROM TURNOS WHERE ID_TURNO = p_id_turno;
+    SELECT ROW_COUNT() AS filas_afectadas;
+END$$
+
+DELIMITER ;
+
+-- =====================================================
+-- SP DASHBOARD TRABAJADOR — DAILY DOSE
+-- =====================================================
+
+-- Obtener todas las mesas
+DELIMITER $$
+CREATE PROCEDURE sp_obtener_mesas()
+BEGIN
+    SELECT ID_MESA, NUMERO_MESA, CAPACIDAD, UBICACION, ESTADO
+    FROM MESAS
+    ORDER BY NUMERO_MESA ASC;
+END$$
+DELIMITER ;
+
+-- Contar pedidos entregados hoy
+DELIMITER $$
+CREATE PROCEDURE sp_contar_pedidos_hoy()
+BEGIN
+    SELECT COUNT(*) AS TOTAL
+    FROM PEDIDOS
+    WHERE DATE(FECHA) = CURDATE()
+      AND ESTADO = 'ENTREGADO';
+END$$
+DELIMITER ;
