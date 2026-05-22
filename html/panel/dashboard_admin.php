@@ -3,60 +3,66 @@ session_start();
 require_once "../includes/config.php";
 
 // --- SEGURIDAD ---
-if (!isset($_SESSION['ROL']) || $_SESSION['ROL'] != 'admin') {
+if (!isset($_SESSION['ROL']) || $_SESSION['ROL'] != 'ADMIN') {
     header("Location: ../index.php");
     exit();
 }
 
-// --- 1. LÓGICA: CAMBIAR ROL ---
-if (isset($_POST['cambiar_rol'])) {
-    $id_usuario = intval($_POST['id_usuario']);
-    $nuevo_rol = $_POST['nuevo_rol'];
-    $stmt = $conn->prepare("UPDATE USUARIOS SET ROL = ? WHERE ID_USUARIO = ?");
-    $stmt->bind_param("si", $nuevo_rol, $id_usuario);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: dashboard_admin.php"); // Recargar para ver cambios
-    exit();
-}
+// ========================================================
+// CARGA EXCLUSIVA DE DATOS PARA PINTAR LA INTERFAZ (PL)
+// ========================================================
 
-// --- 2. LÓGICA: AÑADIR TRABAJADOR ---
-if (isset($_POST['add_trabajador'])) {
-    // Aquí recibes los datos del formulario
-    $nombre = $_POST['nombre'];
-    $apellidos = $_POST['apellidos'];
-    $email = $_POST['email'];
-    $pass = password_hash($_POST['contrasena'], PASSWORD_DEFAULT); // ¡Siempre encriptada!
-    $rol = 'TRABAJADOR';
+// 1. Estadísticas del Día
+$stmt = $conn->prepare("CALL sp_admin_obtener_estadisticas_hoy()");
+$stmt->execute();
+$stats = $stmt->get_result()->fetch_assoc();
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
 
-    // Si mencionabas "pl" refiriéndote a un Procedimiento Almacenado, cambiarías el INSERT por "CALL tu_procedimiento(?, ?, ?, ?, ?)"
-    $stmt = $conn->prepare("INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nombre, $apellidos, $email, $pass, $rol);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: dashboard_admin.php");
-    exit();
-}
-
-// --- 3. LÓGICA: DAR DE BAJA ---
-if (isset($_POST['baja_usuario'])) {
-    $id_baja = intval($_POST['id_baja']);
-    // Ojo: Esto borra al usuario físicamente. A veces es mejor hacer un UPDATE ESTADO = 'inactivo'.
-    $stmt = $conn->prepare("DELETE FROM USUARIOS WHERE ID_USUARIO = ?");
-    $stmt->bind_param("i", $id_baja);
-    $stmt->execute();
-    $stmt->close();
-    header("Location: dashboard_admin.php");
-    exit();
-}
-
-// Obtener todos los usuarios para los desplegables
-$result = $conn->query("SELECT ID_USUARIO, NOMBRE, APELLIDOS, EMAIL, ROL FROM USUARIOS ORDER BY ID_USUARIO ASC");
-// Guardamos los usuarios en un array para poder usarlos en varios desplegables sin tener que hacer la consulta SQL de nuevo
+// 2. Usuarios y Personal
+$stmt = $conn->prepare("CALL sp_admin_obtener_usuarios()");
+$stmt->execute();
+$res_users = $stmt->get_result();
 $usuarios = [];
-while($row = $result->fetch_assoc()) {
-    $usuarios[] = $row;
-}
+while($row = $res_users->fetch_assoc()) { $usuarios[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+
+// 3. Pedidos en Tiempo Real
+$stmt = $conn->prepare("CALL sp_admin_obtener_pedidos_hoy()");
+$stmt->execute();
+$res_pedidos = $stmt->get_result();
+$pedidos_hoy = [];
+while($row = $res_pedidos->fetch_assoc()) { $pedidos_hoy[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+
+// 4. Alertas de Inventario
+$stmt = $conn->prepare("CALL sp_admin_obtener_stock_bajo()");
+$stmt->execute();
+$res_stock = $stmt->get_result();
+$stock_bajo = [];
+while($row = $res_stock->fetch_assoc()) { $stock_bajo[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+
+// 5. Catálogo de la Carta
+$stmt = $conn->prepare("CALL sp_admin_obtener_todos_productos()");
+$stmt->execute();
+$res_prod = $stmt->get_result();
+$productos_carta = [];
+while($row = $res_prod->fetch_assoc()) { $productos_carta[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+
+// 6. Lista de Baristas para Turnos
+$stmt = $conn->prepare("CALL sp_obtener_empleados()");
+$stmt->execute();
+$res_emp = $stmt->get_result();
+$empleados = [];
+while($row = $res_emp->fetch_assoc()) { $empleados[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -64,53 +70,110 @@ while($row = $result->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DAILY DOSE - Tu dosis diaria de café</title>
-
-    <!-- CSS Global -->
+    <title>DAILY DOSE - Panel Central</title>
     <link rel="stylesheet" href="../assets/css/variables.css">
     <link rel="stylesheet" href="../assets/css/style.css">
-
-    <!-- CSS Componentes -->
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
     <link rel="stylesheet" href="../assets/css/dashboard_admin.css">
 </head>
 <body>
 
-<div class="container">
-    <h2 style="text-align:center;">Panel de Control Administrativo</h2>
-    <p style="text-align:center;">Bienvenido, <strong><?= htmlspecialchars($_SESSION['NOMBRE'] ?? 'Admin') ?></strong></p>
+<?php include "../includes/header.php"; ?>
 
-    <details open> <summary>Gestión de Roles de Usuarios</summary>
+<div class="container" style="max-width: 1200px; margin-top: 110px;">
+    <h2 style="text-align:center;">Centro de Operaciones Globales</h2>
+    <p style="text-align:center; margin-bottom:30px;">Admin activo: <strong><?= htmlspecialchars($_SESSION['NOMBRE']) ?></strong></p>
+
+    <details open>
+        <summary>Estadísticas del Día</summary>
         <div class="details-content">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; text-align: center;">
+                <div style="background: rgba(0,0,0,0.03); padding: 20px; border-radius: 10px; border-left: 4px solid var(--rojo-japones);">
+                    <h3 style="font-size: 2.2rem; color: var(--rojo-japones);"><?= number_format($stats['INGRESOS_HOY'] ?? 0, 2) ?> €</h3>
+                    <p style="margin:0; opacity: 0.8;">Ingresos de Hoy</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.03); padding: 20px; border-radius: 10px; border-left: 4px solid var(--verde-pastel-oscuro);">
+                    <h3 style="font-size: 2.2rem; color: var(--verde-pastel-oscuro);"><?= $stats['PEDIDOS_HOY'] ?? 0 ?></h3>
+                    <p style="margin:0; opacity: 0.8;">Pedidos Procesados</p>
+                </div>
+                <div style="background: rgba(0,0,0,0.03); padding: 20px; border-radius: 10px; border-left: 4px solid #ffc107;">
+                    <h3 style="font-size: 2.2rem; color: #ffc107;"><?= $stats['TICKET_MEDIO'] ?? 0 ?> €</h3>
+                    <p style="margin:0; opacity: 0.8;">Ticket Medio</p>
+                </div>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Gestión de Usuarios y Personal</summary>
+        <div class="details-content">
+            <h4 style="color:var(--rojo-japones); margin-bottom: 10px;">Contratación de Personal</h4>
+            <form id="form-add-trabajador" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:15px; margin-bottom:30px;">
+                <input type="text" name="nombre" placeholder="Nombre" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" required>
+                <input type="email" name="email" placeholder="usuario@dailydose.es" pattern="[a-z0-9._%+-]+@dailydose\.es$" title="Debe usar correo @dailydose.es" required>
+                <input type="text" name="puesto" placeholder="Puesto (ej: BARISTA, ENCARGADO)" required>
+                <input type="number" step="0.01" name="salario" placeholder="Salario Mensual" required>
+                <input type="password" name="contrasena" placeholder="Clave temporal" required>
+                <button type="submit">Dar de Alta</button>
+            </form>
+
+            <h4 style="color:var(--rojo-japones); margin-bottom: 10px;">Control de Roles de la Plataforma</h4>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Nombre completo</th><th>Email</th><th>Rol del Sistema</th><th>Acción Crítica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($usuarios as $user): ?>
+                        <tr>
+                            <td><?= $user['ID_USUARIO'] ?></td>
+                            <td><?= htmlspecialchars($user['NOMBRE'] . ' ' . $user['APELLIDOS']) ?></td>
+                            <td><?= htmlspecialchars($user['EMAIL']) ?></td>
+                            <td>
+                                <form class="form-cambiar-rol" style="display:inline-flex; gap:5px;">
+                                    <input type="hidden" name="id_usuario" value="<?= $user['ID_USUARIO'] ?>">
+                                    <select name="nuevo_rol" style="padding: 5px;">
+                                        <option value="CLIENTE" <?= $user['ROL']=='CLIENTE'?'selected':'' ?>>CLIENTE</option>
+                                        <option value="EMPLEADO" <?= $user['ROL']=='EMPLEADO'?'selected':'' ?>>EMPLEADO</option>
+                                        <option value="ADMIN" <?= $user['ROL']=='ADMIN'?'selected':'' ?>>ADMIN</option>
+                                    </select>
+                                    <button type="submit" style="padding:5px 10px;">✓</button>
+                                </form>
+                            </td>
+                            <td>
+                                <button class="btn-baja-directa button btn-danger" data-id="<?= $user['ID_USUARIO'] ?>" style="padding: 5px 12px; font-size:0.85rem;">Revocar Acceso</button>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Pedidos del Día</summary>
+        <div class="details-content" style="overflow-x:auto;">
             <table>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Rol Actual</th>
-                        <th>Acción</th>
+                        <th>Cód. Pedido</th><th>Hora</th><th>Ubicación</th><th>Cliente</th><th>Total</th><th>Estado</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($usuarios as $user): ?>
+                    <?php if(empty($pedidos_hoy)): ?><tr><td colspan="6">No hay comandas registradas hoy.</td></tr><?php endif; ?>
+                    <?php foreach($pedidos_hoy as $p): ?>
                     <tr>
-                        <td><?= $user['ID_USUARIO'] ?></td>
-                        <td><?= htmlspecialchars($user['NOMBRE'] . ' ' . $user['APELLIDOS']) ?></td>
-                        <td><?= htmlspecialchars($user['EMAIL']) ?></td>
-                        <td><?= $user['ROL'] ?></td>
-                        <td>
-                            <form method="post" class="inline-form">
-                                <input type="hidden" name="id_usuario" value="<?= $user['ID_USUARIO'] ?>">
-                                <select name="nuevo_rol">
-                                    <option value="CLIENTE" <?= strtoupper($user['ROL'])=='CLIENTE'?'selected':'' ?>>CLIENTE</option>
-                                    <option value="TRABAJADOR" <?= strtoupper($user['ROL'])=='TRABAJADOR'?'selected':'' ?>>TRABAJADOR</option>
-                                    <option value="ADMIN" <?= strtoupper($user['ROL'])=='ADMIN'?'selected':'' ?>>ADMIN</option>
-                                </select>
-                                <button type="submit" name="cambiar_rol">Actualizar</button>
-                            </form>
-                        </td>
+                        <td><strong>#<?= $p['ID_PEDIDO'] ?></strong></td>
+                        <td><?= date("H:i", strtotime($p['FECHA'])) ?></td>
+                        <td><?= $p['NUMERO_MESA'] ? "Mesa ".$p['NUMERO_MESA'] : "Para llevar" ?></td>
+                        <td><?= htmlspecialchars($p['CLIENTE_NOMBRE'] ?? 'Consumidor Local') ?></td>
+                        <td style="color:var(--verde-pastel-oscuro); font-weight:bold;"><?= number_format($p['TOTAL'], 2) ?> €</td>
+                        <td><span class="badge" style="background: rgba(0,0,0,0.05); padding:4px 10px; border-radius:20px; font-size:0.8rem;"><?= $p['ESTADO'] ?></span></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -119,41 +182,171 @@ while($row = $result->fetch_assoc()) {
     </details>
 
     <details>
-        <summary>Alta de Nuevo Trabajador</summary>
+        <summary>Stock e Inventario Crítico</summary>
         <div class="details-content">
-            <form method="post" class="form-grid">
-                <input type="text" name="nombre" placeholder="Nombre" required>
-                <input type="text" name="apellidos" placeholder="Apellidos" required>
-                <input type="email" name="email" placeholder="Correo Electrónico" required>
-                <input type="password" name="contrasena" placeholder="Contraseña temporal" required>
-                <button type="submit" name="add_trabajador">Registrar Trabajador</button>
-            </form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th><th>Insumo / Producto</th><th>Categoría</th><th>Existencias</th><th>Estado Almacén</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php if(empty($stock_bajo)): ?><tr><td colspan="5" style="color:var(--verde-pastel-oscuro); font-weight:bold;">✓ Todo el inventario está por encima del nivel de seguridad.</td></tr><?php endif; ?>
+                    <?php foreach($stock_bajo as $s): ?>
+                    <tr style="background: rgba(244, 43, 29, 0.02);">
+                        <td><?= $s['ID_PRODUCTO'] ?></td>
+                        <td><strong><?= htmlspecialchars($s['NOMBRE']) ?></strong></td>
+                        <td><?= $s['CATEGORIA'] ?></td>
+                        <td style="color:var(--rojo-japones); font-weight:bold;"><?= $s['STOCK'] ?> uds.</td>
+                        <td><span style="color:#ffc107; font-weight:bold;">⚠️ REABASTECER</span></td>
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
         </div>
     </details>
 
     <details>
-        <summary>Dar de Baja a un Usuario</summary>
+        <summary>Gestión de la Carta y Productos</summary>
         <div class="details-content">
-            <form method="post" style="text-align: center;">
-                <p>Selecciona el usuario que deseas eliminar del sistema:</p>
-                <select name="id_baja" required style="width: 60%; margin-bottom: 15px;">
-                    <option value="">-- Seleccionar Usuario --</option>
-                    <?php foreach($usuarios as $user): ?>
-                        <option value="<?= $user['ID_USUARIO'] ?>">
-                            ID: <?= $user['ID_USUARIO'] ?> - <?= htmlspecialchars($user['NOMBRE'] . ' ' . $user['APELLIDOS']) ?> (<?= $user['ROL'] ?>)
-                        </option>
+            <h4 style="color:var(--rojo-japones); margin-bottom: 15px;">Añadir Nuevo Producto al Menú</h4>
+            <form id="form-add-producto" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:15px; margin-bottom:30px;">
+                <input type="text" name="nombre" placeholder="Nombre (ej: Flat White)" required>
+                <input type="text" name="categoria" placeholder="Categoría (ej: CAFES, DULCES)" required>
+                <input type="number" step="0.01" name="precio" placeholder="Precio de Venta" required>
+                <input type="number" name="stock" placeholder="Stock Inicial" required>
+                <button type="submit">Agregar a la Carta</button>
+            </form>
+
+            <h4 style="color:var(--rojo-japones); margin-bottom: 10px;">Catálogo de Productos Activos</h4>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Ítem</th><th>Categoría</th><th>Precio</th><th>Stock Disponible</th><th>Ajuste Rápido</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($productos_carta as $prod): ?>
+                        <tr>
+                            <td><?= $prod['ID_PRODUCTO'] ?></td>
+                            <td><?= htmlspecialchars($prod['NOMBRE']) ?></td>
+                            <td><?= $prod['CATEGORIA'] ?></td>
+                            <td><strong><?= number_format($prod['PRECIO'], 2) ?> €</strong></td>
+                            <td><?= $prod['STOCK'] ?> uds.</td>
+                            <td>
+                                <button class="btn-toggle-producto" data-id="<?= $prod['ID_PRODUCTO'] ?>" style="background:var(--verde-pastel-oscuro); padding: 5px 10px; font-size:0.8rem;">Modificar Stock</button>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </details>
+
+    <details>
+        <summary>Gestión de Turnos y Planificación</summary>
+        <div class="details-content">
+            <h4 style="color:var(--rojo-japones); margin-bottom: 15px;">Fijar Cuadrante Semanal</h4>
+            <form id="form-add-turno" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:15px;">
+                <select name="id_empleado" required>
+                    <option value="" disabled selected>Seleccionar Barista...</option>
+                    <?php foreach($empleados as $emp): ?>
+                        <option value="<?= $emp['ID_EMPLEADO'] ?>"><?= htmlspecialchars($emp['NOMBRE'] . ' ' . $emp['APELLIDOS'] . ' - ' . $emp['PUESTO']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <br>
-                <button type="submit" name="baja_usuario" class="btn-danger" onclick="return confirm('¿Estás SEGURO de que quieres eliminar a este usuario? Esta acción no se puede deshacer.');">
-                    Eliminar Usuario Definitivamente
-                </button>
+                <input type="date" name="fecha_turno" value="<?= date('Y-m-d') ?>" required>
+                <select name="bloque_turno" required>
+                    <option value="MAÑANA">Mañana</option>
+                    <option value="TARDE">Tarde</option>
+                </select>
+                <button type="submit">Asignar Cuadrante</button>
             </form>
         </div>
     </details>
 
-    <a href="../actions/auth_logout.php" class="logout-btn">Cerrar Sesión</a>
+    <div style="text-align: center; margin-top: 40px;">
+        <a href="../actions/auth_logout.php" class="logout-btn">Cerrar Sesión Segura</a>
+    </div>
 </div>
 
+<?php include "../includes/footer.php"; ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+    // Bloque 2: Alta Empleado
+    document.getElementById('form-add-trabajador').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch('../actions/admin_add_trabajador.php', { method: 'POST', body: new FormData(this) })
+        .then(res => res.json()).then(data => {
+            if(data.status === 'ok') { alert('¡Contratación formalizada con éxito!'); location.reload(); }
+            else { alert('Error: ' + data.status); }
+        });
+    });
+
+    // Bloque 2: Cambiar Rol
+    document.querySelectorAll('.form-cambiar-rol').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            fetch('../actions/admin_cambiar_rol.php', { method: 'POST', body: new FormData(this) })
+            .then(res => res.json()).then(data => {
+                if(data.status === 'ok') { alert('Permisos de cuenta actualizados.'); }
+                else { alert('Error operativo al cambiar rol.'); }
+            });
+        });
+    });
+
+    // Bloque 2: Revocar Cuenta (Baja)
+    document.querySelectorAll('.btn-baja-directa').forEach(btn => {
+        btn.addEventListener('click', function() {
+            if(!confirm('¿Seguro que deseas eliminar esta cuenta? Esta acción es irreversible.')) return;
+            const f = new FormData(); f.append('id_baja', this.getAttribute('data-id'));
+            fetch('../actions/admin_baja_usuario.php', { method: 'POST', body: f })
+            .then(res => res.json()).then(data => {
+                if(data.status === 'ok') { alert('Cuenta eliminada de la base de datos.'); location.reload(); }
+                else { alert('Error al dar de baja.'); }
+            });
+        });
+    });
+
+    // Bloque 5: Añadir Producto
+    document.getElementById('form-add-producto').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch('../actions/admin_add_producto.php', { method: 'POST', body: new FormData(this) })
+        .then(res => res.json()).then(data => {
+            if(data.status === 'ok') { alert('¡Producto insertado en la carta digital!'); location.reload(); }
+            else { alert('Error al añadir producto.'); }
+        });
+    });
+
+    // Bloque 5: Ajustar Stock manual
+    document.querySelectorAll('.btn-toggle-producto').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const nuevoStock = prompt("Introduce las unidades reales en almacén:");
+            if (nuevoStock === null || nuevoStock.trim() === "" || isNaN(nuevoStock)) return;
+            const f = new FormData();
+            f.append('id_producto', this.getAttribute('data-id'));
+            f.append('nuevo_stock', nuevoStock);
+            fetch('../actions/admin_update_stock.php', { method: 'POST', body: f })
+            .then(res => res.json()).then(data => {
+                if(data.status === 'ok') { alert('Inventario sincronizado.'); location.reload(); }
+                else { alert('Error al ajustar existencias.'); }
+            });
+        });
+    });
+
+    // Bloque 6: Asignar Turno
+    document.getElementById('form-add-turno').addEventListener('submit', function(e) {
+        e.preventDefault();
+        fetch('../actions/admin_add_turno.php', { method: 'POST', body: new FormData(this) })
+        .then(res => res.json()).then(data => {
+            if(data.status === 'ok') { alert('Cuadrante guardado y publicado.'); }
+            else { alert('Error al registrar turno.'); }
+        });
+    });
+});
+</script>
 </body>
 </html>

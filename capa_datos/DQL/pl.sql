@@ -111,6 +111,7 @@ DELIMITER ;
 
 
 /*Procesar carrito*/
+DELIMITER $$
 CREATE PROCEDURE sp_insertar_detalle_pedido(
     IN p_id_pedido       INT,
     IN p_id_producto     INT,
@@ -271,4 +272,110 @@ BEGIN
     WHERE DATE(FECHA) = CURDATE()
       AND ESTADO = 'ENTREGADO';
 END$$
+DELIMITER ;
+
+DELIMITER //
+
+/* =====================================================================
+   1. ESTADÍSTICAS DEL DÍA
+   Calcula ingresos netos de hoy, total de comandas y el ticket medio.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_admin_obtener_estadisticas_hoy //
+CREATE PROCEDURE sp_admin_obtener_estadisticas_hoy()
+BEGIN
+    SELECT 
+        IFNULL(SUM(TOTAL), 0.00) AS INGRESOS_HOY,
+        COUNT(ID_PEDIDO) AS PEDIDOS_HOY,
+        IFNULL(ROUND(AVG(TOTAL), 2), 0.00) AS TICKET_MEDIO
+    FROM PEDIDOS 
+    WHERE DATE(FECHA) = CURDATE() AND ESTADO != 'CANCELADO';
+END //
+
+/* =====================================================================
+   2. GESTIÓN DE USUARIOS
+   Trae la lista de todas las cuentas registradas en el sistema para la tabla.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_admin_obtener_usuarios //
+CREATE PROCEDURE sp_admin_obtener_usuarios()
+BEGIN
+    SELECT ID_USUARIO, NOMBRE, APELLIDOS, EMAIL, ROL 
+    FROM USUARIOS 
+    ORDER BY ID_USUARIO ASC;
+END //
+
+/* =====================================================================
+   3. AUDITORÍA DE PEDIDOS
+   Muestra los pedidos del día con la hora, el número de mesa y el cliente.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_admin_obtener_pedidos_hoy //
+CREATE PROCEDURE sp_admin_obtener_pedidos_hoy()
+BEGIN
+    SELECT 
+        p.ID_PEDIDO, 
+        p.FECHA, 
+        m.NUMERO_MESA, 
+        p.TOTAL, 
+        p.ESTADO, 
+        u.NOMBRE AS CLIENTE_NOMBRE
+    FROM PEDIDOS p
+    LEFT JOIN CLIENTES c ON p.ID_CLIENTE = c.ID_CLIENTE
+    LEFT JOIN USUARIOS u ON c.ID_USUARIO = u.ID_USUARIO
+    LEFT JOIN MESAS m ON p.ID_MESA = m.ID_MESA
+    WHERE DATE(p.FECHA) = CURDATE()
+    ORDER BY p.ID_PEDIDO DESC;
+END //
+
+/* =====================================================================
+   4. ALERTAS DE INVENTARIO (STOCK BAJO)
+   Detecta insumos críticos con 10 o menos unidades disponibles en el almacén.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_admin_obtener_stock_bajo //
+CREATE PROCEDURE sp_admin_obtener_stock_bajo()
+BEGIN
+    SELECT 
+        p.ID_PRODUCTO, 
+        p.NOMBRE, 
+        c.NOMBRE_CATEGORIA AS CATEGORIA, 
+        p.STOCK 
+    FROM PRODUCTOS p
+    LEFT JOIN CATEGORIAS c ON p.ID_CATEGORIA = c.ID_CATEGORIA
+    WHERE p.STOCK <= 10
+    ORDER BY p.STOCK ASC;
+END //
+
+/* =====================================================================
+   5. CATÁLOGO COMPLETO DE LA CARTA
+   Lista todos los productos unificados con el nombre de su categoría de texto.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_admin_obtener_todos_productos //
+CREATE PROCEDURE sp_admin_obtener_todos_productos()
+BEGIN
+    SELECT 
+        p.ID_PRODUCTO, 
+        p.NOMBRE, 
+        c.NOMBRE_CATEGORIA AS CATEGORIA, 
+        p.PRECIO, 
+        p.STOCK 
+    FROM PRODUCTOS p
+    LEFT JOIN CATEGORIAS c ON p.ID_CATEGORIA = c.ID_CATEGORIA
+    ORDER BY c.NOMBRE_CATEGORIA ASC, p.NOMBRE ASC;
+END //
+
+/* =====================================================================
+   6. LISTAR BARISTAS PARA TURNOS
+   Une EMPLEADOS con USUARIOS para pintar los nombres en el selector de turnos.
+   ===================================================================== */
+DROP PROCEDURE IF EXISTS sp_obtener_empleados //
+CREATE PROCEDURE sp_obtener_empleados()
+BEGIN
+    SELECT 
+        e.ID_EMPLEADO, 
+        u.NOMBRE, 
+        u.APELLIDOS, 
+        e.PUESTO 
+    FROM EMPLEADOS e
+    JOIN USUARIOS u ON e.ID_USUARIO = u.ID_USUARIO
+    ORDER BY u.NOMBRE ASC;
+END //
+
 DELIMITER ;
