@@ -24,8 +24,8 @@
 
     /* Otros estilos */
     box-sizing: border-box;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.1); /* Sombra suave */
-    color: var(--texto); /* Asegúrate de tener una variable para el color del texto */
+    box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+    color: var(--texto-principal);
 }
 
 .cajas { 

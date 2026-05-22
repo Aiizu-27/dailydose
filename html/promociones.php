@@ -2,29 +2,37 @@
 session_start();
 require_once "includes/config.php";
 
-// 1. Comprobamos si hay sesión, pero NO expulsamos al usuario
+// 1. Comprobamos si hay sesión activa, pero NO expulsamos al invitado
 $esta_logueado = isset($_SESSION['ROL']);
 $puntos_actuales = 0;
-$result_promos = null;
+$recompensas = [];
 
 if ($esta_logueado) {
     $id_usuario = $_SESSION['ID_USUARIO'];
 
-    // 2. OBTENER LOS PUNTOS ACTUALES DEL CLIENTE
-    $stmt = $conn->prepare("SELECT PUNTOS FROM CLIENTES WHERE ID_USUARIO = ?");
+    // 2. LLAMADA AL PL: Obtener los puntos reales del monedero del cliente
+    $stmt = $conn->prepare("CALL sp_promos_obtener_puntos_cliente(?)");
     $stmt->bind_param("i", $id_usuario);
     $stmt->execute();
-    $resultado = $stmt->get_result();
-
-    if ($row = $resultado->fetch_assoc()) {
+    $res_puntos = $stmt->get_result();
+    if ($row = $res_puntos->fetch_assoc()) {
         $puntos_actuales = $row['PUNTOS'] ?? 0;
     }
+    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
     $stmt->close();
 
-    // 3. OBTENER TODAS LAS PROMOCIONES
-    $sql_promos = "SELECT * FROM PROMOCIONES ORDER BY PUNTOS_REQUERIDOS ASC";
-    $result_promos = $conn->query($sql_promos);
+    // 3. LLAMADA AL PL: Cargar todo el catálogo de regalos del club
+    $stmt = $conn->prepare("CALL sp_promos_obtener_recompensas()");
+    $stmt->execute();
+    $res_recompensas = $stmt->get_result();
+    while ($row = $res_recompensas->fetch_assoc()) {
+        $recompensas[] = $row;
+    }
+    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
+    $stmt->close();
 }
+
+$conn->close(); // Clausura limpia de pasarela de datos
 ?>
 
 <!DOCTYPE html>
@@ -42,7 +50,6 @@ if ($esta_logueado) {
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/promociones.css?v=1">
 </head>
-
 <body>
 
 <?php include "includes/header.php"; ?>
@@ -63,31 +70,31 @@ if ($esta_logueado) {
     <?php if ($esta_logueado): ?>
 
         <section class="grid-promos">
-            <?php if ($result_promos && $result_promos->num_rows > 0): ?>
+            <?php if (!empty($recompensas)): ?>
                 
-                <?php while ($promo = $result_promos->fetch_assoc()): ?>
+                <?php foreach ($recompensas as $promo): ?>
                     <div class="promo-card">
                         <div>
                             <h3><?= htmlspecialchars($promo['NOMBRE']) ?></h3>
                             <p><?= htmlspecialchars($promo['DESCRIPCION']) ?></p>
                             <div class="coste-puntos">
-                                Valor: <?= $promo['PUNTOS_REQUERIDOS'] ?> puntos
+                                Valor: <?= $promo['COSTE_PUNTOS'] ?> puntos
                             </div>
                         </div>
 
-                        <?php if ($puntos_actuales >= $promo['PUNTOS_REQUERIDOS']): ?>
+                        <?php if ($puntos_actuales >= $promo['COSTE_PUNTOS']): ?>
                             <form action="actions/canjear_promo.php" method="POST">
-                                <input type="hidden" name="id_promocion" value="<?= $promo['ID_PROMOCION'] ?>">
+                                <input type="hidden" name="id_promocion" value="<?= $promo['ID_RECOMPENSA'] ?>">
                                 <button type="submit" class="btn-canjear btn-activo">¡Canjear Ahora!</button>
                             </form>
                         <?php else: ?>
-                            <?php $puntos_faltantes = $promo['PUNTOS_REQUERIDOS'] - $puntos_actuales; ?>
+                            <?php $puntos_faltantes = $promo['COSTE_PUNTOS'] - $puntos_actuales; ?>
                             <div class="btn-canjear btn-inactivo">
                                 Te faltan <?= $puntos_faltantes ?> puntos
                             </div>
                         <?php endif; ?>
                     </div>
-                <?php endwhile; ?>
+                <?php endforeach; ?>
 
             <?php else: ?>
                 <p>Actualmente no hay promociones disponibles. ¡Vuelve pronto!</p>
@@ -115,6 +122,5 @@ if ($esta_logueado) {
 <?php include "includes/footer.php"; ?>
 
 <script src="assets/js/script.js"></script>
-
 </body>
 </html>

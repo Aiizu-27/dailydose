@@ -111,7 +111,7 @@ if(toggleTema){
         e.preventDefault();
         const formData = new FormData(this);
 
-        fetch('actions/auth_login.php', { method:'POST', body: formData })
+        fetch('/actions/auth_login.php', { method:'POST', body: formData })
         .then(res => res.json()) // ahora esperamos JSON
         .then(data => {
             if(data.status === "login_ok"){
@@ -143,7 +143,7 @@ if(toggleTema){
             const formData = new FormData(this);
 
             // RUTA CORREGIDA: 'actions/auth_registro.php'
-            fetch('actions/auth_registro.php', { method:'POST', body: formData })
+            fetch('/actions/auth_registro.php', { method:'POST', body: formData })
             .then(res => res.text())
             .then(data => {
                 const respuesta = data.trim();
