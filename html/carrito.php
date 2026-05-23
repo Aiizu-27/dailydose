@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 // Si por algún motivo de seguridad extra quieres asegurarte de que nadie sin sesión entre aquí copiando la URL:
 if (!isset($_SESSION['ROL'])) {

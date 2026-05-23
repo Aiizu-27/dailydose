@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 if (ob_get_length()) ob_clean();
 header('Content-Type: application/json');

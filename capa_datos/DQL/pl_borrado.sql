@@ -15,7 +15,7 @@ DROP PROCEDURE IF EXISTS sp_obtener_producto_carrito;
 DROP PROCEDURE IF EXISTS sp_procesar_pedido;
 DROP PROCEDURE IF EXISTS sp_insertar_detalle_pedido;
 DROP PROCEDURE IF EXISTS sp_cambiar_estado_pedido;
-
+    
 -- --- 3. DASHBOARD DEL TRABAJADOR / BARISTA ---
 DROP PROCEDURE IF EXISTS sp_obtener_empleados;
 DROP PROCEDURE IF EXISTS sp_obtener_pedidos_activos;

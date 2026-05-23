@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 // 1. Comprobamos si hay sesión activa, pero NO expulsamos al invitado
 $esta_logueado = isset($_SESSION['ROL']);

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 // Red de seguridad: Si no hay sesión iniciada, mandamos al usuario al registro
 if (!isset($_SESSION['ID_USUARIO'])) {

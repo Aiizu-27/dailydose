@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 // Red de seguridad: Solo clientes pueden acceder a esta vista
 if (!isset($_SESSION['ROL']) || strtolower($_SESSION['ROL']) !== 'cliente') {

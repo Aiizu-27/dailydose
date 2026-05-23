@@ -1,6 +1,6 @@
 <?php
 session_start(); 
-require_once "includes/config.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 // Comprobación inicial de pasarela
 if (!$conn) {
