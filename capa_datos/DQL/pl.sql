@@ -82,7 +82,7 @@ END //
 DROP PROCEDURE IF EXISTS sp_procesar_pedido //
 CREATE PROCEDURE sp_procesar_pedido(
     IN p_id_cliente   INT,
-    IN p_numero_mesa  INT, 
+    IN p_numero_mesa  INT, -- Recibe el número de mesa (ej: 1, 2, 3...)
     IN p_total        DECIMAL(6,2),
     IN p_puntos       INT
 )
@@ -90,20 +90,20 @@ BEGIN
     DECLARE v_id_mesa INT DEFAULT NULL;
     DECLARE v_id_pedido INT;
 
-    -- 1. Buscamos el ID_MESA dentro de la base de datos de forma interna
-    IF p_numero_mesa IS NOT NULL THEN
+    -- 1. Buscamos el ID_MESA interno usando el número que envió el usuario
+    IF p_numero_mesa IS NOT NULL AND p_numero_mesa > 0 THEN
         SELECT ID_MESA INTO v_id_mesa 
         FROM MESAS 
         WHERE NUMERO_MESA = p_numero_mesa;
 
-        -- 2. SI NO EXISTE: Lanzamos un error de estado personalizado para PHP
+        -- 2. SI NO EXISTE: Lanza un error para frenar la ejecución
         IF v_id_mesa IS NULL THEN
             SIGNAL SQLSTATE '45000' 
             SET MESSAGE_TEXT = 'Error: Mesa no valida';
         END IF;
     END IF;
 
-    -- 3. Si todo está bien, procesamos la transacción de forma segura
+    -- 3. Iniciamos la transacción segura
     START TRANSACTION;
 
     INSERT INTO PEDIDOS (FECHA, TOTAL, ID_CLIENTE, ID_MESA, ESTADO)
@@ -111,16 +111,23 @@ BEGIN
 
     SET v_id_pedido = LAST_INSERT_ID();
 
+    -- 💥 ¡EL ESLABÓN PERDIDO!: Si el pedido tiene mesa, la marcamos como OCUPADA
+    IF v_id_mesa IS NOT NULL THEN
+        UPDATE MESAS SET ESTADO = 'OCUPADA' WHERE ID_MESA = v_id_mesa;
+    END IF;
+
+    -- Sumar puntos al monedero del cliente
     UPDATE CLIENTES 
     SET PUNTOS = PUNTOS + p_puntos 
     WHERE ID_CLIENTE = p_id_cliente;
 
+    -- Registrar el movimiento en el historial
     INSERT INTO HISTORIAL_PUNTOS (ID_CLIENTE, TIPO_MOVIMIENTO, CANTIDAD, MOTIVO)
     VALUES (p_id_cliente, 'SUMA', p_puntos, CONCAT('Pedido #', v_id_pedido));
 
     COMMIT;
 
-    -- Devolvemos el ID del pedido para la web
+    -- Devolvemos el ID del pedido para el flujo de la web
     SELECT v_id_pedido AS ID_PEDIDO;
 END //
 
