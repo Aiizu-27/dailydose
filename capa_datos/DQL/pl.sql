@@ -79,18 +79,36 @@ BEGIN
     WHERE ID_PRODUCTO = p_id_producto;
 END //
 
-DROP PROCEDURE IF EXISTS sp_procesar_pedido //
+DROP PROCEDURE IF EXISTS sp_procesar_pedido$$
+
 CREATE PROCEDURE sp_procesar_pedido(
-    IN p_id_cliente  INT,
-    IN p_id_mesa     INT,
-    IN p_total       DECIMAL(6,2),
-    IN p_puntos      INT
+    IN p_id_cliente   INT,
+    IN p_numero_mesa  INT, -- <-- Ahora recibe el número que escribe el usuario
+    IN p_total        DECIMAL(6,2),
+    IN p_puntos       INT
 )
 BEGIN
+    DECLARE v_id_mesa INT DEFAULT NULL;
     DECLARE v_id_pedido INT;
 
+    -- 1. Buscamos el ID_MESA dentro de la base de datos de forma interna
+    IF p_numero_mesa IS NOT NULL THEN
+        SELECT ID_MESA INTO v_id_mesa 
+        FROM MESAS 
+        WHERE NUMERO_MESA = p_numero_mesa;
+
+        -- 2. SI NO EXISTE: Lanzamos un error de estado personalizado para PHP
+        IF v_id_mesa IS NULL THEN
+            SIGNAL SQLSTATE '45000' 
+            SET MESSAGE_TEXT = 'Error: Mesa no valida';
+        END IF;
+    END IF;
+
+    -- 3. Si todo está bien, procesamos la transacción de forma segura
+    START TRANSACTION;
+
     INSERT INTO PEDIDOS (FECHA, TOTAL, ID_CLIENTE, ID_MESA, ESTADO)
-    VALUES (NOW(), p_total, p_id_cliente, p_id_mesa, 'PENDIENTE');
+    VALUES (NOW(), p_total, p_id_cliente, v_id_mesa, 'PENDIENTE');
 
     SET v_id_pedido = LAST_INSERT_ID();
 
@@ -101,8 +119,11 @@ BEGIN
     INSERT INTO HISTORIAL_PUNTOS (ID_CLIENTE, TIPO_MOVIMIENTO, CANTIDAD, MOTIVO)
     VALUES (p_id_cliente, 'SUMA', p_puntos, CONCAT('Pedido #', v_id_pedido));
 
+    COMMIT;
+
+    -- Devolvemos el ID del pedido para la web
     SELECT v_id_pedido AS ID_PEDIDO;
-END //
+END$$
 
 DROP PROCEDURE IF EXISTS sp_insertar_detalle_pedido //
 CREATE PROCEDURE sp_insertar_detalle_pedido(

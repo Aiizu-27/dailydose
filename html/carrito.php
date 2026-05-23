@@ -40,6 +40,12 @@ $total_pedido = 0;
         <p>Revisa tu dosis diaria antes de confirmar el pedido.</p>
     </div>
 
+    <?php if (isset($_GET['error']) && $_GET['error'] == 'mesa_no_valida'): ?>
+        <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 20px; font-weight: bold; border: 1px solid #f5c6cb;">
+            El número de mesa introducido no existe en el local. Por favor, compruébalo.
+        </div>
+    <?php endif; ?>
+
     <?php if(empty($carrito)): ?>
         <div class="tarjeta-cristal carrito-vacio">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
