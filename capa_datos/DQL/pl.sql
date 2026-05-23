@@ -79,11 +79,10 @@ BEGIN
     WHERE ID_PRODUCTO = p_id_producto;
 END //
 
-DROP PROCEDURE IF EXISTS sp_procesar_pedido$$
-
+DROP PROCEDURE IF EXISTS sp_procesar_pedido //
 CREATE PROCEDURE sp_procesar_pedido(
     IN p_id_cliente   INT,
-    IN p_numero_mesa  INT, -- <-- Ahora recibe el número que escribe el usuario
+    IN p_numero_mesa  INT, 
     IN p_total        DECIMAL(6,2),
     IN p_puntos       INT
 )
@@ -123,7 +122,7 @@ BEGIN
 
     -- Devolvemos el ID del pedido para la web
     SELECT v_id_pedido AS ID_PEDIDO;
-END$$
+END //
 
 DROP PROCEDURE IF EXISTS sp_insertar_detalle_pedido //
 CREATE PROCEDURE sp_insertar_detalle_pedido(
