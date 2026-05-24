@@ -46,9 +46,6 @@ CREATE TABLE TURNOS (
     CONSTRAINT UQ_EMPLEADO_DIA UNIQUE (ID_EMPLEADO, DIA)
 );
 
--- =========================
--- TABLA NOTIFICACIONES
--- =========================
 CREATE TABLE NOTIFICACIONES (
     ID_NOTIFICACION INT PRIMARY KEY AUTO_INCREMENT,
     ID_USUARIO INT, -- Destinatario de la notificación
