@@ -1,12 +1,14 @@
 /* =====================================================
    ESTILOS ESPECÍFICOS: SALA DE REUNIONES — DAILY DOSE
+   Ecosistema adaptativo unificado (Modo Claro / Oscuro)
    ===================================================== */
 
 .sala-container {
     max-width: 800px;
-    margin: 40px auto;
+    margin: 110px auto 50px auto; /* Margen superior adaptado para no chocar con el header fijo */
     padding: 0 20px;
     min-height: 70vh;
+    box-sizing: border-box;
 }
 
 .cabecera-sala {
@@ -15,6 +17,7 @@
 }
 
 .cabecera-sala h1 {
+    font-family: 'CooperBold', sans-serif; /* Integración de tu fuente corporativa */
     font-size: 2.5rem;
     color: var(--rojo-japones);
     margin-bottom: 10px;
@@ -45,26 +48,52 @@
     animation: pulse 2s infinite;
 }
 
+/* 🟢 CORREGIDO: Tarjeta de descripción adaptada a tus variables de cristal */
 .tarjeta-cristal.sala-descripcion {
+    background: var(--cristal-fondo);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--cristal-borde);
+    box-shadow: 0 4px 16px var(--cristal-sombra);
+    border-radius: 16px;
     text-align: center;
     padding: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.tarjeta-cristal.sala-descripcion:hover {
+    background: var(--cristal-hover);
 }
 
 .tarjeta-cristal.sala-descripcion p {
+    color: var(--texto-principal); /* Cambia automáticamente entre #2B2B2B y #F3F0E9 */
     font-size: 1.2rem;
     line-height: 1.7;
     margin-bottom: 0;
 }
 
+/* 🟢 CORREGIDO: Tarjeta de equipamiento adaptada a tus variables de cristal */
 .tarjeta-cristal.sala-equipamiento {
+    background: var(--cristal-fondo);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--cristal-borde);
+    box-shadow: 0 4px 16px var(--cristal-sombra);
+    border-radius: 16px;
     padding: 30px;
+    transition: background-color 0.3s ease;
+}
+
+.tarjeta-cristal.sala-equipamiento:hover {
+    background: var(--cristal-hover);
 }
 
 .tarjeta-cristal.sala-equipamiento h3 {
+    font-family: 'CooperBold', sans-serif; /* Integración de tu fuente corporativa */
     color: var(--rojo-japones);
     margin-top: 0;
     font-size: 1.4rem;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid var(--cristal-borde); /* Separador dinámico según el modo */
     padding-bottom: 10px;
 }
 
@@ -74,12 +103,13 @@
 }
 
 .features-list li {
+    color: var(--texto-principal); /* Cambia automáticamente para garantizar la lectura */
     margin-bottom: 12px;
     line-height: 1.6;
 }
 
 .features-list strong {
-    color: var(--rojo-oscuro);
+    color: var(--rojo-oscuro); /* Cambia de tono según tus variables de paleta */
 }
 
 /* Zona inferior de acciones */
@@ -91,14 +121,25 @@
 
 .sala-acciones .aviso-disculpas {
     font-size: 0.9rem;
+    color: var(--texto-principal);
     opacity: 0.6;
     margin-bottom: 20px;
 }
 
+/* 🟢 OPTIMIZADO: Botón principal unificado con las tipografías y el tema */
 .sala-acciones .btn-principal {
+    font-family: 'CooperBold', sans-serif;
     display: inline-block;
     padding: 12px 35px;
     text-decoration: none;
+    background-color: var(--rojo-japones);
+    color: white !important;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+
+.sala-acciones .btn-principal:hover {
+    background-color: var(--rojo-oscuro);
 }
 
 /* Animación del misticismo del co-working */
