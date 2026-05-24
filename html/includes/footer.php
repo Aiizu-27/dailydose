@@ -25,7 +25,7 @@
         <div class="footer-digitalizador">
             <span class="texto-digitalizador">Solución por:</span>
             <a href="https://cds-advance.es" target="_blank" class="enlace-logo-cds">
-                <img src="assets/img/logo_CDS.jpg" alt="Logo Empresa Digitalizadora" class="logo-cds">
+                <img src="../assets/img/logo_CDS.jpg" alt="Logo Empresa Digitalizadora" class="logo-cds">
             </a>
         </div>
 
