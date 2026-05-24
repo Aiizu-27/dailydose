@@ -4,7 +4,7 @@
         <h3>DAILY DOSE</h3>
         <p>Tu dosis diaria de café.</p>
         <p>Calle del Café, 12 · Madrid</p>
-        <p><a href="mailto:contacto@dailydose.com">contacto@dailydose.com</a></p>
+        <p><a href="mailto:contacto@daily-dose.es">contacto@daily-dose.es</a></p>
       </div>
 
       <div class="iconos-redes">
