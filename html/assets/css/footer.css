@@ -1,5 +1,5 @@
 /* ============================= */
-/* FOOTER */
+/* FOOTER ORIGINAL INTACTO */
 /* ============================= */
 footer {
   position: relative;
@@ -12,7 +12,7 @@ footer {
   );
   color: var(--texto-principal);
   text-align: center;
-  padding: 3rem 0 2rem 0; /* espacio superior extra */
+  padding: 3rem 0 2rem 0; 
   border-top: 1px solid rgba(255,255,255,0.2);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -41,6 +41,7 @@ footer {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  align-items: center; /* Alineamos verticalmente los bloques al centro */
   gap: 2rem;
 }
 
@@ -103,37 +104,71 @@ footer {
   .footer-cristal .iconos-redes {
     justify-content: center;
   }
+  
+  .footer-digitalizador {
+    align-items: center !important;
+  }
 }
 
 /* Contenedor de los iconos */
 .iconos-redes {
     display: flex;
-    gap: 15px; /* Espacio entre los iconos */
+    gap: 15px; 
     margin-top: 10px;
 }
 
 /* Estilo del enlace que envuelve al SVG */
 .icono-red {
-    /* Color inicial: usa tu variable de texto principal */
     color: var(--texto-principal, #333); 
-    
-    display: inline-flex; /* Para que se alineen perfectamente */
-    transition: transform 0.3s ease, color 0.3s ease; /* Animación suave */
+    display: inline-flex; 
+    transition: transform 0.3s ease, color 0.3s ease; 
 }
 
 /* Tamaño de los SVGs */
 .icono-red svg {
     width: 24px;
     height: 24px;
-    /* ESTO ES CLAVE: Hereda el color del enlace padre */
     fill: currentColor; 
 }
 
-/* Efecto HOVER (al pasar el ratón) */
+/* Efecto HOVER */
 .icono-red:hover {
-    /* Cambia al color de tu marca */
     color: var(--rojo-japones, #d9534f); 
-    
-    /* Un pequeño saltito hacia arriba */
     transform: translateY(-3px); 
+}
+
+/* =====================================================
+   CLASES AÑADIDAS PARA EL LOGO DIGITALIZADOR ELECTRÓNICO
+   ===================================================== */
+.footer-digitalizador {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Lo tira a la derecha en escritorio */
+    gap: 6px;
+}
+
+.texto-digitalizador {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--texto-secundario);
+    opacity: 0.6;
+}
+
+.enlace-logo-cds {
+    display: block;
+    transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Efecto visual al pasar el ratón por encima del logo clickable */
+.enlace-logo-cds:hover {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.1));
+}
+
+.logo-cds {
+    max-width: 160px; /* Tamaño perfecto para integrarse en el lateral */
+    height: auto;
+    display: block;
+    border-radius: 6px;
 }
