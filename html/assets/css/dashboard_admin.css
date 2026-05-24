@@ -1,8 +1,7 @@
 /* =========================================================
    DAILY DOSE — CENTRAL DE CONTROL ADMINISTRATIVO (CENTRADO TOTAL)
-   Estilo unificado y alineación simétrica absoluta
    ========================================================= */
-
+ 
 .admin-body {
     background-color: var(--fondo);
     color: var(--texto-principal);
@@ -10,45 +9,45 @@
     min-height: 100vh;
     padding-top: 0;
 }
-
-/* 🟢 CORREGIDO: El contenedor ahora es un eje de alineación central */
+ 
 .admin-container {
-    max-width: 1000px; /* Reducido para que las barras no se estiren en exceso */
+    max-width: 1000px;
     margin: 110px auto 50px auto;
     padding: 0 1.5rem;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Alinea todos los hijos directos al centro */
+    align-items: center;
     width: 100%;
 }
-
+ 
 .admin-container h2 {
     font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
     font-size: 2rem;
     margin-bottom: 5px;
     text-align: center;
+    width: 100%;
 }
-
+ 
 .admin-subtitle {
     font-size: 0.9rem;
     opacity: 0.6;
     margin-bottom: 2rem;
     font-weight: normal;
     text-align: center;
+    width: 100%;
 }
-
-/* 🟢 CORREGIDO: Cuadrícula de estadísticas centrada */
+ 
+/* ── Stats grid ── */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1.25rem;
     margin-bottom: 2rem;
     width: 100%;
-    justify-content: center;
 }
-
+ 
 .stat-card {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -64,25 +63,25 @@
     align-items: center;
     justify-content: center;
 }
-
+ 
 .stat-card:hover {
     background: var(--cristal-hover);
     transform: translateY(-3px);
 }
-
+ 
 .stat-card h3 {
     font-size: 2rem;
     margin-bottom: 4px;
 }
-
+ 
 .stat-card p {
     font-size: 0.8rem;
     opacity: 0.6;
     margin: 0;
     text-transform: uppercase;
 }
-
-/* 🟢 CORREGIDO: Barras de detalles con tamaño equilibrado y centradas */
+ 
+/* ── Details / barras ── */
 details {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -92,11 +91,11 @@ details {
     margin-bottom: 1.25rem;
     box-shadow: 0 4px 16px var(--cristal-sombra);
     overflow: hidden;
-    width: 100%; /* Ocupa el ancho máximo del contenedor controlado */
+    width: 100%;
 }
-
+ 
 details[open] { background: var(--cristal-hover); }
-
+ 
 summary {
     padding: 1.25rem 1.5rem;
     font-size: 1.1rem;
@@ -104,13 +103,28 @@ summary {
     user-select: none;
     outline: none;
     color: var(--texto-principal);
+    list-style: none;           /* elimina la flecha nativa */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
     text-align: center;
-    list-style-position: inside; /* La flechita acompaña al texto en el centro */
 }
-
+ 
+/* flecha manual centrada junto al texto */
+summary::after {
+    content: '▾';
+    font-size: 0.85rem;
+    transition: transform 0.25s ease;
+}
+ 
+details[open] summary::after {
+    transform: rotate(-180deg);
+}
+ 
 summary:hover { color: var(--rojo-japones); }
-
-/* 🟢 CORREGIDO: El contenido interno ahora distribuye todo al centro */
+ 
+/* ── Contenido interno ── */
 .details-content {
     padding: 1.5rem;
     border-top: 1px solid var(--cristal-borde);
@@ -121,24 +135,24 @@ summary:hover { color: var(--rojo-japones); }
     justify-content: center;
     gap: 1.5rem;
 }
-
-/* 🟢 CORREGIDO: Envoltura de tabla centrada */
-.table-wrapper { 
-    overflow-x: auto; 
-    border-radius: 8px; 
+ 
+/* ── Tabla ── */
+.table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
     width: 100%;
     display: flex;
     justify-content: center;
 }
-
-table { 
-    width: 100%; 
+ 
+table {
+    width: 100%;
     max-width: 900px;
-    border-collapse: collapse; 
-    text-align: center; 
+    border-collapse: collapse;
+    text-align: center;
     margin: 0 auto;
 }
-
+ 
 th {
     font-size: 0.85rem;
     color: var(--rojo-japones);
@@ -147,7 +161,7 @@ th {
     text-transform: uppercase;
     text-align: center;
 }
-
+ 
 td {
     padding: 12px 14px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.05);
@@ -158,10 +172,10 @@ td {
     vertical-align: middle;
     text-align: center;
 }
-
+ 
 tr:hover { background: rgba(255, 255, 255, 0.12); }
-
-/* 🟢 CORREGIDO: Formulario centrado con elementos en línea equilibrados */
+ 
+/* ── Formulario ── */
 .form-grid {
     display: flex;
     flex-wrap: wrap;
@@ -171,7 +185,7 @@ tr:hover { background: rgba(255, 255, 255, 0.12); }
     width: 100%;
     max-width: 800px;
 }
-
+ 
 input, select {
     width: auto;
     min-width: 200px;
@@ -185,13 +199,13 @@ input, select {
     box-sizing: border-box;
     text-align: center;
 }
-
+ 
 input:focus, select:focus {
     outline: none;
     border-color: var(--rojo-japones);
     background: rgba(255, 255, 255, 0.35);
 }
-
+ 
 button {
     font-family: 'CooperBold', sans-serif;
     cursor: pointer;
@@ -202,28 +216,31 @@ button {
     border-radius: 8px;
     transition: background-color 0.3s ease;
 }
-
+ 
 button:hover { background-color: var(--rojo-oscuro); }
-
+ 
 .btn-danger {
     background-color: transparent !important;
     border: 1px solid #dc3545 !important;
     color: #dc3545 !important;
 }
-
+ 
 .btn-danger:hover {
     background-color: #dc3545 !important;
     color: white !important;
 }
-
-.logout-container { 
-    text-align: center; 
-    margin-top: 3rem; 
+ 
+/* ── Logout ── */
+.logout-container {
+    text-align: center;
+    margin-top: 3rem;
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
-
-.logout-btn { 
-    color: var(--rojo-japones); 
-    font-family: 'CooperBold', sans-serif; 
+ 
+.logout-btn {
+    color: var(--rojo-japones);
+    font-family: 'CooperBold', sans-serif;
     display: inline-block;
-}
+}  
