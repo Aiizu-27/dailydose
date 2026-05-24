@@ -1,0 +1,110 @@
+/* =====================================================
+   ESTILOS ESPECÍFICOS: SALA DE REUNIONES — DAILY DOSE
+   ===================================================== */
+
+.sala-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    min-height: 70vh;
+}
+
+.cabecera-sala {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.cabecera-sala h1 {
+    font-size: 2.5rem;
+    color: var(--color-primario, #4a148c);
+    margin-bottom: 10px;
+}
+
+.badge-proximamente {
+    display: inline-block;
+    background: rgba(255, 193, 7, 0.15);
+    color: #ffc107;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    border: 1px solid rgba(255, 193, 7, 0.3);
+    margin-top: 10px;
+}
+
+.sala-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.icon-central {
+    font-size: 4rem;
+    text-align: center;
+    margin-bottom: 10px;
+    animation: pulse 2s infinite;
+}
+
+/* Bloques de contenido basados en tu tarjeta-cristal */
+.tarjeta-cristal.sala-descripcion {
+    text-align: center;
+    padding: 30px;
+}
+
+.tarjeta-cristal.sala-descripcion p {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.tarjeta-cristal.sala-equipamiento {
+    padding: 30px;
+}
+
+.tarjeta-cristal.sala-equipamiento h3 {
+    color: var(--color-primario, #4a148c);
+    margin-top: 0;
+    font-size: 1.4rem;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+}
+
+.features-list {
+    margin: 20px 0;
+    padding-left: 20px;
+}
+
+.features-list li {
+    margin-bottom: 12px;
+    line-height: 1.6;
+}
+
+.features-list strong {
+    color: var(--color-secundario, #8e24aa);
+}
+
+/* Zona inferior de acciones */
+.sala-acciones {
+    text-align: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.sala-acciones .aviso-disculpas {
+    font-size: 0.9rem;
+    opacity: 0.6;
+    margin-bottom: 20px;
+}
+
+.sala-acciones .btn-principal {
+    display: inline-block;
+    padding: 12px 35px;
+    text-decoration: none;
+}
+
+/* Animación del misticismo del co-working */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
