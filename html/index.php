@@ -41,7 +41,7 @@
 
         <div class="div1-botones">
           <a href="carta.php" class="btn-principal">Pedir ahora</a>
-          <a href="reservas.php" class="btn-secundario">Reservar sala</a>
+          <a href="sala_reuniones.php" class="btn-secundario">Reservar sala</a>
         </div>
       </div>
       <div class="div2">
