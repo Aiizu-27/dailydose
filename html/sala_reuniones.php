@@ -26,7 +26,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 <main class="sala-container">
     
     <div class="cabecera-sala">
-        <div class="icon-central">🔮</div>
+        <div class="icon-central"></div>
         <h1>Espacio Co-Working & Reuniones</h1>
         <span class="badge-proximamente">Módulo en Desarrollo</span>
     </div>
@@ -40,7 +40,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
         </div>
 
         <div class="tarjeta-cristal sala-equipamiento">
-            <h3>⚙️ Equipamiento de la Sala (Mesa 7)</h3>
+            <h3>Equipamiento de la Sala (Mesa 7)</h3>
             <ul class="features-list">
                 <li><strong>Capacidad máxima:</strong> Mesa presidencial para un aforo de hasta 8 personas.</li>
                 <li><strong>Sistemas Audiovisuales:</strong> Pantalla Smart TV de 55" con cámara integrada dedicada a videoconferencias ultra-HD.</li>

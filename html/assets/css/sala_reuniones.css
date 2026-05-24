@@ -16,7 +16,7 @@
 
 .cabecera-sala h1 {
     font-size: 2.5rem;
-    color: var(--color-primario, #4a148c);
+    color: var(--rojo-japones);
     margin-bottom: 10px;
 }
 
@@ -45,7 +45,6 @@
     animation: pulse 2s infinite;
 }
 
-/* Bloques de contenido basados en tu tarjeta-cristal */
 .tarjeta-cristal.sala-descripcion {
     text-align: center;
     padding: 30px;
@@ -62,7 +61,7 @@
 }
 
 .tarjeta-cristal.sala-equipamiento h3 {
-    color: var(--color-primario, #4a148c);
+    color: var(--rojo-japones);
     margin-top: 0;
     font-size: 1.4rem;
     border-bottom: 2px solid rgba(255, 255, 255, 0.1);
@@ -80,7 +79,7 @@
 }
 
 .features-list strong {
-    color: var(--color-secundario, #8e24aa);
+    color: var(--rojo-oscuro);
 }
 
 /* Zona inferior de acciones */
