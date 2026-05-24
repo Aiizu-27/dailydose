@@ -1,6 +1,6 @@
 /* =========================================================
-   DAILY DOSE — CENTRAL DE CONTROL ADMINISTRATIVO (CENTRADO)
-   Estilo unificado con el ecosistema de trabajadores
+   DAILY DOSE — CENTRAL DE CONTROL ADMINISTRATIVO (CENTRADO TOTAL)
+   Estilo unificado y alineación simétrica absoluta
    ========================================================= */
 
 .admin-body {
@@ -11,13 +11,17 @@
     padding-top: 0;
 }
 
+/* 🟢 CORREGIDO: El contenedor ahora es un eje de alineación central */
 .admin-container {
-    max-width: 1200px;
+    max-width: 1000px; /* Reducido para que las barras no se estiren en exceso */
     margin: 110px auto 50px auto;
     padding: 0 1.5rem;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Alinea todos los hijos directos al centro */
+    width: 100%;
 }
-
 
 .admin-container h2 {
     font-family: 'CooperBold', sans-serif;
@@ -35,11 +39,14 @@
     text-align: center;
 }
 
+/* 🟢 CORREGIDO: Cuadrícula de estadísticas centrada */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 1.25rem;
     margin-bottom: 2rem;
+    width: 100%;
+    justify-content: center;
 }
 
 .stat-card {
@@ -52,6 +59,10 @@
     box-shadow: 0 4px 16px var(--cristal-sombra);
     transition: transform 0.3s ease, background-color 0.3s ease;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .stat-card:hover {
@@ -71,6 +82,7 @@
     text-transform: uppercase;
 }
 
+/* 🟢 CORREGIDO: Barras de detalles con tamaño equilibrado y centradas */
 details {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -80,6 +92,7 @@ details {
     margin-bottom: 1.25rem;
     box-shadow: 0 4px 16px var(--cristal-sombra);
     overflow: hidden;
+    width: 100%; /* Ocupa el ancho máximo del contenedor controlado */
 }
 
 details[open] { background: var(--cristal-hover); }
@@ -92,23 +105,38 @@ summary {
     outline: none;
     color: var(--texto-principal);
     text-align: center;
-    list-style-position: inside;
+    list-style-position: inside; /* La flechita acompaña al texto en el centro */
 }
 
 summary:hover { color: var(--rojo-japones); }
 
+/* 🟢 CORREGIDO: El contenido interno ahora distribuye todo al centro */
 .details-content {
     padding: 1.5rem;
     border-top: 1px solid var(--cristal-borde);
     background: rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
 }
 
-.table-wrapper { overflow-x: auto; border-radius: 8px; }
+/* 🟢 CORREGIDO: Envoltura de tabla centrada */
+.table-wrapper { 
+    overflow-x: auto; 
+    border-radius: 8px; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
 
 table { 
     width: 100%; 
+    max-width: 900px;
     border-collapse: collapse; 
     text-align: center; 
+    margin: 0 auto;
 }
 
 th {
@@ -133,16 +161,20 @@ td {
 
 tr:hover { background: rgba(255, 255, 255, 0.12); }
 
+/* 🟢 CORREGIDO: Formulario centrado con elementos en línea equilibrados */
 .form-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
     gap: 12px;
     justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: 800px;
 }
 
 input, select {
-    width: 100%;
+    width: auto;
+    min-width: 200px;
     padding: 10px 14px;
     background: rgba(255, 255, 255, 0.2);
     border: 1px solid var(--cristal-borde);
@@ -163,7 +195,7 @@ input:focus, select:focus {
 button {
     font-family: 'CooperBold', sans-serif;
     cursor: pointer;
-    padding: 10px 20px;
+    padding: 10px 24px;
     background-color: var(--rojo-japones);
     color: white !important;
     border: none;
@@ -184,5 +216,14 @@ button:hover { background-color: var(--rojo-oscuro); }
     color: white !important;
 }
 
-.logout-container { text-align: center; margin-top: 3rem; }
-.logout-btn { color: var(--rojo-japones); font-family: 'CooperBold', sans-serif; }
+.logout-container { 
+    text-align: center; 
+    margin-top: 3rem; 
+    width: 100%;
+}
+
+.logout-btn { 
+    color: var(--rojo-japones); 
+    font-family: 'CooperBold', sans-serif; 
+    display: inline-block;
+}
