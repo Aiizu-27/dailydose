@@ -1,8 +1,3 @@
--- =====================================================================
--- INSERCIÓN DE USUARIOS DE PRUEBA GENÉRICOS (PASSWORD: 123456)
--- =====================================================================
-
--- 1. CONFIGURACIÓN: ADMINISTRADOR
 INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL, CAMBIAR_PASSWORD)
 VALUES (
     'Admin', 
@@ -14,7 +9,6 @@ VALUES (
 );
 
 
--- 2. CONFIGURACIÓN: EMPLEADO (BARISTA)
 INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL, CAMBIAR_PASSWORD)
 VALUES (
     'Empleado', 
@@ -29,7 +23,6 @@ INSERT INTO EMPLEADOS (ID_USUARIO, PUESTO)
 VALUES (LAST_INSERT_ID(), 'BARISTA');
 
 
--- 3. CONFIGURACIÓN: CLIENTE CLUB
 INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL, CAMBIAR_PASSWORD)
 VALUES (
     'Cliente', 
@@ -42,7 +35,3 @@ VALUES (
 
 INSERT INTO CLIENTES (ID_USUARIO, TELEFONO, PUNTOS)
 VALUES (LAST_INSERT_ID(), '600123456', 150);
-
--- =====================================================================
--- FIN DEL SCRIPT
--- =====================================================================

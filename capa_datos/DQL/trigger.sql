@@ -50,15 +50,12 @@ FOR EACH ROW
 BEGIN
     DECLARE v_id_usuario_cliente INT;
 
-    -- 1. Verificamos si el pedido tiene un cliente asociado (para evitar nulos)
     IF NEW.ID_CLIENTE IS NOT NULL THEN
-        
-        -- 2. Buscamos el ID_USUARIO correspondiente a ese ID_CLIENTE
+
         SELECT ID_USUARIO INTO v_id_usuario_cliente 
         FROM CLIENTES 
         WHERE ID_CLIENTE = NEW.ID_CLIENTE;
 
-        -- 3. Insertamos la notificación en el tablón del cliente
         INSERT INTO NOTIFICACIONES (ID_USUARIO, MENSAJE, TIPO, LEIDO, FECHA_CREACION)
         VALUES (
             v_id_usuario_cliente, 
@@ -81,17 +78,14 @@ AFTER UPDATE ON PRODUCTOS
 FOR EACH ROW
 BEGIN
     DECLARE v_id_admin INT;
-    
-    -- 1. Verificamos si el stock ha bajado del umbral crítico (ej. 5 unidades)
+
     IF NEW.STOCK <= 5 AND OLD.STOCK > 5 THEN
         
-        -- 2. Buscamos el ID_USUARIO del primer empleado que sea Administrador
         SELECT ID_USUARIO INTO v_id_admin 
         FROM EMPLEADOS 
         WHERE PUESTO = 'ADMIN' 
         LIMIT 1;
         
-        -- 3. Si encontramos al admin, le insertamos la notificación de alerta
         IF v_id_admin IS NOT NULL THEN
             INSERT INTO NOTIFICACIONES (ID_USUARIO, MENSAJE, TIPO, LEIDO, FECHA_CREACION)
             VALUES (
@@ -118,13 +112,10 @@ BEGIN
     DECLARE v_id_usuario_cliente INT;
     DECLARE v_nombre_premio VARCHAR(100);
     
-    -- 1. Buscamos el ID_USUARIO del cliente que hace el canje
     SELECT ID_USUARIO INTO v_id_usuario_cliente FROM CLIENTES WHERE ID_CLIENTE = NEW.ID_CLIENTE;
     
-    -- 2. Buscamos el nombre del regalo que ha pedido
     SELECT NOMBRE INTO v_nombre_premio FROM RECOMPENSAS WHERE ID_RECOMPENSA = NEW.ID_RECOMPENSA;
     
-    -- 3. Le enviamos la notificación de confirmación
     IF v_id_usuario_cliente IS NOT NULL THEN
         INSERT INTO NOTIFICACIONES (ID_USUARIO, MENSAJE, TIPO, LEIDO, FECHA_CREACION)
         VALUES (
@@ -148,7 +139,7 @@ CREATE TRIGGER tg_notificar_pedido_a_empleados
 AFTER INSERT ON PEDIDOS
 FOR EACH ROW
 BEGIN
-    -- Insertamos en cascada la alerta para TODOS los ID_USUARIO que sean empleados
+
     INSERT INTO NOTIFICACIONES (ID_USUARIO, MENSAJE, TIPO, LEIDO, FECHA_CREACION)
     SELECT 
         e.ID_USUARIO, 

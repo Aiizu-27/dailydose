@@ -1,8 +1,3 @@
--- ======================================================
--- PROYECTO: DailyDose - Gestión de Cafetería y Fidelización
--- SISTEMA GESTOR: MySQL
--- ======================================================
-
 -- 1. GESTIÓN DE ACCESO Y ROLES
 -- ------------------------------------------------------
 CREATE TABLE USUARIOS (
@@ -10,7 +5,7 @@ CREATE TABLE USUARIOS (
     NOMBRE VARCHAR(50) NOT NULL,
     APELLIDOS VARCHAR(50),
     EMAIL VARCHAR(255) UNIQUE NOT NULL,
-    CONTRASENA VARCHAR(255) NOT NULL, -- Almacena el hash
+    CONTRASENA VARCHAR(255) NOT NULL,
     ROL ENUM('CLIENTE', 'EMPLEADO', 'ADMIN') NOT NULL,
     CAMBIAR_PASSWORD TINYINT(1) DEFAULT 0,
     FECHA_REGISTRO DATETIME DEFAULT CURRENT_TIMESTAMP
@@ -48,7 +43,7 @@ CREATE TABLE TURNOS (
 
 CREATE TABLE NOTIFICACIONES (
     ID_NOTIFICACION INT PRIMARY KEY AUTO_INCREMENT,
-    ID_USUARIO INT, -- Destinatario de la notificación
+    ID_USUARIO INT,
     TITULO VARCHAR(100) NOT NULL,
     MENSAJE TEXT NOT NULL,
     TIPO ENUM('PEDIDO', 'SISTEMA', 'PROMOCION', 'STOCK') DEFAULT 'SISTEMA',
@@ -111,9 +106,6 @@ CREATE TABLE INVENTARIO (
 
 -- 3. GESTIÓN OPERATIVA Y VENTAS
 -- ------------------------------------------------------
--- =========================
--- TABLA MESAS
--- =========================
 CREATE TABLE MESAS (
     ID_MESA INT PRIMARY KEY AUTO_INCREMENT,
     NUMERO_MESA INT UNIQUE NOT NULL,

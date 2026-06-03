@@ -5,5 +5,5 @@ DO
     JOIN PEDIDOS p ON m.ID_MESA = p.ID_MESA
     SET m.ESTADO = 'LIBRE'
     WHERE m.ESTADO = 'OCUPADA' 
-      AND p.ESTADO = 'ENTREGADO' -- Usamos el estado real de tu tabla PEDIDOS
+      AND p.ESTADO = 'ENTREGADO'
       AND TIMESTAMPDIFF(MINUTE, p.FECHA, NOW()) >= 60;

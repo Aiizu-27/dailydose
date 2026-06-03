@@ -1,10 +1,4 @@
--- =====================================================================
--- ECOSTRUKTURA GLOBAL DE PROCEDIMIENTOS ALMACENADOS (PL) — DAILY DOSE
--- =====================================================================
-
 DELIMITER //
-
-/* --- 1. SEGURIDAD Y ACCESOS (AUTH) --- */
 
 DROP PROCEDURE IF EXISTS sp_obtener_usuario_login //
 CREATE PROCEDURE sp_obtener_usuario_login(IN p_correo VARCHAR(255))
@@ -40,8 +34,6 @@ BEGIN
 END //
 
 
-/* --- 2. REGISTRO DE NUEVOS CLIENTES --- */
-
 DROP PROCEDURE IF EXISTS sp_registrar_cliente //
 CREATE PROCEDURE sp_registrar_cliente(
     IN p_nombre    VARCHAR(50),
@@ -69,8 +61,6 @@ BEGIN
 END //
 
 
-/* --- 3. PROCESAMIENTO DE CARRITO Y COMANDAS --- */
-
 DROP PROCEDURE IF EXISTS sp_obtener_producto_carrito //
 CREATE PROCEDURE sp_obtener_producto_carrito(IN p_id_producto INT)
 BEGIN
@@ -82,7 +72,7 @@ END //
 DROP PROCEDURE IF EXISTS sp_procesar_pedido //
 CREATE PROCEDURE sp_procesar_pedido(
     IN p_id_cliente   INT,
-    IN p_numero_mesa  INT, -- Recibe el número de mesa (ej: 1, 2, 3...)
+    IN p_numero_mesa  INT,
     IN p_total        DECIMAL(6,2),
     IN p_puntos       INT
 )
@@ -90,20 +80,17 @@ BEGIN
     DECLARE v_id_mesa INT DEFAULT NULL;
     DECLARE v_id_pedido INT;
 
-    -- 1. Buscamos el ID_MESA interno usando el número que envió el usuario
     IF p_numero_mesa IS NOT NULL AND p_numero_mesa > 0 THEN
         SELECT ID_MESA INTO v_id_mesa 
         FROM MESAS 
         WHERE NUMERO_MESA = p_numero_mesa;
 
-        -- 2. SI NO EXISTE: Lanza un error para frenar la ejecución
         IF v_id_mesa IS NULL THEN
             SIGNAL SQLSTATE '45000' 
             SET MESSAGE_TEXT = 'Error: Mesa no valida';
         END IF;
     END IF;
 
-    -- 3. Iniciamos la transacción segura
     START TRANSACTION;
 
     INSERT INTO PEDIDOS (FECHA, TOTAL, ID_CLIENTE, ID_MESA, ESTADO)
@@ -111,25 +98,22 @@ BEGIN
 
     SET v_id_pedido = LAST_INSERT_ID();
 
-    -- 💥 ¡EL ESLABÓN PERDIDO!: Si el pedido tiene mesa, la marcamos como OCUPADA
     IF v_id_mesa IS NOT NULL THEN
         UPDATE MESAS SET ESTADO = 'OCUPADA' WHERE ID_MESA = v_id_mesa;
     END IF;
 
-    -- Sumar puntos al monedero del cliente
     UPDATE CLIENTES 
     SET PUNTOS = PUNTOS + p_puntos 
     WHERE ID_CLIENTE = p_id_cliente;
 
-    -- Registrar el movimiento en el historial
     INSERT INTO HISTORIAL_PUNTOS (ID_CLIENTE, TIPO_MOVIMIENTO, CANTIDAD, MOTIVO)
     VALUES (p_id_cliente, 'SUMA', p_puntos, CONCAT('Pedido #', v_id_pedido));
 
     COMMIT;
 
-    -- Devolvemos el ID del pedido para el flujo de la web
     SELECT v_id_pedido AS ID_PEDIDO;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_insertar_detalle_pedido //
 CREATE PROCEDURE sp_insertar_detalle_pedido(
@@ -147,6 +131,7 @@ BEGIN
     SET STOCK = STOCK - p_id_cantidad 
     WHERE ID_PRODUCTO = p_id_producto;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_cambiar_estado_pedido //
 CREATE PROCEDURE sp_cambiar_estado_pedido(
@@ -169,8 +154,6 @@ BEGIN
 END //
 
 
-/* --- 4. PANEL OPERATIVO (BARISTAS / TURNOS / MESAS) --- */
-
 DROP PROCEDURE IF EXISTS sp_obtener_empleados //
 CREATE PROCEDURE sp_obtener_empleados()
 BEGIN
@@ -179,6 +162,7 @@ BEGIN
     JOIN USUARIOS u ON e.ID_USUARIO = u.ID_USUARIO
     ORDER BY u.NOMBRE ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_obtener_pedidos_activos //
 CREATE PROCEDURE sp_obtener_pedidos_activos()
@@ -196,6 +180,7 @@ BEGIN
     ORDER BY p.FECHA ASC;
 END //
 
+
 DROP PROCEDURE IF EXISTS sp_obtener_detalle_pedido //
 CREATE PROCEDURE sp_obtener_detalle_pedido(IN p_id_pedido INT)
 BEGIN
@@ -204,6 +189,7 @@ BEGIN
     JOIN PRODUCTOS pr ON dp.ID_PRODUCTO = pr.ID_PRODUCTO
     WHERE dp.ID_PEDIDO = p_id_pedido;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_obtener_turnos_semanas //
 CREATE PROCEDURE sp_obtener_turnos_semanas(IN p_fecha_inicio DATE)
@@ -215,6 +201,7 @@ BEGIN
     WHERE t.DIA BETWEEN p_fecha_inicio AND DATE_ADD(p_fecha_inicio, INTERVAL 27 DAY)
     ORDER BY t.DIA ASC, u.NOMBRE ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_asignar_turno //
 CREATE PROCEDURE sp_asignar_turno(
@@ -230,12 +217,14 @@ BEGIN
     SELECT ROW_COUNT() AS filas_afectadas;
 END //
 
+
 DROP PROCEDURE IF EXISTS sp_eliminar_turno //
 CREATE PROCEDURE sp_eliminar_turno(IN p_id_turno INT)
 BEGIN
     DELETE FROM TURNOS WHERE ID_TURNO = p_id_turno;
     SELECT ROW_COUNT() AS filas_afectadas;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_obtener_mesas //
 CREATE PROCEDURE sp_obtener_mesas()
@@ -245,6 +234,7 @@ BEGIN
     ORDER BY NUMERO_MESA ASC;
 END //
 
+
 DROP PROCEDURE IF EXISTS sp_contar_pedidos_hoy //
 CREATE PROCEDURE sp_contar_pedidos_hoy()
 BEGIN
@@ -253,8 +243,6 @@ BEGIN
     WHERE DATE(FECHA) = CURDATE() AND ESTADO = 'ENTREGADO';
 END //
 
-
-/* --- 5. PANEL DE CONTROL ADMINISTRATIVO (ADMINISTRADOR) --- */
 
 DROP PROCEDURE IF EXISTS sp_admin_obtener_estadisticas_hoy //
 CREATE PROCEDURE sp_admin_obtener_estadisticas_hoy()
@@ -267,6 +255,7 @@ BEGIN
     WHERE DATE(FECHA) = CURDATE() AND ESTADO != 'CANCELADO';
 END //
 
+
 DROP PROCEDURE IF EXISTS sp_admin_obtener_usuarios //
 CREATE PROCEDURE sp_admin_obtener_usuarios()
 BEGIN
@@ -274,6 +263,7 @@ BEGIN
     FROM USUARIOS 
     ORDER BY ID_USUARIO ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_admin_obtener_pedidos_hoy //
 CREATE PROCEDURE sp_admin_obtener_pedidos_hoy()
@@ -289,6 +279,7 @@ BEGIN
     ORDER BY p.ID_PEDIDO DESC;
 END //
 
+
 DROP PROCEDURE IF EXISTS sp_admin_obtener_stock_bajo //
 CREATE PROCEDURE sp_admin_obtener_stock_bajo()
 BEGIN
@@ -298,6 +289,7 @@ BEGIN
     WHERE p.STOCK <= 10
     ORDER BY p.STOCK ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_admin_obtener_todos_productos //
 CREATE PROCEDURE sp_admin_obtener_todos_productos()
@@ -309,13 +301,12 @@ BEGIN
 END //
 
 
-/* --- 6. CARTA DIGITAL Y ESPECIALIDAD --- */
-
 DROP PROCEDURE IF EXISTS sp_carta_obtener_categories //
 CREATE PROCEDURE sp_carta_obtener_categories()
 BEGIN
     SELECT NOMBRE_CATEGORIA AS CATEGORIA FROM CATEGORIAS ORDER BY NOMBRE_CATEGORIA ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_carta_obtener_productos //
 CREATE PROCEDURE sp_carta_obtener_productos()
@@ -325,6 +316,7 @@ BEGIN
     JOIN CATEGORIAS c ON p.ID_CATEGORIA = c.ID_CATEGORIA
     ORDER BY c.NOMBRE_CATEGORIA ASC, p.NOMBRE ASC;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_carta_obtener_especialidad //
 CREATE PROCEDURE sp_carta_obtener_especialidad(IN p_fecha DATE)
@@ -337,13 +329,12 @@ BEGIN
 END //
 
 
-/* --- 7. MONEDERO DE CLUB DE COMPRAS Y PROMOCIONES --- */
-
 DROP PROCEDURE IF EXISTS sp_promos_obtener_puntos_cliente //
 CREATE PROCEDURE sp_promos_obtener_puntos_cliente(IN p_id_usuario INT)
 BEGIN
     SELECT PUNTOS FROM CLIENTES WHERE ID_USUARIO = p_id_usuario;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_promos_obtener_recompensas //
 CREATE PROCEDURE sp_promos_obtener_recompensas()
@@ -355,8 +346,6 @@ BEGIN
 END //
 
 
-/* --- 8. HISTORIALES Y VISTAS PRIVADAS DEL CLIENTE --- */
-
 DROP PROCEDURE IF EXISTS sp_cliente_obtener_perfil //
 CREATE PROCEDURE sp_cliente_obtener_perfil(IN p_id_usuario INT)
 BEGIN
@@ -365,6 +354,7 @@ BEGIN
     LEFT JOIN CLIENTES c ON u.ID_USUARIO = c.ID_USUARIO
     WHERE u.ID_USUARIO = p_id_usuario;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_cliente_obtener_ultimos_pedidos //
 CREATE PROCEDURE sp_cliente_obtener_ultimos_pedidos(IN p_id_cliente INT)
@@ -375,6 +365,7 @@ BEGIN
     ORDER BY FECHA DESC 
     LIMIT 5;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_cliente_obtener_favoritos //
 CREATE PROCEDURE sp_cliente_obtener_favoritos(IN p_id_cliente INT)
@@ -388,6 +379,7 @@ BEGIN
     ORDER BY VECES_PEDIDO DESC
     LIMIT 3;
 END //
+
 
 DROP PROCEDURE IF EXISTS sp_obtener_pedidos_cliente //
 CREATE PROCEDURE sp_obtener_pedidos_cliente(IN p_id_usuario INT)
