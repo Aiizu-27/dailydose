@@ -11,7 +11,6 @@ $id_usuario    = $_SESSION['ID_USUARIO'];
 $numero_mesa   = !empty($_POST['numero_mesa']) ? intval($_POST['numero_mesa']) : null;
 $total_pedido  = 0;
 
-// ===== OBTENER ID_CLIENTE =====
 $stmt = $conn->prepare("SELECT ID_CLIENTE FROM CLIENTES WHERE ID_USUARIO = ?");
 if (!$stmt) {
     error_log("Error prepare get_cliente: " . $conn->error);
@@ -29,7 +28,6 @@ if (!$cliente) {
 }
 $id_cliente = $cliente['ID_CLIENTE'];
 
-// ===== CALCULAR TOTAL Y PUNTOS =====
 foreach ($_SESSION['carrito'] as $item) {
     $total_pedido += ($item['precio'] * $item['cantidad']);
 }
@@ -37,9 +35,7 @@ $total_pedido  = round($total_pedido, 2);
 $puntos_ganados = floor($total_pedido);
 
 
-// ===== EJECUTAR LÓGICA EN BASE DE DATOS =====
 try {
-    // Llamamos directamente al SP pasando el número comercial de la mesa
     $stmt = $conn->prepare("CALL sp_procesar_pedido(?, ?, ?, ?)");
     if (!$stmt) throw new Exception("Error prepare sp_procesar_pedido: " . $conn->error);
 
@@ -53,7 +49,6 @@ try {
     while ($stmt->more_results()) $stmt->next_result();
     $stmt->close();
 
-    // Insertar detalle línea a línea
     $stmt_det = $conn->prepare("CALL sp_insertar_detalle_pedido(?, ?, ?, ?, ?)");
     if (!$stmt_det) throw new Exception("Error prepare sp_detalle: " . $conn->error);
 
@@ -72,7 +67,6 @@ try {
 } catch (Exception $e) {
     error_log("Error procesar_carrito: " . $e->getMessage());
 
-    // Si el catch intercepta el SIGNAL 'Mesa no valida' enviado por MySQL
     if (str_contains($e->getMessage(), 'Mesa no valida')) {
         header("Location: ../carrito.php?error=mesa_no_valida");
     } else {

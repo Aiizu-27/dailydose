@@ -1,6 +1,3 @@
-/* ============================= */
-/* VARIABLES GLOBALES DE COLORES */
-/* ============================= */
 :root {
     --texto-principal: #2B2B2B;
     --fondo: #F3F0E9;
@@ -9,7 +6,6 @@
     --verde-pastel: #C7E3D4;
     --verde-pastel-oscuro: #3C6649;
 
-    /* Efecto cristal (modo claro) */
     --cristal-fondo: rgba(255, 255, 255, 0.35);
     --cristal-borde: rgba(255, 255, 255, 0.45);
     --cristal-sombra: rgba(0, 0, 0, 0.2);
@@ -21,9 +17,6 @@
     );
 }
 
-/* ============================= */
-/* MODO OSCURO */
-/* ============================= */
 body.dark-mode {
     --fondo: #2B1E1B;
     --texto-principal: #F3F0E9;
@@ -32,7 +25,6 @@ body.dark-mode {
     --rojo-oscuro: #80231C;
     --verde-pastel: #3C6649;
 
-    /* Efecto cristal (modo oscuro) */
     --cristal-fondo: rgba(43, 30, 27, 0.45);
     --cristal-borde: rgba(255, 255, 255, 0.1);
     --cristal-sombra: rgba(0, 0, 0, 0.6);
@@ -44,9 +36,6 @@ body.dark-mode {
     );
 }
 
-/* ============================= */
-/* FUENTES PERSONALIZADAS */
-/* ============================= */
 @font-face {
     font-family: 'CooperBold';
     src: url('../fonts/CooperBold.ttf') format('truetype');

@@ -11,13 +11,12 @@ $telefono  = trim($_POST['telefono'] ?? '');
 
 if (!empty($nombre) && !empty($correo) && !empty($pass)) {
     
-    // LLAMADA AL PL: Verificamos si el correo ya está duplicado de forma segura
     $stmt_check = $conn->prepare("CALL sp_auth_verificar_email(?)");
     $stmt_check->bind_param("s", $correo);
     $stmt_check->execute();
     $existe = $stmt_check->get_result()->fetch_assoc();
     
-    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
+    while ($conn->more_results()) $conn->next_result();
     $stmt_check->close();
 
     if ($existe) {
@@ -25,7 +24,6 @@ if (!empty($nombre) && !empty($correo) && !empty($pass)) {
         exit();
     }
 
-    // Procedes a registrar al usuario (aquí mantienes tu CALL sp_registrar_usuario existente)
     $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL) VALUES (?, ?, ?, ?, 'CLIENTE')");
     $stmt->bind_param("ssss", $nombre, $apellidos, $correo, $pass_hash);
@@ -34,7 +32,6 @@ if (!empty($nombre) && !empty($correo) && !empty($pass)) {
         $id_usuario = $conn->insert_id;
         $stmt->close();
         
-        // Crear el registro en la tabla clientes
         $stmt_c = $conn->prepare("INSERT INTO CLIENTES (ID_USUARIO, TELEFONO, PUNTOS) VALUES (?, ?, 0)");
         $stmt_c->bind_param("is", $id_usuario, $telefono);
         $stmt_c->execute();

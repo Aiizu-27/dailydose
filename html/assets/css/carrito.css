@@ -1,10 +1,6 @@
-/* ========================================= */
-/* ESTILOS DEL CARRITO (DAILY DOSE STYLE)    */
-/* ========================================= */
-
 .carrito-container {
     max-width: 1100px;
-    margin: 120px auto 60px auto; /* Margen superior para que no lo tape el header */
+    margin: 120px auto 60px auto;
     padding: 0 20px;
     color: var(--texto-principal);
     font-family: 'Poppins', sans-serif;
@@ -17,12 +13,11 @@
 
 .cabecera-carrito h1 {
     color: var(--rojo-japones);
-    font-family: 'CooperBold', sans-serif; /* Tu fuente corporativa */
+    font-family: 'CooperBold', sans-serif;
     font-size: 2.5rem;
     margin-bottom: 10px;
 }
 
-/* Tarjeta con efecto Cristal (Glassmorphism) */
 .tarjeta-cristal {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -33,7 +28,6 @@
     box-shadow: 0 8px 32px var(--cristal-sombra);
 }
 
-/* Layout en dos columnas */
 .carrito-layout {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -41,7 +35,6 @@
     align-items: start;
 }
 
-/* Si el carrito está vacío */
 .carrito-vacio {
     text-align: center;
     max-width: 500px;
@@ -58,7 +51,6 @@
     opacity: 0.6;
 }
 
-/* Lista de productos */
 .lista-productos h3, .resumen-pedido h3 {
     margin-top: 0;
     color: var(--rojo-japones);
@@ -97,7 +89,6 @@
     color: var(--verde-pastel-oscuro);
 }
 
-/* Resumen de pago */
 .fila-total {
     display: flex;
     justify-content: space-between;
@@ -114,7 +105,6 @@
     color: var(--rojo-japones);
 }
 
-/* Botones y formularios */
 .form-checkout {
     display: flex;
     flex-direction: column;
@@ -139,7 +129,6 @@
     color: white;
 }
 
-/* Responsive */
 @media (max-width: 850px) {
     .carrito-layout {
         grid-template-columns: 1fr;

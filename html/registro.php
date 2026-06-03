@@ -8,17 +8,14 @@
 <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/style.css">
 
-    <!-- CSS Componentes -->
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
     <link rel="stylesheet" href="assets/css/registro.css">
 </head>
 <body>
 
-<!-- Header / Cabecera de la página -->
 <?php include "includes/header.php"; ?>
 
-<!-- FORMULARIO -->
 <div class="registroContenido">
     <div class="formulario">
         <div class="form-tabs">
@@ -26,7 +23,6 @@
             <button id="tabRegistro">Registrarse</button>
         </div>
 
-        <!-- FORMULARIO LOGIN -->
         <form id="formLogin">
             <div class="cajas">
                 <input type="email" name="correo" placeholder=" " required>
@@ -50,7 +46,6 @@
             <button type="submit">Iniciar sesión</button>
         </form>
 
-        <!-- FORMULARIO REGISTRO -->
         <form id="formRegistro" style="display:none;">
             <div class="cajas">
                 <input type="text" name="nombre" placeholder=" " required>
@@ -86,8 +81,6 @@
             <button type="submit">Registrarse</button>
         </form>
 
-
-<!-- Enlace al JS externo -->
 <script src="assets/js/script.js"></script>
 
 </body>

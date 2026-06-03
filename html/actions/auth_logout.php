@@ -4,7 +4,6 @@ session_start();
 session_unset();
 session_destroy();
 
-// Eliminar la cookie de sesión del navegador
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(

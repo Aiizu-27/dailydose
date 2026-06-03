@@ -1,17 +1,10 @@
-/* ========================================= */
-/* ESTILOS DE PROMOCIONES (GLASSMORPHISM) */
-/* ========================================= */
-
 .promo-container {
     max-width: 1200px;
-    margin: 120px auto 60px auto; /* Espacio para el header fijo */
+    margin: 120px auto 60px auto;
     padding: 0 20px;
     color: var(--texto-principal);
 }
 
-/* ========================================= */
-/* CABECERA PRINCIPAL (Marcador de Puntos) */
-/* ========================================= */
 .header-puntos {
     background: var(--cristal-fondo);
     backdrop-filter: blur(10px);
@@ -44,7 +37,6 @@
     margin-bottom: 10px;
 }
 
-/* La pastilla con la cantidad de puntos */
 .marcador-puntos {
     font-size: 3.5rem;
     font-weight: bold;
@@ -57,15 +49,11 @@
     box-shadow: inset 0 3px 6px rgba(0,0,0,0.1);
 }
 
-/* Adaptación del marcador al Modo Oscuro */
 body.dark-mode .marcador-puntos {
     color: var(--texto-principal);
     background: rgba(255, 255, 255, 0.1);
 }
 
-/* ========================================= */
-/* GRID Y TARJETAS DE PROMOCIÓN */
-/* ========================================= */
 .grid-promos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -103,10 +91,9 @@ body.dark-mode .marcador-puntos {
     line-height: 1.6;
     margin-bottom: 25px;
     color: var(--texto-principal);
-    flex-grow: 1; /* Esto hace que los botones siempre queden alineados abajo del todo */
+    flex-grow: 1;
 }
 
-/* Línea divisoria del coste */
 .coste-puntos {
     font-size: 1.2rem;
     font-weight: bold;
@@ -117,9 +104,6 @@ body.dark-mode .marcador-puntos {
     color: var(--texto-principal);
 }
 
-/* ========================================= */
-/* BOTONES DE CANJEO */
-/* ========================================= */
 .btn-canjear {
     display: block;
     text-align: center;
@@ -133,7 +117,6 @@ body.dark-mode .marcador-puntos {
     box-sizing: border-box;
 }
 
-/* Botón Activo (Cuando tienes puntos suficientes) */
 .btn-activo {
     background-color: var(--rojo-japones);
     color: white;
@@ -148,7 +131,6 @@ body.dark-mode .marcador-puntos {
     box-shadow: 0 6px 15px rgba(244, 43, 29, 0.4);
 }
 
-/* Botón Inactivo (Cuando te faltan puntos) */
 .btn-inactivo {
     background-color: rgba(128, 128, 128, 0.1);
     color: #888;

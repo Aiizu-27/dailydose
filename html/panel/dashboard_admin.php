@@ -2,24 +2,18 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// --- SEGURIDAD ---
 if (!isset($_SESSION['ROL']) || $_SESSION['ROL'] != 'ADMIN') {
     header("Location: ../index.php");
     exit();
 }
 
-// ========================================================
-// CARGA EXCLUSIVA DE DATOS PARA PINTAR LA INTERFAZ (PL)
-// ========================================================
 
-// 1. Estadísticas del Día
 $stmt = $conn->prepare("CALL sp_admin_obtener_estadisticas_hoy()");
 $stmt->execute();
 $stats = $stmt->get_result()->fetch_assoc();
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
 
-// 2. Usuarios y Personal
 $stmt = $conn->prepare("CALL sp_admin_obtener_usuarios()");
 $stmt->execute();
 $res_users = $stmt->get_result();
@@ -28,7 +22,6 @@ while($row = $res_users->fetch_assoc()) { $usuarios[] = $row; }
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
 
-// 3. Pedidos en Tiempo Real
 $stmt = $conn->prepare("CALL sp_admin_obtener_pedidos_hoy()");
 $stmt->execute();
 $res_pedidos = $stmt->get_result();
@@ -37,7 +30,6 @@ while($row = $res_pedidos->fetch_assoc()) { $pedidos_hoy[] = $row; }
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
 
-// 4. Alertas de Inventario
 $stmt = $conn->prepare("CALL sp_admin_obtener_stock_bajo()");
 $stmt->execute();
 $res_stock = $stmt->get_result();
@@ -46,7 +38,6 @@ while($row = $res_stock->fetch_assoc()) { $stock_bajo[] = $row; }
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
 
-// 5. Catálogo de la Carta
 $stmt = $conn->prepare("CALL sp_admin_obtener_todos_productos()");
 $stmt->execute();
 $res_prod = $stmt->get_result();
@@ -55,7 +46,6 @@ while($row = $res_prod->fetch_assoc()) { $productos_carta[] = $row; }
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
 
-// 6. Lista de Baristas para Turnos
 $stmt = $conn->prepare("CALL sp_obtener_empleados()");
 $stmt->execute();
 $res_emp = $stmt->get_result();
@@ -199,7 +189,7 @@ $stmt->close();
                         <td><strong><?= htmlspecialchars($s['NOMBRE']) ?></strong></td>
                         <td><?= $s['CATEGORIA'] ?></td>
                         <td style="color:var(--rojo-japones); font-weight:bold;"><?= $s['STOCK'] ?> uds.</td>
-                        <td><span style="color:#ffc107; font-weight:bold;">⚠️ REABASTECER</span></td>
+                        <td><span style="color:#ffc107; font-weight:bold;">REABASTECER</span></td>
                     </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -277,7 +267,6 @@ $stmt->close();
 <script>
 document.addEventListener('DOMContentLoaded', () => {
 
-    // Bloque 2: Alta Empleado
     document.getElementById('form-add-trabajador').addEventListener('submit', function(e) {
         e.preventDefault();
         fetch('../actions/admin_add_trabajador.php', { method: 'POST', body: new FormData(this) })
@@ -287,7 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Bloque 2: Cambiar Rol
     document.querySelectorAll('.form-cambiar-rol').forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -299,7 +287,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Bloque 2: Revocar Cuenta (Baja)
     document.querySelectorAll('.btn-baja-directa').forEach(btn => {
         btn.addEventListener('click', function() {
             if(!confirm('¿Seguro que deseas eliminar esta cuenta? Esta acción es irreversible.')) return;
@@ -312,7 +299,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Bloque 5: Añadir Producto
     document.getElementById('form-add-producto').addEventListener('submit', function(e) {
         e.preventDefault();
         fetch('../actions/admin_add_producto.php', { method: 'POST', body: new FormData(this) })
@@ -322,7 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Bloque 5: Ajustar Stock manual
     document.querySelectorAll('.btn-toggle-producto').forEach(btn => {
         btn.addEventListener('click', function() {
             const nuevoStock = prompt("Introduce las unidades reales en almacén:");
@@ -338,7 +323,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Bloque 6: Asignar Turno
     document.getElementById('form-add-turno').addEventListener('submit', function(e) {
         e.preventDefault();
         fetch('../actions/admin_add_turno.php', { method: 'POST', body: new FormData(this) })

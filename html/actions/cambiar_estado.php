@@ -4,7 +4,6 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
 header('Content-Type: application/json');
 
-// ===== SEGURIDAD: solo empleados y admins =====
 if (!isset($_SESSION['ID_USUARIO'])) {
     echo json_encode(["status" => "no_autenticado"]);
     exit;
@@ -24,7 +23,6 @@ $id_pedido    = intval($_POST['id']);
 $nuevo_estado = $_POST['estado'] ?? '';
 $id_empleado  = !empty($_POST['id_empleado']) ? intval($_POST['id_empleado']) : null;
 
-// ===== VALIDAR ESTADO =====
 $estados_validos = ['PENDIENTE', 'EN_PREPARACION', 'LISTO', 'ENTREGADO', 'CANCELADO'];
 if (!in_array($nuevo_estado, $estados_validos)) {
     echo json_encode(["status" => "estado_invalido"]);
@@ -36,7 +34,6 @@ if ($id_pedido <= 0) {
     exit;
 }
 
-// ===== LLAMADA AL SP =====
 $stmt = $conn->prepare("CALL sp_cambiar_estado_pedido(?, ?, ?)");
 if (!$stmt) {
     error_log("Error prepare cambiar_estado: " . $conn->error);

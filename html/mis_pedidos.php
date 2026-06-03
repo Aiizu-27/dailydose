@@ -2,7 +2,6 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// Red de seguridad: Si no hay sesión iniciada, mandamos al usuario al registro
 if (!isset($_SESSION['ID_USUARIO'])) {
     header("Location: registro.php");
     exit();
@@ -11,22 +10,15 @@ if (!isset($_SESSION['ID_USUARIO'])) {
 $id_usuario = $_SESSION['ID_USUARIO'];
 $pedidos = [];
 
-// ========================================================
-// CAPA DE DETRÁS (BACKEND): PROCESAMIENTO EXCLUSIVO DE PL
-// ========================================================
-
-// LLAMADA AL PL: Extraemos el historial completo indexado por fecha
 $stmt = $conn->prepare("CALL sp_obtener_pedidos_cliente(?)");
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $resultado = $stmt->get_result();
 
-// Almacenamos todo en un array limpio para liberar la conexión de inmediato
 while ($row = $resultado->fetch_assoc()) {
     $pedidos[] = $row;
 }
 
-// Limpieza de canales de comunicación de MySQL
 while ($conn->more_results()) $conn->next_result();
 $stmt->close();
 $conn->close();

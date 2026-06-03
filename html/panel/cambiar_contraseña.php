@@ -12,23 +12,19 @@
 </head>
 <body>
 
-<!-- Header / Cabecera de la página -->
 <?php include "includes/header.php"; ?>
 
 <?php
 session_start();
 if (!isset($_SESSION['ID_USUARIO']) || !$_SESSION['CAMBIAR_PASSWORD']) {
-    // No tiene que cambiar la contraseña o no está logueado
     header("Location: ../index.php");
     exit;
 }
 ?>
 
-<!-- CAMBIO DE CONTRASEÑA -->
 <div class="registroContenido">
     <div class="formulario">
             <h2>Cambiar Contraseña</h2>
-        <!-- FORMULARIO CAMBIO DE CONTRASEÑA -->
         <form action="../actions/auth_cambiar_pass.php" method="POST">
             <input type="password" name="nueva_contrasena" placeholder="Nueva contraseña" required>
             <input type="password" name="confirmar_contrasena" placeholder="Confirmar contraseña" required>
@@ -37,7 +33,6 @@ if (!isset($_SESSION['ID_USUARIO']) || !$_SESSION['CAMBIAR_PASSWORD']) {
         </form>
         
 
-<!-- Enlace al JS externo -->
 <script src="assets/js/script.js"></script>
 
 </body>

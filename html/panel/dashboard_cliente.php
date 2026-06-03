@@ -2,7 +2,6 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// Red de seguridad: Solo clientes pueden acceder a esta vista
 if (!isset($_SESSION['ROL']) || strtolower($_SESSION['ROL']) !== 'cliente') {
     header("Location: ../index.php");
     exit();
@@ -10,26 +9,19 @@ if (!isset($_SESSION['ROL']) || strtolower($_SESSION['ROL']) !== 'cliente') {
 
 $id_usuario = $_SESSION['ID_USUARIO'];
 
-// ========================================================
-// CAPA DE DETRÁS (BACKEND): PROCESAMIENTO EXCLUSIVO DE PL
-// ========================================================
-
-// 1. LLAMADA AL PL: Datos del Perfil
 $stmt = $conn->prepare("CALL sp_cliente_obtener_perfil(?)");
 $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $cliente = $stmt->get_result()->fetch_assoc();
-while ($conn->more_results()) $conn->next_result(); // Limpiar canal SQL
+while ($conn->more_results()) $conn->next_result();
 $stmt->close();
 
-// Extraemos el ID_CLIENTE de la tabla relacional (0 por seguridad si es nuevo)
 $id_cliente_actual = $cliente['ID_CLIENTE'] ?? 0;
 
 $ultimos_pedidos = [];
 $favoritos = [];
 
 if ($id_cliente_actual > 0) {
-    // 2. LLAMADA AL PL: Últimos 5 pedidos
     $stmt_pedidos = $conn->prepare("CALL sp_cliente_obtener_ultimos_pedidos(?)");
     $stmt_pedidos->bind_param("i", $id_cliente_actual);
     $stmt_pedidos->execute();
@@ -40,7 +32,6 @@ if ($id_cliente_actual > 0) {
     while ($conn->more_results()) $conn->next_result();
     $stmt_pedidos->close();
 
-    // 3. LLAMADA AL PL: Top 3 Favoritos
     $stmt_favs = $conn->prepare("CALL sp_cliente_obtener_favoritos(?)");
     $stmt_favs->bind_param("i", $id_cliente_actual);
     $stmt_favs->execute();
@@ -52,7 +43,7 @@ if ($id_cliente_actual > 0) {
     $stmt_favs->close();
 }
 
-$conn->close(); // Clausura limpia de la pasarela de datos
+$conn->close();
 ?>
 
 <!DOCTYPE html>

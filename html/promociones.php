@@ -2,7 +2,6 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// 1. Comprobamos si hay sesión activa, pero NO expulsamos al invitado
 $esta_logueado = isset($_SESSION['ROL']);
 $puntos_actuales = 0;
 $recompensas = [];
@@ -10,7 +9,6 @@ $recompensas = [];
 if ($esta_logueado) {
     $id_usuario = $_SESSION['ID_USUARIO'];
 
-    // 2. LLAMADA AL PL: Obtener los puntos reales del monedero del cliente
     $stmt = $conn->prepare("CALL sp_promos_obtener_puntos_cliente(?)");
     $stmt->bind_param("i", $id_usuario);
     $stmt->execute();
@@ -18,21 +16,19 @@ if ($esta_logueado) {
     if ($row = $res_puntos->fetch_assoc()) {
         $puntos_actuales = $row['PUNTOS'] ?? 0;
     }
-    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
+    while ($conn->more_results()) $conn->next_result();
     $stmt->close();
 
-    // 3. LLAMADA AL PL: Cargar todo el catálogo de regalos del club
     $stmt = $conn->prepare("CALL sp_promos_obtener_recompensas()");
     $stmt->execute();
     $res_recompensas = $stmt->get_result();
     while ($row = $res_recompensas->fetch_assoc()) {
         $recompensas[] = $row;
     }
-    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
-    $stmt->close();
+    while ($conn->more_results()) $conn->next_result();
 }
 
-$conn->close(); // Clausura limpia de pasarela de datos
+$conn->close();
 ?>
 
 <!DOCTYPE html>

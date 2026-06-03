@@ -18,21 +18,17 @@
 
   <body>
 
-  <!-- Header / Cabecera de la página -->
   <?php include "includes/header.php"; ?>
 
-  <!-- Contenedor de pantalla inicial -->
   <div class="contenedor-fijo">
     <!-- Video de fondo -->
     <video class="video-fondo" autoplay muted loop>
       <source src="assets/video/VideoInicio.mp4" type="video/mp4">
     </video>
 
-    <!-- Contenido encima del video -->
     <div class="contenido-sobre-video"></div>
   </div>
 
-  <!-- Contenido principal que aparecerá al hacer scroll -->
   <div class="contenido-principal">
     <div class="fila1">
       <div class="div1">

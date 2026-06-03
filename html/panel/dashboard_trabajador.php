@@ -2,13 +2,11 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
  
-// ===== SEGURIDAD =====
 if (!isset($_SESSION['ROL']) || !in_array($_SESSION['ROL'], ['EMPLEADO', 'ADMIN'])) {
     header("Location: ../index.php");
     exit();
 }
- 
-// ===== OBTENER EMPLEADOS =====
+
 $stmt = $conn->prepare("CALL sp_obtener_empleados()");
 $stmt->execute();
 $res_empleados = $stmt->get_result();
@@ -18,8 +16,7 @@ while ($emp = $res_empleados->fetch_assoc()) {
 }
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
- 
-// ===== OBTENER PEDIDOS ACTIVOS =====
+
 $stmt = $conn->prepare("CALL sp_obtener_pedidos_activos()");
 $stmt->execute();
 $res_pedidos = $stmt->get_result();
@@ -31,7 +28,7 @@ $columnas = [
 ];
  
 $ids_pedidos  = [];
-$mesas_ocupadas = []; // id_mesa => pedido
+$mesas_ocupadas = [];
  
 while ($pedido = $res_pedidos->fetch_assoc()) {
     $columnas[$pedido['ESTADO']][] = $pedido;
@@ -43,7 +40,6 @@ while ($pedido = $res_pedidos->fetch_assoc()) {
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
  
-// ===== OBTENER DETALLE DE CADA PEDIDO =====
 $detalles = [];
 foreach ($ids_pedidos as $id_pedido) {
     $stmt = $conn->prepare("CALL sp_obtener_detalle_pedido(?)");
@@ -58,7 +54,6 @@ foreach ($ids_pedidos as $id_pedido) {
     $stmt->close();
 }
  
-// ===== OBTENER MESAS =====
 $stmt = $conn->prepare("CALL sp_obtener_mesas()");
 $stmt->execute();
 $res_mesas = $stmt->get_result();
@@ -69,7 +64,6 @@ while ($mesa = $res_mesas->fetch_assoc()) {
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
  
-// ===== CONTADOR PEDIDOS DEL DÍA =====
 $stmt = $conn->prepare("CALL sp_contar_pedidos_hoy()");
 $stmt->execute();
 $res_contador = $stmt->get_result();
@@ -77,7 +71,6 @@ $contador_hoy = $res_contador->fetch_assoc()['TOTAL'] ?? 0;
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
  
-// ===== TURNOS SEMANA ACTUAL =====
 $lunes = date('Y-m-d', strtotime('monday this week'));
 $stmt = $conn->prepare("CALL sp_obtener_turnos_semanas(?)");
 $stmt->bind_param("s", $lunes);
@@ -90,11 +83,9 @@ while ($t = $res_turnos->fetch_assoc()) {
 while ($stmt->more_results()) $stmt->next_result();
 $stmt->close();
  
-// Estadísticas rápidas
 $mesas_libres   = count(array_filter($mesas, fn($m) => $m['ESTADO'] === 'LIBRE'));
 $mesas_ocupadas_count = count(array_filter($mesas, fn($m) => $m['ESTADO'] === 'OCUPADA'));
  
-// Días de la semana actual
 $dias_semana = [];
 for ($i = 0; $i < 7; $i++) {
     $dias_semana[] = date('Y-m-d', strtotime($lunes . " +$i days"));
@@ -116,7 +107,6 @@ $hoy = date('Y-m-d');
 </head>
 <body class="worker-body">
  
-<!-- ── NAV ──────────────────────────────── -->
 <nav class="worker-nav">
     <div class="nav-left">
         <img src="../assets/img/logo.png" alt="Logo Daily Dose" class="mini-logo">
@@ -135,7 +125,6 @@ $hoy = date('Y-m-d');
  
 <main class="worker-container">
  
-    <!-- ── HEADER ────────────────────────── -->
     <header class="section-header">
         <h1>Tablero de Gestión</h1>
         <div class="status-legend">
@@ -151,7 +140,6 @@ $hoy = date('Y-m-d');
         </div>
     </header>
  
-    <!-- ── STATS ─────────────────────────── -->
     <div class="stats-row">
         <div class="stat-card">
             <div class="stat-num" style="color: var(--verde-pastel-oscuro);">
@@ -179,7 +167,6 @@ $hoy = date('Y-m-d');
         </div>
     </div>
  
-    <!-- ── MAPA DE MESAS ──────────────────── -->
     <section class="mapa-section">
         <div class="zona-label">
             <i class="fa-solid fa-map-location-dot"></i> Sala — zona clientes
@@ -192,7 +179,6 @@ $hoy = date('Y-m-d');
                 $inactiva  = ($mesa['ESTADO'] === 'MANTENIMIENTO' || $mesa['ESTADO'] === 'RESERVADA');
                 $clase     = $inactiva ? 'inactiva' : $estado;
  
-                // Buscar pedido activo de esta mesa
                 $pedido_mesa = null;
                 foreach ($columnas as $col) {
                     foreach ($col as $p) {
@@ -234,7 +220,6 @@ $hoy = date('Y-m-d');
         </div>
     </section>
  
-    <!-- ── PARA LLEVAR ────────────────────── -->
     <?php
     $pedidos_llevar = [];
     foreach ($columnas as $col) {
@@ -273,7 +258,6 @@ $hoy = date('Y-m-d');
     </section>
     <?php endif; ?>
  
-    <!-- ── KANBAN ─────────────────────────── -->
     <div class="kanban-board">
         <?php
         $labels = [
@@ -361,7 +345,6 @@ $hoy = date('Y-m-d');
         <?php endforeach; ?>
     </div>
  
-    <!-- ── CALENDARIO DE TURNOS ───────────── -->
     <section class="turnos-section" style="margin-top: 1.5rem;">
         <div class="zona-label">
             <i class="fa-solid fa-calendar-days"></i> Turnos del equipo
@@ -431,7 +414,6 @@ $hoy = date('Y-m-d');
 </main>
  
 <script>
-// ── AUTO REFRESCO ────────────────────────────
 let segundos = 30;
 const cuentaEl = document.getElementById('cuenta');
  
@@ -441,7 +423,6 @@ setInterval(() => {
     if (segundos <= 0) location.reload();
 }, 1000);
  
-// ── CAMBIAR ESTADO ───────────────────────────
 function cambiarEstado(idPedido, nuevoEstado, selectId = null) {
     const formData = new FormData();
     formData.append('id', idPedido);
@@ -471,7 +452,6 @@ function cambiarEstado(idPedido, nuevoEstado, selectId = null) {
     .catch(() => alert('Error de conexión'));
 }
  
-// ── TABS SEMANAS ────────────────────────────
 function mostrarSemana(index, btn) {
     document.querySelectorAll('.semana-bloque').forEach((el, i) => {
         el.style.display = i === index ? 'block' : 'none';

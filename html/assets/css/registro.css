@@ -1,13 +1,9 @@
-/* ============================= */
-/* FORMULARIO / LOGIN Y REGISTRO */
-/* ============================= */
-/* Aseguramos que el formulario baje lo suficiente y no se superponga con el header */
 .registroContenido {
     margin-top: 80px;
     padding: 2rem;
     display: flex;
-    justify-content: center; /* centra el formulario horizontalmente */
-    background-color: transparent !important; /* elimina el fondo crema */
+    justify-content: center;
+    background-color: transparent !important;
 }
 
 .formulario {
@@ -16,13 +12,11 @@
     padding: 2rem;
     border-radius: 10px;
 
-    /* Efecto cristal */
-    background: rgba(255, 255, 255, 0.1); /* Fondo translúcido */
-    border: 1px solid rgba(255, 255, 255, 0.2); /* Borde suave */
-    backdrop-filter: blur(10px); /* Desenfoque del fondo */
-    -webkit-backdrop-filter: blur(10px); /* Para Safari */
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
-    /* Otros estilos */
     box-sizing: border-box;
     box-shadow: 0 8px 32px rgba(0,0,0,0.1);
     color: var(--texto-principal);
@@ -59,7 +53,6 @@
     color: var(--rojo-japones);
 }
 
-/* Botones de enviar */
 button {
     width: 100%;
     padding: 10px;
@@ -73,9 +66,6 @@ button {
 
 button:hover { background-color: var(--rojo-oscuro); }
 
-/* ============================= */
-/* PASSWORD BOX / ICONO OJO */
-/* ============================= */
 .password-box {
     position: relative;
 }
@@ -102,14 +92,10 @@ button:hover { background-color: var(--rojo-oscuro); }
     stroke: currentColor;
 }
 
-/* ============================= */
-/* TABS LOGIN / REGISTRO */
-/* ============================= */
 .form-tabs {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
-    /* Espacio extra arriba para los tabs */
     margin-bottom: 1.5rem;
 }
 

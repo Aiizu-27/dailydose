@@ -10,7 +10,6 @@ if (!isset($_SESSION['ROL']) || $_SESSION['ROL'] != 'ADMIN') {
 $id_baja = intval($_POST['id_baja'] ?? 0);
 
 if ($id_baja > 0) {
-    // Tu restricción ON DELETE CASCADE de la BD limpiará automáticamente CLIENTES o EMPLEADOS
     $stmt = $conn->prepare("DELETE FROM USUARIOS WHERE ID_USUARIO = ?");
     $stmt->bind_param("i", $id_baja);
     if ($stmt->execute()) { echo json_encode(["status" => "ok"]); } 

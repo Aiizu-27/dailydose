@@ -1,11 +1,3 @@
-/* ============================= */
-/* PÁGINA INICIAL */
-/* ============================= */
-
-
-/* ============================= */
-/* VIDEO DE FONDO FIJO */
-/* ============================= */
 .contenedor-fijo {
   position: fixed;
   top: 0;
@@ -13,7 +5,7 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  z-index: 0; /* detrás de todo */
+  z-index: 0;
 }
 
 .video-fondo {
@@ -26,9 +18,6 @@
   z-index: 0;
 }
 
-/* ============================= */
-/* CONTENIDO ENCIMA DEL VIDEO */
-/* ============================= */
 .contenido-sobre-video {
     position: relative;
     z-index: 1;
@@ -41,9 +30,6 @@
     height: 100%;
 }
 
-/* ============================= */
-/* CONTENIDO PRINCIPAL SCROLLEABLE */
-/* ============================= */
 .contenido-principal {
   position: relative;
   z-index: 5;
@@ -56,7 +42,6 @@
   );
 }
 
-/* Filas y grid */
 .fila1, .fila2, .fila3 {
     width: 95%;
     margin: 2rem auto 0 auto;
@@ -68,16 +53,12 @@
 .fila2 { grid-template-columns: 1fr 1fr; min-height: 250px; height: auto;}
 .fila3 { min-height: 300px; height: auto;}
 
-/* Bordes de los divs */
 .div1 {border-radius: 15px 0 0 15px;}
 .div2 {border-radius: 0 15px 15px 0;}
 .div3 {border-radius: 15px 0 0 15px;}
 .div4 {border-radius: 0 15px 15px 0;}
 .div5 {border-radius: 15px;}
 
-/* ============================= */
-/* ESTILO GENERAL DE LOS DIVS */
-/* ============================= */
 .div1, .div2, .div3, .div4, .div5 {
   background: var(--cristal-fondo);
   backdrop-filter: blur(10px);
@@ -100,9 +81,6 @@
   box-shadow: 0 8px 20px var(--cristal-sombra);
 }
 
-/* ============================= */
-/* DIV2 ESPECIAL (APP) */
-/* ============================= */
 .div2 h2 {
     font-size: 2rem;
     color: var(--rojo-japones);
@@ -130,9 +108,6 @@
     transform: scale(1.05);
 }
 
-/* ============================= */
-/* TITULOS Y PARRAFOS DE TODOS LOS DIVS */
-/* ============================= */
 .div1 h2, .div3 h2, .div4 h2, .div5 h2 {
     font-size: 1.8rem;
     color: var(--texto-principal);
@@ -150,9 +125,6 @@
     margin: 0 auto 1rem auto;
 }
 
-/* ============================= */
-/* LISTAS DENTRO DE DIVS */
-/* ============================= */
 .div1 ul, .div2 ul, .div3 ul, .div4 ul, .div5 ul {
     list-style: inside disc;
     padding-left: 1rem;
@@ -160,9 +132,6 @@
     color: var(--texto-principal);
 }
 
-/* ============================= */
-/* BOTONES PRINCIPALES */
-/* ============================= */
 .btn-principal {
   background-color: var(--rojo-japones);
   color: white;

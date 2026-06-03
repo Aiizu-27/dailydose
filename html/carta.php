@@ -2,16 +2,10 @@
 session_start(); 
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// Comprobación inicial de pasarela
 if (!$conn) {
     die("Conexión fallida: " . mysqli_connect_error());
 }
 
-// ========================================================
-// CAPA DE DETRÁS (BACKEND): PROCESAMIENTO EXCLUSIVO DE PL
-// ========================================================
-
-// 1. Cargar Categorías del menú lateral
 $stmt = $conn->prepare("CALL sp_carta_obtener_categories()");
 $stmt->execute();
 $res_cat = $stmt->get_result();
@@ -19,10 +13,9 @@ $categorias = [];
 while ($cat = $res_cat->fetch_assoc()) {
     $categorias[] = $cat;
 }
-while ($conn->more_results()) $conn->next_result(); // Limpiar canal SQL
+while ($conn->more_results()) $conn->next_result();
 $stmt->close();
 
-// 2. Cargar Catálogo de Productos completo
 $stmt = $conn->prepare("CALL sp_carta_obtener_productos()");
 $stmt->execute();
 $res_prod = $stmt->get_result();
@@ -33,7 +26,6 @@ while ($prod = $res_prod->fetch_assoc()) {
 while ($conn->more_results()) $conn->next_result();
 $stmt->close();
 
-// 3. Cargar Especialidad del Día (El PL ya calcula el fallback por sí solo)
 $fecha_hoy = date('Y-m-d');
 $stmt = $conn->prepare("CALL sp_carta_obtener_especialidad(?)");
 $stmt->bind_param("s", $fecha_hoy);
@@ -42,7 +34,7 @@ $especial = $stmt->get_result()->fetch_assoc();
 while ($conn->more_results()) $conn->next_result();
 $stmt->close();
 
-$conn->close(); // Cerramos la conexión limpiamente
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -88,7 +80,6 @@ $conn->close(); // Cerramos la conexión limpiamente
     if (!empty($productos)) {
         foreach ($productos as $row) {
 
-            // CONTROL DE CAMBIO DE CATEGORÍA (Ruptura de secuencia)
             if ($categoriaActual != $row['CATEGORIA']) {
                 if ($categoriaActual != "") echo "</ul>";
                 $categoriaActual = $row['CATEGORIA'];
@@ -125,7 +116,7 @@ $conn->close(); // Cerramos la conexión limpiamente
             </li>
             <?php
         }
-        echo "</ul>"; // Cierre de la última lista
+        echo "</ul>";
     } else {
         echo "<p class='mensaje-vacio'>No hay productos disponibles en el menú actual.</p>";
     }

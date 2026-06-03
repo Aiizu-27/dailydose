@@ -1,11 +1,6 @@
-/* =====================================================
-   ESTILOS ESPECÍFICOS: SALA DE REUNIONES — DAILY DOSE
-   Ecosistema adaptativo unificado (Modo Claro / Oscuro)
-   ===================================================== */
-
 .sala-container {
     max-width: 800px;
-    margin: 110px auto 50px auto; /* Margen superior adaptado para no chocar con el header fijo */
+    margin: 110px auto 50px auto;
     padding: 0 20px;
     min-height: 70vh;
     box-sizing: border-box;
@@ -17,7 +12,7 @@
 }
 
 .cabecera-sala h1 {
-    font-family: 'CooperBold', sans-serif; /* Integración de tu fuente corporativa */
+    font-family: 'CooperBold', sans-serif;
     font-size: 2.5rem;
     color: var(--rojo-japones);
     margin-bottom: 10px;
@@ -48,7 +43,6 @@
     animation: pulse 2s infinite;
 }
 
-/* 🟢 CORREGIDO: Tarjeta de descripción adaptada a tus variables de cristal */
 .tarjeta-cristal.sala-descripcion {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -66,13 +60,12 @@
 }
 
 .tarjeta-cristal.sala-descripcion p {
-    color: var(--texto-principal); /* Cambia automáticamente entre #2B2B2B y #F3F0E9 */
+    color: var(--texto-principal);
     font-size: 1.2rem;
     line-height: 1.7;
     margin-bottom: 0;
 }
 
-/* 🟢 CORREGIDO: Tarjeta de equipamiento adaptada a tus variables de cristal */
 .tarjeta-cristal.sala-equipamiento {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -89,11 +82,11 @@
 }
 
 .tarjeta-cristal.sala-equipamiento h3 {
-    font-family: 'CooperBold', sans-serif; /* Integración de tu fuente corporativa */
+    font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
     margin-top: 0;
     font-size: 1.4rem;
-    border-bottom: 2px solid var(--cristal-borde); /* Separador dinámico según el modo */
+    border-bottom: 2px solid var(--cristal-borde);
     padding-bottom: 10px;
 }
 
@@ -103,16 +96,15 @@
 }
 
 .features-list li {
-    color: var(--texto-principal); /* Cambia automáticamente para garantizar la lectura */
+    color: var(--texto-principal);
     margin-bottom: 12px;
     line-height: 1.6;
 }
 
 .features-list strong {
-    color: var(--rojo-oscuro); /* Cambia de tono según tus variables de paleta */
+    color: var(--rojo-oscuro);
 }
 
-/* Zona inferior de acciones */
 .sala-acciones {
     text-align: center;
     margin-top: 10px;
@@ -126,7 +118,6 @@
     margin-bottom: 20px;
 }
 
-/* 🟢 OPTIMIZADO: Botón principal unificado con las tipografías y el tema */
 .sala-acciones .btn-principal {
     font-family: 'CooperBold', sans-serif;
     display: inline-block;
@@ -142,7 +133,6 @@
     background-color: var(--rojo-oscuro);
 }
 
-/* Animación del misticismo del co-working */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }

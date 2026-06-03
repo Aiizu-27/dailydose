@@ -1,10 +1,9 @@
 <?php
-// 1. Iniciamos sesión solo si no estaba ya iniciada en el archivo principal
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// 2. RED DE SEGURIDAD: Definimos la ruta base automáticamente si no existe.
 if (!defined('BASE_URL')) {
     define('BASE_URL', '/'); 
 }
@@ -40,7 +39,6 @@ if (!defined('BASE_URL')) {
       <?php 
         $cantidad_total = 0;
         if(isset($_SESSION['carrito'])) {
-            // Sumamos la cantidad de cada producto (no solo los productos distintos)
             foreach($_SESSION['carrito'] as $item) {
                 $cantidad_total += $item['cantidad'];
             }
@@ -77,7 +75,6 @@ if (!defined('BASE_URL')) {
     <?php if(isset($_SESSION['ROL'])): ?>
       
       <?php 
-        // Lógica para enviar al usuario a su panel correspondiente usando BASE_URL
         $rol_actual = strtolower($_SESSION['ROL']);
         $link_panel = BASE_URL . 'panel/dashboard_cliente.php'; 
         

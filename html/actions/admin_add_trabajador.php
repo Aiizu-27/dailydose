@@ -19,14 +19,12 @@ if (!empty($nombre) && !empty($email) && !empty($pass)) {
     
     $conn->begin_transaction();
     try {
-        // 1. Insertar en la tabla maestra de acceso
         $stmt = $conn->prepare("INSERT INTO USUARIOS (NOMBRE, APELLIDOS, EMAIL, CONTRASENA, ROL) VALUES (?, ?, ?, ?, 'EMPLEADO')");
         $stmt->bind_param("ssss", $nombre, $apellidos, $email, $pass_hash);
         $stmt->execute();
         $id_usuario = $conn->insert_id;
         $stmt->close();
 
-        // 2. Insertar en la tabla relacional de Recursos Humanos
         $stmt_emp = $conn->prepare("INSERT INTO EMPLEADOS (ID_USUARIO, PUESTO, SALARIO, FECHA_CONTRATACION) VALUES (?, ?, ?, CURDATE())");
         $stmt_emp->bind_param("isd", $id_usuario, $puesto, $salario);
         $stmt_emp->execute();

@@ -14,7 +14,6 @@ if ($id_producto <= 0) {
     exit();
 }
 
-// ===== CONSULTAMOS DATOS DEL PRODUCTO DESDE LA BD =====
 $stmt = $conn->prepare("CALL sp_obtener_producto_carrito(?)");
 if (!$stmt) {
     error_log("Error prepare add_carrito: " . $conn->error);
@@ -37,7 +36,6 @@ if (!$producto) {
     exit();
 }
 
-// ===== CARRITO EN SESIÓN =====
 if (!isset($_SESSION['carrito'])) {
     $_SESSION['carrito'] = [];
 }

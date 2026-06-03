@@ -12,7 +12,6 @@ $fecha       = $_POST['fecha_turno'] ?? '';
 $turno       = $_POST['bloque_turno'] ?? '';
 
 if ($id_empleado > 0 && !empty($fecha) && in_array($turno, ['MAÑANA', 'TARDE'])) {
-    // Al usar ON DUPLICATE KEY, si el admin cambia de idea, se machaca el registro viejo sin colisiones
     $stmt = $conn->prepare("INSERT INTO TURNOS (ID_EMPLEADO, DIA, TURNO) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE TURNO = ?");
     $stmt->bind_param("isss", $id_empleado, $fecha, $turno, $turno);
     if ($stmt->execute()) { echo json_encode(["status" => "ok"]); } 

@@ -1,14 +1,9 @@
-/* ========================================= */
-/* ESTILOS DE MIS PEDIDOS (DAILY DOSE)       */
-/* ========================================= */
-
 .pedidos-container {
     max-width: 900px;
     margin: 120px auto 60px auto;
     padding: 0 20px;
 }
 
-/* Tarjeta individual de cada pedido */
 .pedido-card {
     display: flex;
     justify-content: space-between;
@@ -23,7 +18,6 @@
     box-shadow: 0 12px 40px var(--cristal-sombra);
 }
 
-/* Información del pedido (izquierda) */
 .info-pedido h3 {
     margin: 0;
     font-family: 'CooperBold', sans-serif;
@@ -42,7 +36,6 @@
     font-size: 1.1rem;
 }
 
-/* Badges de Estado (derecha) */
 .estado-badge {
     padding: 8px 16px;
     border-radius: 50px;
@@ -55,7 +48,6 @@
     min-width: 120px;
 }
 
-/* Colores dinámicos según el estado */
 .PENDIENTE {
     background: rgba(255, 193, 7, 0.15);
     color: #ffc107;
@@ -72,7 +64,7 @@
     background: rgba(40, 167, 69, 0.15);
     color: #28a745;
     border: 1px solid #28a745;
-    animation: pulse-verde 2s infinite; /* Para que el cliente vea que ya puede ir a por él */
+    animation: pulse-verde 2s infinite;
 }
 
 .ENTREGADO {
@@ -87,14 +79,12 @@
     border: 1px solid #dc3545;
 }
 
-/* Animación para cuando el pedido está LISTO */
 @keyframes pulse-verde {
     0% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(40, 167, 69, 0); }
     100% { box-shadow: 0 0 0 0 rgba(40, 167, 69, 0); }
 }
 
-/* Responsivo para móviles */
 @media (max-width: 600px) {
     .pedido-card {
         flex-direction: column;

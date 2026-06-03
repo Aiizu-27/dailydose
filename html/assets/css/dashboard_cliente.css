@@ -1,18 +1,10 @@
-/* ========================================= */
-/* ESTILOS DEL PANEL DE CLIENTE (GLASSMORPHISM) */
-/* ========================================= */
-
 .dashboard-container {
     max-width: 1100px;
-    /* Damos margen superior por si tu header es fijo (absolute/fixed) */
     margin: 120px auto 40px auto; 
     padding: 0 20px;
     color: var(--texto-principal);
 }
 
-/* ========================================= */
-/* CAJAS EFECTO CRISTAL (Reutilizando tu core)*/
-/* ========================================= */
 .welcome-header,
 .perfil-seccion,
 .caja-panel,
@@ -27,7 +19,6 @@
     transition: all 0.3s ease;
 }
 
-/* Efecto Hover idéntico al de tu index */
 .welcome-header:hover,
 .perfil-seccion:hover,
 .caja-panel:hover,
@@ -37,9 +28,6 @@
     box-shadow: 0 8px 20px var(--cristal-sombra);
 }
 
-/* ========================================= */
-/* TIPOGRAFÍAS Y CABECERAS */
-/* ========================================= */
 .welcome-header h2,
 .caja-panel h3,
 .card h3,
@@ -50,16 +38,13 @@
     text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
 }
 
-/* ========================================= */
-/* SECCIÓN PERFIL Y PUNTOS */
-/* ========================================= */
 .perfil-seccion {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     align-items: center;
     justify-content: space-between;
-    border-left: 5px solid var(--rojo-japones); /* Toque distintivo */
+    border-left: 5px solid var(--rojo-japones);
 }
 
 .datos-personales p {
@@ -68,7 +53,6 @@
     color: var(--texto-principal);
 }
 
-/* Tarjeta de puntos destacada */
 .puntos-card {
     background: var(--verde-pastel);
     padding: 1.5rem 2.5rem;
@@ -79,7 +63,6 @@
 }
 
 body.dark-mode .puntos-card {
-    /* En modo oscuro, el verde cambia y el texto necesita contraste */
     color: var(--texto-principal);
 }
 
@@ -102,16 +85,12 @@ body.dark-mode .puntos-card .titulo-puntos {
     color: var(--texto-principal);
 }
 
-/* ========================================= */
-/* GRID DE TARJETAS (Navegación y Listas) */
-/* ========================================= */
 .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
 }
 
-/* Listas dentro de cajas (Favoritos, Pedidos) */
 .caja-panel ul {
     list-style: none;
     padding: 0;
@@ -129,7 +108,6 @@ body.dark-mode .puntos-card .titulo-puntos {
     border-bottom: none;
 }
 
-/* Tablas de pedidos */
 .caja-panel table {
     width: 100%;
     border-collapse: collapse;
@@ -150,9 +128,6 @@ body.dark-mode .caja-panel td {
     border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
-/* ========================================= */
-/* BOTONES */
-/* ========================================= */
 .card .btn {
     display: inline-block;
     margin-top: 15px;

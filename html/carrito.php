@@ -2,13 +2,11 @@
 session_start();
 require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
-// Si por algún motivo de seguridad extra quieres asegurarte de que nadie sin sesión entre aquí copiando la URL:
 if (!isset($_SESSION['ROL'])) {
     header("Location: registro.php");
     exit();
 }
 
-// 1. Obtenemos el carrito de la sesión (si no existe, lo creamos como un array vacío)
 $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
 $total_pedido = 0;
 ?>
@@ -64,9 +62,7 @@ $total_pedido = 0;
                 <ul>
                     <?php foreach($carrito as $id_producto => $item): ?>
                         <?php 
-                            // Calculamos el subtotal de este producto (Precio x Cantidad)
                             $subtotal = $item['precio'] * $item['cantidad'];
-                            // Lo sumamos al Total Global
                             $total_pedido += $subtotal;
                         ?>
                         <li class="item-carrito">

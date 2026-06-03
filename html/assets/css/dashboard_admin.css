@@ -1,7 +1,3 @@
-/* =========================================================
-   DAILY DOSE — CENTRAL DE CONTROL ADMINISTRATIVO (CENTRADO TOTAL)
-   ========================================================= */
- 
 .admin-body {
     background-color: var(--fondo);
     color: var(--texto-principal);
@@ -39,7 +35,6 @@
     width: 100%;
 }
  
-/* ── Stats grid ── */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -81,7 +76,6 @@
     text-transform: uppercase;
 }
  
-/* ── Details / barras ── */
 details {
     background: var(--cristal-fondo);
     backdrop-filter: blur(12px);
@@ -103,7 +97,7 @@ summary {
     user-select: none;
     outline: none;
     color: var(--texto-principal);
-    list-style: none;           /* elimina la flecha nativa */
+    list-style: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -111,7 +105,6 @@ summary {
     text-align: center;
 }
  
-/* flecha manual centrada junto al texto */
 summary::after {
     content: '▾';
     font-size: 0.85rem;
@@ -124,7 +117,6 @@ details[open] summary::after {
  
 summary:hover { color: var(--rojo-japones); }
  
-/* ── Contenido interno ── */
 .details-content {
     padding: 1.5rem;
     border-top: 1px solid var(--cristal-borde);
@@ -136,7 +128,6 @@ summary:hover { color: var(--rojo-japones); }
     gap: 1.5rem;
 }
  
-/* ── Tabla ── */
 .table-wrapper {
     overflow-x: auto;
     border-radius: 8px;
@@ -175,7 +166,6 @@ td {
  
 tr:hover { background: rgba(255, 255, 255, 0.12); }
  
-/* ── Formulario ── */
 .form-grid {
     display: flex;
     flex-wrap: wrap;
@@ -230,7 +220,6 @@ button:hover { background-color: var(--rojo-oscuro); }
     color: white !important;
 }
  
-/* ── Logout ── */
 .logout-container {
     text-align: center;
     margin-top: 3rem;

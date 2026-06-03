@@ -1,11 +1,6 @@
-/* ========================================= */
-/* ESTILOS ESPECÍFICOS DE LA CARTA (MENU)     */
-/* ========================================= */
-
-/* --- 1. LAYOUT PRINCIPAL (Rejilla de 3 columnas) --- */
 .carta-layout {
     display: grid;
-    grid-template-columns: 180px 1fr 340px; /* menú | productos | especialidad */
+    grid-template-columns: 180px 1fr 340px;
     gap: 2.5rem;
     max-width: 1200px;
     margin: 40px auto 4rem auto;
@@ -14,7 +9,6 @@
     min-height: 60vh;
 }
 
-/* --- 2. MENÚ LATERAL DE CATEGORÍAS (IZQUIERDA) --- */
 .carta-layout .menu-categorias {
     position: sticky;
     top: 110px;
@@ -65,12 +59,10 @@
     padding-left: 1rem;
 }
 
-/* --- 3. COLUMNA CENTRAL: PRODUCTOS --- */
 .carta-layout .columna-productos {
     width: 100%;
 }
 
-/* Títulos de Categoría */
 .carta-layout .columna-productos h2 {
     font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
@@ -90,7 +82,6 @@
     margin-top: 0;
 }
 
-/* Lista productos (tarjeta cristal) */
 .carta-layout ul.productos {
     list-style: none;
     padding: 0;
@@ -157,7 +148,6 @@
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
-/* Mensaje vacío */
 .carta-layout .mensaje-vacio {
     text-align: center;
     font-size: 1.2rem;
@@ -166,7 +156,6 @@
     border-radius: 12px;
 }
 
-/* --- Botón Añadir al Carrito --- */
 .carta-layout .btn-carrito {
     display: inline-block;
     padding: 8px 16px;
@@ -200,7 +189,6 @@
     text-decoration: underline;
 }
 
-/* --- 4. COLUMNA DERECHA: ESPECIALIDAD --- */
 .carta-layout .columna-lateral {
     position: sticky;
     top: 110px;
@@ -225,7 +213,6 @@
     border-color: var(--rojo-japones);
 }
 
-/* --- 5. RESPONSIVE --- */
 @media (max-width: 900px) {
     .carta-layout {
         grid-template-columns: 1fr;

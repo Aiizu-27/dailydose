@@ -13,17 +13,15 @@ $pass_nueva  = $_POST['pass_nueva'] ?? '';
 
 if (!empty($pass_actual) && !empty($pass_nueva)) {
 
-    // LLAMADA AL PL: Traemos el hash almacenado de la contraseña
     $stmt_hash = $conn->prepare("CALL sp_auth_obtener_password_hash(?)");
     $stmt_hash->bind_param("i", $id_usuario);
     $stmt_hash->execute();
     $usuario = $stmt_hash->get_result()->fetch_assoc();
     
-    while ($conn->more_results()) $conn->next_result(); // Limpiar canal
+    while ($conn->more_results()) $conn->next_result();
     $stmt_hash->close();
 
     if ($usuario && password_verify($pass_actual, $usuario['CONTRASENA'])) {
-        // La contraseña coincide, guardamos la nueva
         $nueva_hash = password_hash($pass_nueva, PASSWORD_DEFAULT);
         
         $stmt_up = $conn->prepare("UPDATE USUARIOS SET CONTRASENA = ? WHERE ID_USUARIO = ?");

@@ -1,38 +1,34 @@
 document.addEventListener('DOMContentLoaded', () => {
     const body = document.body;
 
-// ---------- Toggle Dark Mode con Persistencia ----------
+
 const toggleTema = document.getElementById("toggleTema");
 if(toggleTema){
     const solIcon = document.querySelector(".header-right .sol");
     const lunaIcon = document.querySelector(".header-right .luna");
     const circle = document.querySelector(".header-right .circle");
 
-    // 1. COMPROBACIÓN AL CARGAR LA PÁGINA: ¿Ya activó el modo oscuro antes?
     const temaGuardado = localStorage.getItem("tema_daily_dose");
     
     if (temaGuardado === "dark") {
         body.classList.add("dark-mode");
         toggleTema.checked = true;
-        // Ajustamos la interfaz visual para que el botón refleje que está encendido
         if(solIcon) solIcon.style.opacity = "0";
         if(lunaIcon) lunaIcon.style.opacity = "1";
         if(circle) circle.style.transform = "translateX(26px)";
     }
 
-    // 2. ESCUCHAR LOS CAMBIOS: Guardamos la elección cada vez que pulse el botón
     toggleTema.addEventListener("change", () => {
         if (toggleTema.checked) {
             body.classList.add("dark-mode");
-            localStorage.setItem("tema_daily_dose", "dark"); // Guarda "dark" en el navegador
+            localStorage.setItem("tema_daily_dose", "dark");
             
             if(solIcon) solIcon.style.opacity = "0";
             if(lunaIcon) lunaIcon.style.opacity = "1";
             if(circle) circle.style.transform = "translateX(26px)";
         } else {
             body.classList.remove("dark-mode");
-            localStorage.setItem("tema_daily_dose", "light"); // Guarda "light" en el navegador
-            
+            localStorage.setItem("tema_daily_dose", "light");
             if(solIcon) solIcon.style.opacity = "1";
             if(lunaIcon) lunaIcon.style.opacity = "0";
             if(circle) circle.style.transform = "translateX(0)";
@@ -40,17 +36,15 @@ if(toggleTema){
     });
 }
 
-    // ---------- Menú hamburguesa ----------
     const menuBtn = document.getElementById('menuBtn');
     const menuCerrar = document.getElementById('menuCerrar');
-    const menu = document.querySelector('.menu-container'); // Ojo: clase corregida según tu CSS anterior
+    const menu = document.querySelector('.menu-container');
 
     if(menuBtn && menuCerrar && menu){
         menuBtn.addEventListener('click', () => menu.classList.add('open'));
         menuCerrar.addEventListener('click', () => menu.classList.remove('open'));
     }
 
-    // ---------- Tabs Login / Registro ----------
     const tabLogin = document.getElementById("tabLogin");
     const tabRegistro = document.getElementById("tabRegistro");
     const formLogin = document.getElementById("formLogin");
@@ -71,7 +65,6 @@ if(toggleTema){
         });
     }
 
-    // ---------- Mostrar / Ocultar contraseña ----------
     function togglePassword(inputId, iconId){
         const input = document.getElementById(inputId);
         const icon = document.getElementById(iconId);
@@ -102,20 +95,15 @@ if(toggleTema){
     togglePassword("claveLogin", "iconoOjoLogin");
     togglePassword("claveRegistro", "iconoOjoRegistro");
 
-    // ==========================================
-    // LÓGICA AJAX (Fetch) - CORREGIDA
-    // ==========================================
 
-    // LOGIN
     document.getElementById('formLogin').addEventListener('submit', function(e){
         e.preventDefault();
         const formData = new FormData(this);
 
         fetch('/actions/auth_login.php', { method:'POST', body: formData })
-        .then(res => res.json()) // ahora esperamos JSON
+        .then(res => res.json())
         .then(data => {
             if(data.status === "login_ok"){
-                // Redirigir según rol
                 if(data.rol === "CLIENTE"){
                     window.location.href = "/panel/dashboard_cliente.php";
                 } else if(data.rol === "EMPLEADO"){
@@ -136,13 +124,12 @@ if(toggleTema){
         .catch(err => console.error("Error en fetch:", err));
     });
 
-    // REGISTRO
-    if(formRegistro) { // Solo ejecutar si el formulario existe
+
+    if(formRegistro) { 
         formRegistro.addEventListener('submit', function(e){
             e.preventDefault();
             const formData = new FormData(this);
 
-            // RUTA CORREGIDA: 'actions/auth_registro.php'
             fetch('/actions/auth_registro.php', { method:'POST', body: formData })
             .then(res => res.text())
             .then(data => {
@@ -150,7 +137,6 @@ if(toggleTema){
 
                 if(respuesta === "registro_ok"){
                     alert("Registro exitoso. Ya puedes iniciar sesión.");
-                    // Si existe el tabLogin, hacemos click para cambiar de pestaña
                     if(document.getElementById('tabLogin')) {
                         document.getElementById('tabLogin').click();
                     }
