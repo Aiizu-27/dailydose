@@ -23,8 +23,8 @@ INSERT INTO ESPECIALIDAD_ACTUAL (ID_ESPECIALIDAD, ORIGEN_GRANO, NOTAS_CATA, TUES
 
 
 INSERT INTO PRODUCTOS (ID_PRODUCTO, NOMBRE, ID_CATEGORIA, ID_ESPECIALIDAD, PRECIO, STOCK, ID_PROVEEDOR, RUTA_IMAGEN) VALUES
-(1, 'Cruasán de Mantequilla', 1, NULL, 2.50, 25, 2, 'assets/img/productos/bakery_cruasan.jpg'),
-(2, 'Cinnamon Roll de Canela', 1, NULL, 3.80, 4, 2, 'assets/img/productos/bakery_cinnamon.jpg'),
+(1, 'Cruasán de Mantequilla', 1, NULL, 2.50, 25, 2, 'assets/img/productos/croissant_mantequilla.png'),
+(2, 'Cinnamon Roll de Canela', 1, NULL, 3.80, 4, 2, 'assets/img/productos/'),
 (3, 'Tostada de Aguacate y Feta', 2, NULL, 6.50, 15, 2, 'assets/img/productos/brunch_aguacate.jpg'),
 (4, 'Sandwich de Pastrami Premium', 2, NULL, 8.90, 10, 2, 'assets/img/productos/brunch_pastrami.jpg'),
 (5, 'Flat White', 3, 2, 3.20, 450, 1, 'assets/img/productos/cafe_flatwhite.jpg'),
