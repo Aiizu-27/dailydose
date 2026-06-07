@@ -161,6 +161,18 @@ BEGIN
 END //
 
 
+DROP PROCEDURE IF EXISTS sp_liberar_mesas_automatico //
+CREATE PROCEDURE sp_liberar_mesas_automatico()
+BEGIN
+    UPDATE MESAS m
+    JOIN PEDIDOS p ON m.ID_MESA = p.ID_MESA
+    SET m.ESTADO = 'LIBRE'
+    WHERE m.ESTADO = 'OCUPADA'
+      AND p.ESTADO = 'ENTREGADO'
+      AND TIMESTAMPDIFF(MINUTE, p.FECHA, NOW()) >= 90;
+END //
+
+
 DROP PROCEDURE IF EXISTS sp_obtener_empleados //
 CREATE PROCEDURE sp_obtener_empleados()
 BEGIN

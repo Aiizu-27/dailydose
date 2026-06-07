@@ -54,6 +54,11 @@ foreach ($ids_pedidos as $id_pedido) {
     $stmt->close();
 }
  
+$stmt = $conn->prepare("CALL sp_liberar_mesas_automatico()");
+$stmt->execute();
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+
 $stmt = $conn->prepare("CALL sp_obtener_mesas()");
 $stmt->execute();
 $res_mesas = $stmt->get_result();
