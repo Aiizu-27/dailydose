@@ -85,22 +85,30 @@ $conn->close();
                 $categoriaActual = $row['CATEGORIA'];
                 $idCategoria = strtolower(str_replace(' ', '-', $categoriaActual));
                 
+                echo "<div class='cat-heading'>";
                 echo "<h2 id='$idCategoria'>" . htmlspecialchars($categoriaActual) . "</h2>";
+                echo "<div class='cat-linea'></div>";
+                echo "</div>";
+                
                 echo "<ul class='productos'>";
             }
             ?>
             <li>
+                <!-- La imagen o placeholder son hijos directos del li (Columna 1 del Grid) -->
+                <?php if (!empty($row['RUTA_IMAGEN'])): ?>
+                    <img src="<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>"
+                         alt="<?= htmlspecialchars($row['NOMBRE']) ?>" 
+                         class="img-producto">
+                <?php else: ?>
+                    <div class="img-placeholder">☕</div>
+                <?php endif; ?>
+
+                <!-- Información del producto (Columna 2, Fila 1) -->
                 <div class="info-prod">
-                    <?php if (!empty($row['RUTA_IMAGEN'])): ?>
-                        <img src="assets/img/productos/<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>" 
-                             alt="<?= htmlspecialchars($row['NOMBRE']) ?>" 
-                             class="img-producto">
-                    <?php else: ?>
-                        <div class="img-placeholder">☕</div>
-                    <?php endif; ?>
                     <span class="grid-nombre nombre"><?= htmlspecialchars($row['NOMBRE']) ?></span>
                 </div>
 
+                <!-- Meta y acciones (Columna 2, Fila 2) -->
                 <div class="meta-prod">
                     <span class="precio"><?= number_format($row['PRECIO'], 2) ?>€</span>
 
@@ -110,7 +118,7 @@ $conn->close();
                             <input type="hidden" name="producto" value="<?= htmlspecialchars($row['NOMBRE']) ?>">
                             <input type="hidden" name="precio" value="<?= $row['PRECIO'] ?>">
                             <input type="hidden" name="stock" value="<?= $row['STOCK'] ?>">
-                            <button type="submit" class="btn-carrito">Añadir</button>
+                            <button type="submit" class="btn-carrito">+</button>
                         </form>
                     <?php else: ?>
                         <a href="registro.php" class="btn-login-pedido">Inicia sesión</a>
