@@ -1,108 +1,59 @@
-# DailyDose - Aplicación Web y Base de Datos
+# Daily Dose - Plataforma Transaccional Web y Persistencia Relacional a Medida
 
-## Descripción del proyecto
+## 📋 Descripción del Proyecto
 
-DailyDose es una aplicación web diseñada para la gestión integral de un entorno empresarial. El sistema permite administrar usuarios, clientes, empleados, productos, pedidos, pagos e inventario, así como un sistema de fidelización basado en puntos.
+**Daily Dose** es una solución de software a medida diseñada para la transformación digital y gestión operativa integral de una pyme del sector hostelero. A diferencia de las arquitecturas comerciales rígidas, este sistema implementa un entorno desacoplado y transaccional que administra flujos críticos de negocio: autenticación centralizada, control de comandas y mesas en sala, optimización de inventario, pasarela de pagos simulada y un motor de fidelización de clientes basado en recompensas acumulativas (*Daily Points*).
 
-Este proyecto forma parte de un Trabajo de Fin de Ciclo (TFC) y se centra en el desarrollo de la aplicación web y el diseño de la base de datos relacional.
+Este proyecto constituye el núcleo de desarrollo técnico y persistencia de datos del Trabajo Fin de Ciclo (TFC).
 
 <p align="center">
   <a href="https://daily-dose.es" target="_blank">
-    <img src="https://img.shields.io/badge/DailyDose-Abrir%20Web-f42b1d?style=for-the-badge&logo=googlechrome&logoColor=white" />
+    <img src="https://img.shields.io/badge/DailyDose-Abrir%20Web-00E5FF?style=for-the-badge&logo=googlechrome&logoColor=white" />
   </a>
 </p>
 
-<p align="center">
-  <img src="https://img.shields.io/badge/En%20desarrollo-C7E3D4?style=for-the-badge" />
-</p>
+---
+
+## 🛠️ Stack Tecnológico (Arquitectura LEMP)
+
+La plataforma se despliega sobre una infraestructura distribuida en tres capas independientes bajo un stack de alto rendimiento de código abierto:
+
+* **Capa de Presentación (Frontend):** Interfaz nativa construida bajo el estándar **Mobile-First**. Implementa manipulación dinámica del DOM mediante **Vanilla JavaScript** y diseño adaptativo con hojas de estilo avanzadas (estética *Glassmorphism* y conmutación reactiva mediante variables globales CSS para **Modo Claro / Modo Oscuro**).
+* **Capa de Aplicación (Backend):** Lógica de negocio modular programada en **PHP**, delegando la ejecución de scripts dinámicos al entorno aislado **PHP-FPM** mediante sockets FastCGI sobre un servidor web **Nginx**.
+* **Capa de Datos (Persistencia):** Motor relacional **MySQL** encargado de la consistencia estructural del ecosistema.
 
 ---
 
-## Objetivo
+## ⚙️ Características Técnicas y Bastionado
 
-El objetivo del proyecto es desarrollar una aplicación web funcional que permita:
+### 1. Ingeniería de Datos y Normalización (3FN)
+La base de datos relacional ha sido modelada e implementada desde cero, aplicando un riguroso proceso de normalización hasta la **Tercera Forma Normal (3FN)** para eliminar redundancias y dependencias anómalas. La integridad referencial del negocio está blindada a nivel de motor mediante restricciones explícitas de claves ajenas (*Foreign Keys*) asociadas a directivas automatizadas como `ON DELETE CASCADE` y `ON DELETE SET NULL`.
 
-- Gestión de usuarios con distintos roles (cliente, empleado, administrador)
-- Administración de productos y proveedores
-- Gestión de pedidos y detalle de pedidos
-- Control de inventario
-- Sistema de pagos
-- Sistema de puntos y fidelización de clientes
+### 2. Abstracción de Lógica mediante Stored Procedures
+Para maximizar la eficiencia y liberar carga de cómputo en el servidor de aplicaciones, la lógica pesada transaccional se ha encapsulado directamente en el motor relacional mediante **Procedimientos Almacenados** (ej. `sp_carta_obtener_productos`, `sp_admin_obtener_pedidos_hoy`). Las excepciones operativas se gestionan de manera interna lanzando alertas nativas mediante la directiva `SIGNAL SQLSTATE`.
 
----
+### 3. Mitigación de Vectores de Ataque (OWASP Top 10)
+* **Inyección SQL:** Toda la comunicación e intercambio de parámetros entre PHP y MySQL se realiza mediante **sentencias preparadas con la extensión MySQLi** (`prepare()` y `bind_param()`), forzando la precompilación sintáctica y aislando por completo los datos de la lógica de ejecución.
+* **Criptografía y Sesiones:** Las credenciales de acceso se protegen mediante hashing criptográfico irreversible utilizando el algoritmo **Bcrypt** (`password_hash()`). Además, se implementa un control de accesos basado en roles lógicos (**RBAC**), y el archivo maestro de configuración de base de datos se almacena de forma segura fuera del directorio raíz público (`public_html`) de Nginx.
 
-## Arquitectura de la aplicación
-
-La aplicación sigue una arquitectura cliente-servidor:
-
-- **Frontend:** Interfaz web para la interacción del usuario
-- **Backend:** Lógica de negocio y gestión de datos
-- **Base de datos:** Sistema relacional MySQL
-
-Flujo de la aplicación:
-
-Usuario → Interfaz Web → Backend → Base de Datos
+### 4. Consumo Asíncrono de Datos (Fetch API)
+El intercambio de información entre el frontend y el backend se realiza en segundo plano de manera asíncrona mediante la **Fetch API**, transmitiendo objetos estructurados en formato **JSON**. Esto evita recargas completas de la interfaz, reduce drásticamente la latencia y minimiza el consumo de ancho de banda de la red local segmentada del establecimiento.
 
 ---
 
-## Base de datos
+## 🗄️ Estructura del Modelo Relacional
 
-La base de datos está diseñada bajo un modelo relacional e incluye las siguientes entidades principales:
+El esquema de persistencia se compone de tablas interconectadas que segmentan las operaciones del negocio:
 
-- USUARIOS
-- CLIENTES
-- EMPLEADOS
-- PRODUCTOS
-- PROVEEDORES
-- PEDIDOS
-- DETALLE_PEDIDO
-- PAGOS
-- INVENTARIO
-- PROMOCIONES
-- LOYALTY_TRANSACTIONS
-- CANJES
-
-El sistema garantiza la integridad de los datos mediante claves primarias y foráneas.
+* **Módulo de Accesos:** `USUARIOS`, `CLIENTES`, `EMPLEADOS` (Seguridad RBAC).
+* **Módulo de Ventas y Sala:** `MESAS`, `PEDIDOS`, `DETALLE_PEDIDO`, `PAGOS`.
+* **Módulo de Logística:** `PRODUCTOS`, `PROVEEDORES`, `INVENTARIO`.
+* **Módulo de Fidelización:** `PROMOCIONES`, `LOYALTY_TRANSACTIONS`, `CANJES`.
 
 ---
 
-## Funcionalidades principales
+## 🚀 Despliegue e Infraestructura Cloud
 
-- Registro e inicio de sesión de usuarios
-- Gestión de perfiles según rol
-- Catálogo de productos
-- Creación y gestión de pedidos
-- Cálculo de totales y detalle de compra
-- Registro de pagos
-- Sistema de puntos de fidelización
-- Historial de transacciones
-
----
-
-## Modelo de datos
-
-La base de datos está normalizada y estructurada para evitar redundancia y asegurar la integridad de los datos.
-
-Relaciones principales:
-
-- Usuarios → Clientes / Empleados
-- Clientes → Pedidos
-- Pedidos → Detalle de pedidos
-- Productos → Proveedores
-- Clientes → Transacciones de fidelización
-
----
-
-## Autor
-
-Proyecto desarrollado como parte del Trabajo de Fin de Ciclo (TFC), centrado en el desarrollo de una aplicación web con base de datos relacional.
-
----
-
-## Nota
-
-Este proyecto tiene un enfoque académico y demuestra competencias en:
-
-- Desarrollo web
-- Diseño de bases de datos relacionales
-- Modelado de sistemas empresariales
+La aplicación está optimizada para su explotación en producción dentro de un entorno virtualizado seguro:
+* **Alojamiento:** Servidor Privado Virtual (VPS) con sistema operativo Linux Ubuntu Server alojado en **AWS Lightsail**.
+* **Gestión:** Acceso y administración remota mediante protocolo SSH seguro por clave pública/privada y control de versiones integrado con Git.
