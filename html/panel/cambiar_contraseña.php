@@ -7,7 +7,7 @@
 <link rel="icon" type="assets/image/png" href="../assets/img/APP.png">
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/variables.css?v=2">
-<link rel="stylesheet" href="assets/css/header.css">
+<link rel="stylesheet" href="assets/css/header.css?v=3">
 <link rel="stylesheet" href="assets/css/footer.css">
 </head>
 <body>

@@ -41,8 +41,14 @@ if(toggleTema){
     const menu = document.querySelector('.menu-container');
 
     if(menuBtn && menuCerrar && menu){
-        menuBtn.addEventListener('click', () => menu.classList.add('open'));
-        menuCerrar.addEventListener('click', () => menu.classList.remove('open'));
+        menuBtn.addEventListener('click', () => {
+            menu.classList.add('open');
+            menuCerrar.classList.add('open');
+        });
+        menuCerrar.addEventListener('click', () => {
+            menu.classList.remove('open');
+            menuCerrar.classList.remove('open');
+        });
     }
 
     const tabLogin = document.getElementById("tabLogin");

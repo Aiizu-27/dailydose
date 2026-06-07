@@ -214,6 +214,29 @@ header {
     right: 0;
   }
 
+  #menuCerrar {
+    display: none;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--rojo-japones);
+    cursor: pointer;
+    z-index: 25;
+    transition: color 0.3s;
+  }
+
+  #menuCerrar:hover {
+    color: var(--rojo-oscuro);
+  }
+
+  #menuCerrar.open {
+    display: block;
+  }
+
   .header-right-mobile {
     display: flex;
     justify-content: flex-start;

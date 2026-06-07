@@ -13,7 +13,7 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
 
     <link rel="stylesheet" href="assets/css/variables.css?v=2">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/header.css?v=3">
     <link rel="stylesheet" href="assets/css/footer.css">
     
     <link rel="stylesheet" href="assets/css/sala_reuniones.css">
