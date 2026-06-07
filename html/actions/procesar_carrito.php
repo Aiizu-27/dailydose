@@ -53,6 +53,7 @@ try {
     if (!$stmt_det) throw new Exception("Error prepare sp_detalle: " . $conn->error);
 
     foreach ($_SESSION['carrito'] as $id_prod => $item) {
+        if (!is_numeric($id_prod)) continue;
         $subtotal = round($item['precio'] * $item['cantidad'], 2);
         $stmt_det->bind_param("iiidd", $id_pedido, $id_prod, $item['cantidad'], $item['precio'], $subtotal);
         $stmt_det->execute();
