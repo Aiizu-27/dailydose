@@ -118,6 +118,6 @@ $stmt->close();
 <?php include "includes/footer.php"; ?>
 
 <!-- JS -->
-<script src="assets/js/script.js"></script>
+<script src="assets/js/script.js?v=2"></script>
 </body>
 </html>
