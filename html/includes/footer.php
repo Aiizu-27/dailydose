@@ -34,11 +34,11 @@
     <div class="footer-copy">
         <p>&copy; 2026 DAILY DOSE · Todos los derechos reservados</p>
         <div class="footer-legales">
-            <a href="politicasdeprivacidad.php">Política de Privacidad</a>
+            <a href="../includes/politicasdeprivacidad.php">Política de Privacidad</a>
             <span class="separador">·</span> 
-            <a href="terminosdeuso.php">Términos de Uso</a>
+            <a href="../includes/terminosdeuso.php">Términos de Uso</a>
             <span class="separador">·</span> 
-            <a href="politicadecorreoelectronico.php">Política de Correo Electrónico</a>
+            <a href="../includes/policidadecorreoelectronico.php">Política de Correo Electrónico</a>
         </div>
     </div>
 </footer>
