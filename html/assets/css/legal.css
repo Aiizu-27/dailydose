@@ -3,7 +3,7 @@
    ========================================== */
 
 .bg-legal {
-  background: --var(--fondo);
+  background: var(--fondo);
   min-height: 100vh;
   color: var(--texto-principal, #ffffff);
   font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
