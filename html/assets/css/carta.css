@@ -7,11 +7,11 @@
    NAV LATERAL FIJO (IZQUIERDA)
 ════════════════════════════════ */
 .menu-categorias {
-    position: fixed;
-    top: 80px;            /* arranca justo debajo del header (80px) */
-    left: 0;
+    position: sticky;
+    top: 95px;            /* arranca justo debajo del header (80px) + pequeño margen */
+    align-self: start;
     width: var(--nav-w);
-    height: calc(100vh - 80px);  /* ocupa el resto de la pantalla sin pisar el header */
+    max-height: calc(100vh - 110px);  /* no pisa el header ni se sale de su columna en el grid */
     background: var(--cristal-fondo);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -88,18 +88,13 @@
    LAYOUT PRINCIPAL
 ════════════════════════════════ */
 .carta-layout {
-    margin-left: var(--nav-w);
+    position: relative;
     display: grid;
-    grid-template-columns: 1fr 300px;
+    grid-template-columns: var(--nav-w) 1fr 300px;
     gap: 1.5rem;
     padding: 2rem 1.5rem 4rem 2rem;
     align-items: start;
     min-height: 100vh;
-}
-
-/* El footer de la carta no debe quedar bajo el menu lateral fijo */
-.carta-layout ~ footer {
-    margin-left: var(--nav-w);
 }
  
 /* ════════════════════════════════
@@ -349,6 +344,9 @@
     padding-left: 1.3rem;
     padding-right: 1.3rem;
     border-bottom: 1px solid rgba(200, 200, 200, 0.18);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
  
 .carta-layout .destacado-seasonal {
