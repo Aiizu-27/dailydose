@@ -184,8 +184,22 @@
     -moz-appearance: textfield;
 }
 
+.cajas select {
+    padding-top: 1.4rem;
+    color: var(--texto-principal);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%232B2B2B' fill-opacity='0.5' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    cursor: pointer;
+}
+
 .cajas select:focus {
     border-color: rgba(244, 43, 29, 0.4);
+}
+
+.cajas select option {
+    color: var(--texto-principal);
+    background: var(--fondo);
 }
 
 .cajas select ~ label {
