@@ -86,7 +86,7 @@ $stmt->close();
     </div>
 </nav>
 
-<div class="container" style="max-width: 1200px; margin-top: 110px;">
+<div class="container" style="max-width: 1200px; margin: 110px auto 0;">
     <h2 style="text-align:center;">Centro de Operaciones Globales</h2>
     <p style="text-align:center; margin-bottom:30px;">Admin activo: <strong><?= htmlspecialchars($_SESSION['NOMBRE']) ?></strong></p>
 
