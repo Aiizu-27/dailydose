@@ -97,7 +97,7 @@ $conn->close();
             <li>
                 <!-- 🟢 CORREGIDO: La imagen o placeholder se sitúan fuera de info-prod para quedar alineados arriba a borde completo -->
                 <?php if (!empty($row['RUTA_IMAGEN'])): ?>
-                    <img src="assets/img/productos/<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>" 
+                    <img src="<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>"
                          alt="<?= htmlspecialchars($row['NOMBRE']) ?>" 
                          class="img-producto">
                 <?php else: ?>
