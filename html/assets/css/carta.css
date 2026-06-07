@@ -8,16 +8,16 @@
 ════════════════════════════════ */
 .menu-categorias {
     position: fixed;
-    top: 0;
+    top: 80px;            /* arranca justo debajo del header (80px) */
     left: 0;
     width: var(--nav-w);
-    height: 100vh;
+    height: calc(100vh - 80px);  /* ocupa el resto de la pantalla sin pisar el header */
     background: var(--cristal-fondo);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--cristal-borde);
     box-shadow: 2px 0 20px var(--cristal-sombra);
-    z-index: 50;
+    z-index: 5;   /* por debajo del header */
     display: flex;
     flex-direction: column;
     padding: 1.5rem 0.8rem 1rem;
@@ -289,7 +289,7 @@
 ════════════════════════════════ */
 .carta-layout .columna-lateral {
     position: sticky;
-    top: 1.5rem;
+    top: calc(80px + 1.5rem);  /* se queda fijo por debajo del header */
     min-width: 0;
     z-index: 10;
 }

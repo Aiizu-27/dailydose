@@ -48,9 +48,9 @@ $conn->close();
     <link rel="stylesheet" href="assets/css/variables.css">
     <link rel="stylesheet" href="assets/css/style.css?v=2">
 
-    <link rel="stylesheet" href="assets/css/header.css">
+    <link rel="stylesheet" href="assets/css/header.css?v=2">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/carta.css?v=2">
+    <link rel="stylesheet" href="assets/css/carta.css?v=3">
 </head>
 <body>
 
