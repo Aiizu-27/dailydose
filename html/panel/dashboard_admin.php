@@ -269,6 +269,21 @@ $stmt->close();
                     <option value="MAÑANA">Mañana</option>
                     <option value="TARDE">Tarde</option>
                 </select>
+
+                <fieldset style="grid-column: 1 / -1; display:flex; flex-wrap:wrap; gap:12px; border:1px solid var(--cristal-borde); border-radius:8px; padding:10px 14px;">
+                    <legend style="font-size:0.8rem; opacity:0.8; padding:0 6px;">Días que trabaja (deja 2 sin marcar = días libres)</legend>
+                    <?php
+                    $dias_semana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+                    foreach ($dias_semana as $offset => $nombre_dia):
+                        $marcado = $offset < 5; // por defecto Lun-Vie trabajan, Sáb y Dom libres
+                    ?>
+                        <label style="display:flex; align-items:center; gap:5px; font-size:0.85rem;">
+                            <input type="checkbox" name="dias[]" value="<?= $offset ?>" <?= $marcado ? 'checked' : '' ?>>
+                            <?= $nombre_dia ?>
+                        </label>
+                    <?php endforeach; ?>
+                </fieldset>
+
                 <button type="submit">Asignar Cuadrante</button>
             </form>
         </div>
