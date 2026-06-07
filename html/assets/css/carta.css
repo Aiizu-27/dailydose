@@ -96,6 +96,11 @@
     align-items: start;
     min-height: 100vh;
 }
+
+/* El footer de la carta no debe quedar bajo el menu lateral fijo */
+.carta-layout ~ footer {
+    margin-left: var(--nav-w);
+}
  
 /* ════════════════════════════════
    COLUMNA PRODUCTOS
@@ -458,6 +463,10 @@
         grid-template-columns: 1fr;
         gap: 1.5rem;
         padding: 1.5rem 1rem 3rem;
+    }
+
+    .carta-layout ~ footer {
+        margin-left: 0;
     }
  
     .carta-layout .columna-lateral {
