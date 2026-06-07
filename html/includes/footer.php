@@ -38,7 +38,7 @@
             <span class="separador">·</span> 
             <a href="../includes/terminosdeuso.php">Términos de Uso</a>
             <span class="separador">·</span> 
-            <a href="../includes/policidadecorreoelectronico.php">Política de Correo Electrónico</a>
+            <a href="../includes/politicadecorreoelectronico.php">Política de Correo Electrónico</a>
         </div>
     </div>
 </footer>
