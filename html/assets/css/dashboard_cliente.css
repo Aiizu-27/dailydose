@@ -170,3 +170,25 @@ body.dark-mode .caja-panel td {
     color: white;
     box-shadow: 0 4px 15px var(--cristal-sombra);
 }
+@media (max-width: 600px) {
+    .dashboard-container {
+        margin: 95px auto 30px auto;
+        padding: 0 12px;
+    }
+
+    .welcome-header,
+    .perfil-seccion,
+    .caja-panel,
+    .card {
+        padding: 1.25rem;
+    }
+
+    .perfil-seccion {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .cards-grid {
+        grid-template-columns: 1fr;
+    }
+}

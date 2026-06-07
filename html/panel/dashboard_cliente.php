@@ -59,7 +59,7 @@ $conn->close();
 
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="stylesheet" href="../assets/css/dashboard_cliente.css">
+    <link rel="stylesheet" href="../assets/css/dashboard_cliente.css?v=2">
 </head>
 <body>
 
