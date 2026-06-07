@@ -26,7 +26,7 @@
  
 .cabecera-carrito p {
     font-size: 0.88rem;
-    color: rgba(43, 43, 43, 0.5);
+    color: var(--texto-principal);
 }
  
 /* ── TARJETA CRISTAL (BASE) ── */
@@ -73,7 +73,7 @@
  
 .carrito-vacio p {
     font-size: 0.9rem;
-    color: rgba(43, 43, 43, 0.5);
+    color: var(--texto-principal);
     line-height: 1.5;
 }
  
@@ -118,7 +118,7 @@
  
 .item-precio {
     font-size: 0.78rem;
-    color: rgba(43, 43, 43, 0.48);
+    color: var(--texto-principal);
 }
  
 .item-subtotal {

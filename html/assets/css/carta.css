@@ -294,7 +294,7 @@
 ════════════════════════════════ */
 .carta-layout .columna-lateral {
     position: sticky;
-    top: calc(80px + 1.5rem);  /* se queda fijo por debajo del header */
+    top: calc(80px + 1.5rem);
     min-width: 0;
     z-index: 10;
 }
@@ -333,7 +333,7 @@
     font-size: 0.65rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(43, 43, 43, 0.4);
+    color: var(--texto-principal);
     margin-top: 0.3rem;
 }
  
@@ -361,7 +361,7 @@
     font-size: 0.55rem;
     letter-spacing: 2px;
     text-transform: uppercase;
-    color: rgba(43, 43, 43, 0.38);
+    color: var(--texto-principal);
     font-weight: 700;
     margin-bottom: 0.45rem;
     font-family: sans-serif;
@@ -376,7 +376,7 @@
  
 .carta-layout .notas {
     font-size: 0.75rem;
-    color: rgba(43, 43, 43, 0.52);
+    color: var(--texto-principal);
     line-height: 1.4;
 }
  
@@ -413,7 +413,7 @@
  
 .carta-layout .desc-filtro {
     font-size: 0.75rem;
-    color: rgba(43, 43, 43, 0.52);
+    color: var(--texto-principal);
     line-height: 1.45;
 }
  
@@ -426,7 +426,7 @@
  
 .carta-layout .seasonal-desc {
     font-size: 0.75rem;
-    color: rgba(43, 43, 43, 0.52);
+    color: var(--texto-principal);
     line-height: 1.45;
 }
  
