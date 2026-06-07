@@ -6,7 +6,7 @@
   background: var(--fondo); /* Mantiene tu fondo base */
   min-height: 100vh;
   color: var(--texto-principal, #ffffff);
-  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-family: 'CooperBold', sans-serif;
   padding: 4rem 1rem;
   display: flex;
   justify-content: center;

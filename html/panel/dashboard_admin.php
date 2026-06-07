@@ -66,7 +66,7 @@ $stmt->close();
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/footer.css">
-    <link rel="stylesheet" href="../assets/css/dashboard_admin.css?v=2">
+    <link rel="stylesheet" href="../assets/css/dashboard_admin.css?v=3">
 </head>
 <body class="admin-body">
 

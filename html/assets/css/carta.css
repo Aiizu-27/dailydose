@@ -373,7 +373,7 @@
     color: var(--texto-principal);
     font-weight: 700;
     margin-bottom: 0.45rem;
-    font-family: sans-serif;
+    font-family: 'CooperBold', sans-serif;
 }
  
 .carta-layout .origen {

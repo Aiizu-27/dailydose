@@ -6,7 +6,7 @@
     <title>Política de Privacidad · DAILY DOSE</title>
     <link rel="stylesheet" href="../assets/css/variables.css?v=2">
     <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/legal.css">
+    <link rel="stylesheet" href="../assets/css/legal.css?v=2">
 </head>
 <body class="bg-legal">
 
