@@ -1,17 +1,17 @@
-rito · CSS
-/* ════════════════════════════════
-   CONTENEDOR PRINCIPAL
-════════════════════════════════ */
+/* =====================================================
+   ESTILOS ESPECÍFICOS: TU PEDIDO / CARRITO — DAILY DOSE
+   ===================================================== */
+
+/* ── CONTENEDOR PRINCIPAL ── */
 .carrito-container {
     max-width: 1100px;
     margin: 120px auto 60px auto;
     padding: 0 20px;
     color: var(--texto-principal);
+    box-sizing: border-box;
 }
  
-/* ════════════════════════════════
-   CABECERA
-════════════════════════════════ */
+/* ── CABECERA ── */
 .cabecera-carrito {
     text-align: center;
     margin-bottom: 2.5rem;
@@ -29,9 +29,7 @@ rito · CSS
     color: rgba(43, 43, 43, 0.5);
 }
  
-/* ════════════════════════════════
-   TARJETA CRISTAL (base)
-════════════════════════════════ */
+/* ── TARJETA CRISTAL (BASE) ── */
 .tarjeta-cristal {
     background: var(--cristal-fondo);
     backdrop-filter: blur(16px);
@@ -42,9 +40,7 @@ rito · CSS
     box-shadow: 0 8px 32px var(--cristal-sombra);
 }
  
-/* ════════════════════════════════
-   LAYOUT GRID
-════════════════════════════════ */
+/* ── LAYOUT GRID ── */
 .carrito-layout {
     display: grid;
     grid-template-columns: 1fr 320px;
@@ -52,9 +48,7 @@ rito · CSS
     align-items: start;
 }
  
-/* ════════════════════════════════
-   CARRITO VACÍO
-════════════════════════════════ */
+/* ── CARRITO VACÍO ── */
 .carrito-vacio {
     text-align: center;
     max-width: 480px;
@@ -83,9 +77,7 @@ rito · CSS
     line-height: 1.5;
 }
  
-/* ════════════════════════════════
-   LISTA DE PRODUCTOS
-════════════════════════════════ */
+/* ── LISTA DE PRODUCTOS ── */
 .lista-productos h3,
 .resumen-pedido h3 {
     font-family: 'CooperBold', sans-serif;
@@ -136,9 +128,7 @@ rito · CSS
     white-space: nowrap;
 }
  
-/* ════════════════════════════════
-   RESUMEN DEL PEDIDO
-════════════════════════════════ */
+/* ── RESUMEN DEL PEDIDO ── */
 .fila-total {
     display: flex;
     justify-content: space-between;
@@ -165,9 +155,7 @@ rito · CSS
     line-height: 1;
 }
  
-/* ════════════════════════════════
-   FORMULARIO CHECKOUT
-════════════════════════════════ */
+/* ── FORMULARIO CHECKOUT ── */
 .form-checkout {
     display: flex;
     flex-direction: column;
@@ -225,9 +213,7 @@ rito · CSS
     color: var(--rojo-japones);
 }
  
-/* ════════════════════════════════
-   BOTONES
-════════════════════════════════ */
+/* ── BOTONES ── */
 .btn-principal {
     display: flex;
     align-items: center;
@@ -290,12 +276,11 @@ rito · CSS
     width: 100%;
 }
  
-/* ════════════════════════════════
-   MENSAJE DE ERROR
-════════════════════════════════ */
+/* ── MENSAJE DE ERROR GLOBAL ── */
 .error-mesa {
     background: rgba(248, 215, 218, 0.8);
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     color: #721c24;
     padding: 12px 16px;
     border-radius: 10px;
@@ -306,9 +291,7 @@ rito · CSS
     border: 1px solid rgba(245, 198, 203, 0.8);
 }
  
-/* ════════════════════════════════
-   RESPONSIVE
-════════════════════════════════ */
+/* ── RESPONSIVE ── */
 @media (max-width: 850px) {
     .carrito-container {
         margin-top: 100px;

@@ -503,7 +503,8 @@
 }
  
 @media (max-width: 600px) {
-    .carta-layout ul.produtos {
+    /* 🟢 CORREGIDO: Solucionada la errata tipográfica 'produtos' -> 'productos' */
+    .carta-layout ul.productos {
         grid-template-columns: repeat(2, 1fr);
     }
 }

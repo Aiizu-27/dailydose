@@ -84,17 +84,27 @@ $conn->close();
                 if ($categoriaActual != "") echo "</ul>";
                 $categoriaActual = $row['CATEGORIA'];
                 $idCategoria = strtolower(str_replace(' ', '-', $categoriaActual));
+                
+                // 🟢 CORREGIDO: Envolvemos el H2 en la clase contenedora con la barra de degradado que tu CSS requiere
+                echo "<div class='cat-heading'>";
                 echo "<h2 id='$idCategoria'>" . htmlspecialchars($categoriaActual) . "</h2>";
+                echo "<div class='cat-linea'></div>";
+                echo "</div>";
+                
                 echo "<ul class='productos'>";
             }
             ?>
             <li>
+                <!-- 🟢 CORREGIDO: La imagen o placeholder se sitúan fuera de info-prod para quedar alineados arriba a borde completo -->
+                <?php if (!empty($row['RUTA_IMAGEN'])): ?>
+                    <img src="assets/img/productos/<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>" 
+                         alt="<?= htmlspecialchars($row['NOMBRE']) ?>" 
+                         class="img-producto">
+                <?php else: ?>
+                    <div class="img-placeholder">☕</div>
+                <?php endif; ?>
+
                 <div class="info-prod">
-                    <?php if (!empty($row['RUTA_IMAGEN'])): ?>
-                        <img src="assets/img/productos/<?= htmlspecialchars($row['RUTA_IMAGEN']) ?>" 
-                             alt="<?= htmlspecialchars($row['NOMBRE']) ?>" 
-                             class="img-producto">
-                    <?php endif; ?>
                     <span class="grid-nombre nombre"><?= htmlspecialchars($row['NOMBRE']) ?></span>
                 </div>
 
@@ -107,7 +117,8 @@ $conn->close();
                             <input type="hidden" name="producto" value="<?= htmlspecialchars($row['NOMBRE']) ?>">
                             <input type="hidden" name="precio" value="<?= $row['PRECIO'] ?>">
                             <input type="hidden" name="stock" value="<?= $row['STOCK'] ?>">
-                            <button type="submit" class="btn-carrito">Añadir al carrito</button>
+                            <!-- 🟢 CORREGIDO: Cambiado a '+' para que se posicione centrado en la esfera de 28px -->
+                            <button type="submit" class="btn-carrito">+</button>
                         </form>
                     <?php else: ?>
                         <a href="registro.php" class="btn-login-pedido">Inicia sesión</a>

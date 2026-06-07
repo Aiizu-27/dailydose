@@ -38,8 +38,9 @@ $total_pedido = 0;
         <p>Revisa tu dosis diaria antes de confirmar el pedido.</p>
     </div>
 
+    <!-- 🟢 CORREGIDO: Eliminados los estilos inline opacos; ahora usa tu clase .error-mesa con efecto cristal -->
     <?php if (isset($_GET['error']) && $_GET['error'] == 'mesa_no_valida'): ?>
-        <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 8px; text-align: center; margin-bottom: 20px; font-weight: bold; border: 1px solid #f5c6cb;">
+        <div class="error-mesa">
             El número de mesa introducido no existe en el local. Por favor, compruébalo.
         </div>
     <?php endif; ?>
@@ -95,7 +96,8 @@ $total_pedido = 0;
                     <button type="submit" class="btn-principal w-100">Confirmar Pedido</button>
                 </form>
 
-                <form action="actions/vaciar_carrito.php" method="POST" style="margin-top: 15px;">
+                <!-- 🟢 CORREGIDO: Removido el style="margin-top: 15px" duplicado; el espaciado lo gobierna el CSS -->
+                <form action="actions/vaciar_carrito.php" method="POST">
                     <button type="submit" class="btn-peligro w-100">Vaciar Carrito</button>
                 </form>
             </div>
