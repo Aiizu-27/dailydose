@@ -109,8 +109,8 @@ $hoy = date('Y-m-d');
  
 <nav class="worker-nav">
     <div class="nav-left">
-        <img src="../assets/img/logo.png" alt="Logo Daily Dose" class="mini-logo">
-        <span class="panel-title">Daily Dose <small>Worker Panel</small></span>
+        <img src="../assets/img/APP.png" alt="Logo Daily Dose" class="mini-logo">
+        <span class="panel-title">Daily Dose <small>Panel Trabajador</small></span>
     </div>
     <div class="nav-right">
         <span class="worker-info">

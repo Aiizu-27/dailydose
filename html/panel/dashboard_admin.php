@@ -70,7 +70,21 @@ $stmt->close();
 </head>
 <body>
 
-<?php include "../includes/header.php"; ?>
+<nav class="worker-nav">
+    <div class="nav-left">
+        <img src="../assets/img/APP.png" alt="Logo Daily Dose" class="mini-logo">
+        <span class="panel-title">Daily Dose <small>Panel Administrador</small></span>
+    </div>
+    <div class="nav-right">
+        <span class="Administrador-info">
+            <i class="fa-solid fa-user-tie"></i>
+            <?= htmlspecialchars($_SESSION['NOMBRE'] ?? 'Trabajador') ?>
+        </span>
+        <a href="../actions/auth_logout.php" class="btn-logout-minimal">
+            <i class="fa-solid fa-right-from-bracket"></i> Salir
+        </a>
+    </div>
+</nav>
 
 <div class="container" style="max-width: 1200px; margin-top: 110px;">
     <h2 style="text-align:center;">Centro de Operaciones Globales</h2>

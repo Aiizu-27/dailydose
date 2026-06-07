@@ -5,6 +5,59 @@
     min-height: 100vh;
     padding-top: 0;
 }
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+ 
+.mini-logo {
+    height: 36px;
+    width: auto;
+}
+ 
+.panel-title {
+    font-family: 'CooperBold', sans-serif;
+    font-size: 1rem;
+    color: var(--texto-principal);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+ 
+.panel-title small {
+    display: block;
+    font-size: 0.6rem;
+    color: var(--rojo-japones);
+    letter-spacing: 0.15em;
+}
+ 
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+ 
+.Administrador-info {
+    font-size: 0.85rem;
+    color: var(--texto-principal);
+    opacity: 0.75;
+}
+ 
+.btn-logout-minimal {
+    font-size: 0.8rem;
+    color: var(--rojo-japones);
+    border: 1px solid var(--rojo-japones);
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    font-family: 'CooperBold', sans-serif;
+}
+ 
+.btn-logout-minimal:hover {
+    background: var(--rojo-japones);
+    color: #fff;
+}
  
 .admin-container {
     max-width: 1000px;

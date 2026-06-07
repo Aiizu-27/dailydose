@@ -1,139 +1,337 @@
+/* ════════════════════════════════
+   CONTENEDOR PRINCIPAL
+════════════════════════════════ */
 .carrito-container {
     max-width: 1100px;
     margin: 120px auto 60px auto;
     padding: 0 20px;
     color: var(--texto-principal);
-    font-family: 'Poppins', sans-serif;
 }
 
+/* ════════════════════════════════
+   CABECERA
+════════════════════════════════ */
 .cabecera-carrito {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 2.5rem;
 }
 
 .cabecera-carrito h1 {
-    color: var(--rojo-japones);
     font-family: 'CooperBold', sans-serif;
-    font-size: 2.5rem;
-    margin-bottom: 10px;
+    color: var(--rojo-japones);
+    font-size: 2.4rem;
+    margin-bottom: 0.4rem;
 }
 
+.cabecera-carrito p {
+    font-size: 0.88rem;
+    color: rgba(43, 43, 43, 0.5);
+}
+
+/* ════════════════════════════════
+   TARJETA CRISTAL (base)
+════════════════════════════════ */
 .tarjeta-cristal {
     background: var(--cristal-fondo);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid var(--cristal-borde);
     border-radius: 20px;
-    padding: 30px;
+    padding: 1.8rem;
     box-shadow: 0 8px 32px var(--cristal-sombra);
 }
 
+/* ════════════════════════════════
+   LAYOUT GRID
+════════════════════════════════ */
 .carrito-layout {
     display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
     align-items: start;
 }
 
+/* ════════════════════════════════
+   CARRITO VACÍO
+════════════════════════════════ */
 .carrito-vacio {
     text-align: center;
-    max-width: 500px;
+    max-width: 480px;
     margin: 40px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 1.2rem;
 }
 
 .carrito-vacio svg {
-    width: 80px;
+    width: 72px;
     color: var(--rojo-japones);
-    opacity: 0.6;
+    opacity: 0.55;
 }
 
-.lista-productos h3, .resumen-pedido h3 {
-    margin-top: 0;
-    color: var(--rojo-japones);
+.carrito-vacio h2 {
     font-family: 'CooperBold', sans-serif;
-    border-bottom: 1px solid var(--cristal-borde);
-    padding-bottom: 15px;
-    margin-bottom: 20px;
+    color: var(--rojo-japones);
+    font-size: 1.5rem;
+}
+
+.carrito-vacio p {
+    font-size: 0.9rem;
+    color: rgba(43, 43, 43, 0.5);
+    line-height: 1.5;
+}
+
+/* ════════════════════════════════
+   LISTA DE PRODUCTOS
+════════════════════════════════ */
+.lista-productos h3,
+.resumen-pedido h3 {
+    font-family: 'CooperBold', sans-serif;
+    color: var(--rojo-japones);
+    font-size: 1.2rem;
+    margin-top: 0;
+    padding-bottom: 1rem;
+    margin-bottom: 1.2rem;
+    border-bottom: 1px solid rgba(244, 43, 29, 0.15);
+}
+
+.lista-productos ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .item-carrito {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.15);
+    transition: background 0.2s ease;
 }
 
 .item-carrito:last-child {
     border-bottom: none;
+    padding-bottom: 0;
 }
 
 .item-info h4 {
-    margin: 0;
-    font-size: 1.2rem;
+    margin: 0 0 3px 0;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--texto-principal);
 }
 
 .item-precio {
-    font-size: 0.9rem;
-    opacity: 0.7;
+    font-size: 0.78rem;
+    color: rgba(43, 43, 43, 0.48);
 }
 
 .item-subtotal {
-    font-size: 1.3rem;
-    font-weight: bold;
+    font-family: 'CooperBold', sans-serif;
+    font-size: 1.1rem;
     color: var(--verde-pastel-oscuro);
+    white-space: nowrap;
 }
 
+/* ════════════════════════════════
+   RESUMEN DEL PEDIDO
+════════════════════════════════ */
 .fila-total {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 25px;
-    padding: 15px;
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 10px;
+    background: rgba(244, 43, 29, 0.06);
+    border: 1px solid rgba(244, 43, 29, 0.12);
+    border-radius: 12px;
+    padding: 1rem 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+.fila-total > span:first-child {
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(43, 43, 43, 0.45);
+    font-weight: 700;
 }
 
 .precio-total {
+    font-family: 'CooperBold', sans-serif;
     font-size: 1.8rem;
-    font-weight: bold;
     color: var(--rojo-japones);
+    line-height: 1;
 }
 
+/* ════════════════════════════════
+   FORMULARIO CHECKOUT
+════════════════════════════════ */
 .form-checkout {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 0;
 }
 
-.w-100 { width: 100%; }
+/* Campo mesa con floating label */
+.cajas {
+    position: relative;
+    margin-bottom: 1.2rem;
+}
+
+.cajas input[type="number"] {
+    width: 100%;
+    padding: 1rem 1rem 0.4rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid rgba(200, 200, 200, 0.4);
+    border-radius: 12px;
+    color: var(--texto-principal);
+    outline: none;
+    transition: border-color 0.2s ease;
+    appearance: none;
+    -moz-appearance: textfield;
+}
+
+.cajas input[type="number"]::-webkit-inner-spin-button,
+.cajas input[type="number"]::-webkit-outer-spin-button {
+    opacity: 1;
+}
+
+.cajas input[type="number"]:focus {
+    border-color: rgba(244, 43, 29, 0.4);
+}
+
+.cajas label {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.85rem;
+    color: rgba(43, 43, 43, 0.45);
+    pointer-events: none;
+    transition: all 0.18s ease;
+}
+
+.cajas input:focus ~ label,
+.cajas input:not(:placeholder-shown) ~ label {
+    top: 0.45rem;
+    transform: none;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--rojo-japones);
+}
+
+/* ════════════════════════════════
+   BOTONES
+════════════════════════════════ */
+.btn-principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    background: var(--rojo-japones);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: inherit;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 16px rgba(244, 43, 29, 0.25);
+}
+
+.btn-principal:hover {
+    background: var(--rojo-oscuro);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(244, 43, 29, 0.32);
+}
+
+.btn-principal:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(244, 43, 29, 0.2);
+}
 
 .btn-peligro {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.75rem 1.2rem;
     background: transparent;
-    border: 1px solid #ff4d4d;
-    color: #ff4d4d;
-    padding: 10px;
-    border-radius: 10px;
+    color: rgba(200, 60, 60, 0.8);
+    border: 1px solid rgba(200, 60, 60, 0.35);
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    font-family: inherit;
     cursor: pointer;
-    margin-top: 10px;
-    transition: 0.3s;
+    margin-top: 0.8rem;
+    transition: all 0.2s ease;
 }
 
 .btn-peligro:hover {
-    background: #ff4d4d;
-    color: white;
+    background: rgba(200, 60, 60, 0.07);
+    border-color: rgba(200, 60, 60, 0.6);
+    color: rgba(180, 40, 40, 1);
 }
 
+.w-100 {
+    width: 100%;
+}
+
+/* ════════════════════════════════
+   MENSAJE DE ERROR
+════════════════════════════════ */
+.error-mesa {
+    background: rgba(248, 215, 218, 0.8);
+    backdrop-filter: blur(8px);
+    color: #721c24;
+    padding: 12px 16px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border: 1px solid rgba(245, 198, 203, 0.8);
+}
+
+/* ════════════════════════════════
+   RESPONSIVE
+════════════════════════════════ */
 @media (max-width: 850px) {
+    .carrito-container {
+        margin-top: 100px;
+    }
+
     .carrito-layout {
         grid-template-columns: 1fr;
     }
-    .carrito-container {
-        margin-top: 100px;
+
+    .resumen-pedido {
+        order: -1;
+    }
+
+    .precio-total {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .cabecera-carrito h1 {
+        font-size: 1.9rem;
+    }
+
+    .tarjeta-cristal {
+        padding: 1.3rem;
     }
 }
