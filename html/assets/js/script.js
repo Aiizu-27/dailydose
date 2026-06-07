@@ -158,3 +158,17 @@ if(toggleTema){
     }
 });
 
+
+// Carrusel "Lo más pedido" (index)
+document.addEventListener('DOMContentLoaded', function () {
+    const pista = document.querySelector('.carrusel-pista');
+    const btnPrev = document.querySelector('.carrusel-prev');
+    const btnNext = document.querySelector('.carrusel-next');
+
+    if (pista && btnPrev && btnNext) {
+        const paso = () => pista.querySelector('.carrusel-tarjeta')?.offsetWidth + 16 || 220;
+
+        btnPrev.addEventListener('click', () => pista.scrollBy({ left: -paso(), behavior: 'smooth' }));
+        btnNext.addEventListener('click', () => pista.scrollBy({ left: paso(), behavior: 'smooth' }));
+    }
+});

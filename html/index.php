@@ -1,3 +1,17 @@
+<?php
+session_start();
+require_once $_SERVER['DOCUMENT_ROOT'] . '/../secure_config/config.php';
+
+$mas_vendidos = [];
+$stmt = $conn->prepare("CALL sp_obtener_productos_mas_vendidos(?)");
+$limite = 8;
+$stmt->bind_param("i", $limite);
+$stmt->execute();
+$res_vendidos = $stmt->get_result();
+while ($row = $res_vendidos->fetch_assoc()) { $mas_vendidos[] = $row; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
+?>
 <!DOCTYPE html>
 <html lang="es">
   <head>
@@ -13,7 +27,7 @@
     <!-- CSS Componentes -->
     <link rel="stylesheet" href="assets/css/header.css?v=3">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/index.css?v=2">
+    <link rel="stylesheet" href="assets/css/index.css?v=3">
   </head>
 
   <body>
@@ -72,7 +86,32 @@
 
     <div class="fila3">
       <div class="div5">
-        
+        <h2>Lo más pedido</h2>
+        <p>Los favoritos de nuestra comunidad, elegidos por ti.</p>
+
+        <?php if (!empty($mas_vendidos)): ?>
+        <div class="carrusel-vendidos">
+          <button class="carrusel-flecha carrusel-prev" aria-label="Anterior">&#10094;</button>
+
+          <div class="carrusel-pista">
+            <?php foreach ($mas_vendidos as $prod): ?>
+              <div class="carrusel-tarjeta">
+                <?php if (!empty($prod['RUTA_IMAGEN'])): ?>
+                  <img src="<?= htmlspecialchars($prod['RUTA_IMAGEN']) ?>" alt="<?= htmlspecialchars($prod['NOMBRE']) ?>">
+                <?php else: ?>
+                  <div class="carrusel-placeholder">☕</div>
+                <?php endif; ?>
+                <h3><?= htmlspecialchars($prod['NOMBRE']) ?></h3>
+                <span class="carrusel-precio"><?= number_format($prod['PRECIO'], 2) ?> €</span>
+              </div>
+            <?php endforeach; ?>
+          </div>
+
+          <button class="carrusel-flecha carrusel-next" aria-label="Siguiente">&#10095;</button>
+        </div>
+        <?php else: ?>
+          <p>Aún no hay datos de ventas suficientes para mostrar lo más pedido.</p>
+        <?php endif; ?>
       </div>
     </div>
   </div>

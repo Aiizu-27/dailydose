@@ -337,6 +337,23 @@ BEGIN
 END //
 
 
+DROP PROCEDURE IF EXISTS sp_obtener_productos_mas_vendidos //
+CREATE PROCEDURE sp_obtener_productos_mas_vendidos(IN p_limite INT)
+BEGIN
+    SET @lim = p_limite;
+    PREPARE stmt FROM
+        'SELECT p.ID_PRODUCTO, p.NOMBRE, p.PRECIO, p.RUTA_IMAGEN,
+                SUM(d.CANTIDAD) AS TOTAL_VENDIDO
+         FROM DETALLE_PEDIDO d
+         JOIN PRODUCTOS p ON d.ID_PRODUCTO = p.ID_PRODUCTO
+         GROUP BY p.ID_PRODUCTO, p.NOMBRE, p.PRECIO, p.RUTA_IMAGEN
+         ORDER BY TOTAL_VENDIDO DESC
+         LIMIT ?';
+    EXECUTE stmt USING @lim;
+    DEALLOCATE PREPARE stmt;
+END //
+
+
 DROP PROCEDURE IF EXISTS sp_carta_obtener_especialidad //
 CREATE PROCEDURE sp_carta_obtener_especialidad(IN p_fecha DATE)
 BEGIN
