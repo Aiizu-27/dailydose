@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Términos de Uso · DAILY DOSE</title>
-    <link rel="stylesheet" href="tu-estilo-principal.css">
-    <link rel="stylesheet" href="legal.css">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/legal.css">
 </head>
 <body class="bg-legal">
 
     <main class="contenedor-legal">
-        <a href="index.php" class="enlace-volver">← Volver al inicio</a>
+        <a href="../index.php" class="enlace-volver">← Volver al inicio</a>
         
         <h1 class="titulo-legal">Términos de Uso</h1>
         <p class="subtitulo-legal">Última actualización: Junio 2026</p>
