@@ -119,6 +119,7 @@
 }
  
 .carta-layout .columna-productos h2 {
+    scroll-margin-top: 95px; /* el titulo aterriza 15px por debajo del header fijo (80px) */
     font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
     font-size: 1.4rem;

@@ -46,11 +46,11 @@ $conn->close();
     <link rel="icon" type="image/png" href="assets/img/APP.png">
 
     <link rel="stylesheet" href="assets/css/variables.css">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style.css?v=2">
 
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/carta.css?v=1.1">
+    <link rel="stylesheet" href="assets/css/carta.css?v=2">
 </head>
 <body>
 
