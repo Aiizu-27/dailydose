@@ -27,7 +27,7 @@ $stmt->close();
     <!-- CSS Componentes -->
     <link rel="stylesheet" href="assets/css/header.css?v=3">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/index.css?v=3">
+    <link rel="stylesheet" href="assets/css/index.css?v=5">
   </head>
 
   <body>
@@ -95,15 +95,14 @@ $stmt->close();
 
           <div class="carrusel-pista">
             <?php foreach ($mas_vendidos as $prod): ?>
-              <div class="carrusel-tarjeta">
+              <a href="carta.php" class="carrusel-tarjeta">
                 <?php if (!empty($prod['RUTA_IMAGEN'])): ?>
                   <img src="<?= htmlspecialchars($prod['RUTA_IMAGEN']) ?>" alt="<?= htmlspecialchars($prod['NOMBRE']) ?>">
                 <?php else: ?>
                   <div class="carrusel-placeholder">☕</div>
                 <?php endif; ?>
                 <h3><?= htmlspecialchars($prod['NOMBRE']) ?></h3>
-                <span class="carrusel-precio"><?= number_format($prod['PRECIO'], 2) ?> €</span>
-              </div>
+              </a>
             <?php endforeach; ?>
           </div>
 

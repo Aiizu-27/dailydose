@@ -189,6 +189,8 @@
     align-items: center;
     gap: 0.8rem;
     width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .carrusel-pista {
@@ -199,6 +201,7 @@
     scroll-snap-type: x mandatory;
     padding: 0.5rem 0.25rem 1rem;
     flex: 1;
+    min-width: 0;
 }
 
 .carrusel-pista::-webkit-scrollbar {
@@ -212,13 +215,15 @@
 
 .carrusel-tarjeta {
     scroll-snap-align: start;
-    flex: 0 0 200px;
+    flex: 0 0 170px;
+    text-decoration: none;
+    color: inherit;
     background: var(--cristal-fondo);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid var(--cristal-borde);
     border-radius: 14px;
-    padding: 1.2rem;
+    padding: 0.9rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -235,7 +240,7 @@
 .carrusel-tarjeta img,
 .carrusel-placeholder {
     width: 100%;
-    height: 120px;
+    height: 90px;
     object-fit: cover;
     border-radius: 10px;
 }
@@ -253,11 +258,6 @@
     color: var(--texto-principal);
 }
 
-.carrusel-precio {
-    font-family: 'CooperBold', sans-serif;
-    color: var(--rojo-japones);
-    font-size: 1rem;
-}
 
 .carrusel-flecha {
     flex-shrink: 0;
