@@ -13,7 +13,11 @@
       "Bash(xargs grep -l \"CREATE TABLE PEDIDOS\")",
       "Bash(sed -n '62,75p' insercion_datos.sql)",
       "Bash(sed -n '31,44p' inserts_maestros.sql)",
-      "Bash(grep -n \"^p \\\\|^p{\\\\|^p,\\\\|color:\" assets/css/style.css)"
+      "Bash(grep -n \"^p \\\\|^p{\\\\|^p,\\\\|color:\" assets/css/style.css)",
+      "Bash(xargs sed -i 's/variables\\\\.css\"/variables.css?v=2\"/g')",
+      "Bash(grep -n \"color:\\\\s*#[0-9a-fA-F]\\\\{3,6\\\\}\\\\|color:\\\\s*rgba\\(\\\\\\(43\\\\|0\\\\|51\\\\|68\\\\|85\\\\|102\\\\|119\\\\\\)\" assets/css/style.css)",
+      "Bash(sed -i 's/carrito\\\\.css?v=2/carrito.css?v=3/; ' carrito.php)",
+      "Bash(sed -i 's/footer\\\\.css?v=2/footer.css?v=3/; s/carta\\\\.css?v=6/carta.css?v=7/' carta.php)"
     ]
   }
 }

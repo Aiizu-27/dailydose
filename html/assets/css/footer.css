@@ -89,7 +89,7 @@ footer {
   margin-top: 2rem;
   text-align: center;
   font-size: 0.85rem;
-  color: var(--texto-secundario);
+  color: var(--texto-principal);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 1rem;
   width: 100%;
@@ -102,11 +102,11 @@ footer {
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem 0.8rem;
-  color: var(--texto-secundario); /* Da color a los puntos separadores '·' */
+  color: var(--texto-principal); /* Da color a los puntos separadores '·' */
 }
 
 .footer-cristal .footer-legales a {
-  color: var(--texto-secundario);
+  color: var(--texto-principal);
   font-size: 0.85rem;
   transition: color 0.3s ease;
 }
@@ -150,7 +150,7 @@ footer {
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--texto-secundario);
+    color: var(--texto-principal);
     opacity: 0.6;
 }
 

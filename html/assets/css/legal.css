@@ -28,7 +28,7 @@
 .enlace-volver {
   display: inline-flex;
   align-items: center;
-  color: var(--texto-secundario, #aaa);
+  color: var(--texto-principal);
   text-decoration: none;
   font-size: 0.9rem;
   margin-bottom: 2rem;
@@ -50,7 +50,7 @@
 
 .subtitulo-legal {
   font-size: 0.95rem;
-  color: var(--texto-secundario, #aaa);
+  color: var(--texto-principal);
   margin-bottom: 3rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding-bottom: 1rem;
@@ -80,7 +80,7 @@
 }
 
 .seccion-legal p {
-  color: var(--texto-secundario, #ccc);
+  color: var(--texto-principal);
   font-size: 1rem;
   line-height: 1.7;
   margin-bottom: 1rem;
@@ -93,7 +93,7 @@
 }
 
 .seccion-legal li {
-  color: var(--texto-secundario, #ccc);
+  color: var(--texto-principal);
   font-size: 1rem;
   line-height: 1.7;
   margin-bottom: 0.5rem;

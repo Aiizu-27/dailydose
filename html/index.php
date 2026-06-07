@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="assets/img/APP.png">
 
     <!-- CSS Global -->
-    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/variables.css?v=2">
     <link rel="stylesheet" href="assets/css/style.css">
 
     <!-- CSS Componentes -->
