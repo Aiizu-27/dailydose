@@ -68,7 +68,7 @@ $stmt->close();
     <link rel="stylesheet" href="../assets/css/footer.css">
     <link rel="stylesheet" href="../assets/css/dashboard_admin.css">
 </head>
-<body>
+<body class="admin-body">
 
 <nav class="worker-nav">
     <div class="nav-left">
@@ -80,8 +80,11 @@ $stmt->close();
             <i class="fa-solid fa-user-tie"></i>
             <?= htmlspecialchars($_SESSION['NOMBRE'] ?? 'Trabajador') ?>
         </span>
-        <a href="../actions/auth_logout.php" class="btn-logout-minimal">
-            <i class="fa-solid fa-right-from-bracket"></i> Salir
+        <a href="../actions/auth_logout.php" class="btn-logout">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Cerrar Sesión
         </a>
     </div>
 </nav>
@@ -93,7 +96,7 @@ $stmt->close();
     <details open>
         <summary>Estadísticas del Día</summary>
         <div class="details-content">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; text-align: center;">
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; text-align: center;">
                 <div style="background: rgba(0,0,0,0.03); padding: 20px; border-radius: 10px; border-left: 4px solid var(--rojo-japones);">
                     <h3 style="font-size: 2.2rem; color: var(--rojo-japones);"><?= number_format($stats['INGRESOS_HOY'] ?? 0, 2) ?> €</h3>
                     <p style="margin:0; opacity: 0.8;">Ingresos de Hoy</p>
