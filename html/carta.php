@@ -50,7 +50,7 @@ $conn->close();
 
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/carta.css">
+    <link rel="stylesheet" href="assets/css/carta.css?v=1.1">
 </head>
 <body>
 
