@@ -14,7 +14,7 @@ Este proyecto constituye el núcleo de desarrollo técnico y persistencia de dat
 
 ---
 
-## 🛠️ Stack Tecnológico (Arquitectura LEMP)
+## Stack Tecnológico (Arquitectura LEMP)
 
 La plataforma se despliega sobre una infraestructura distribuida en tres capas independientes bajo un stack de alto rendimiento de código abierto:
 
