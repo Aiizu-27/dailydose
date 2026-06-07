@@ -1,3 +1,4 @@
+rito · CSS
 /* ════════════════════════════════
    CONTENEDOR PRINCIPAL
 ════════════════════════════════ */
@@ -7,7 +8,7 @@
     padding: 0 20px;
     color: var(--texto-principal);
 }
-
+ 
 /* ════════════════════════════════
    CABECERA
 ════════════════════════════════ */
@@ -15,19 +16,19 @@
     text-align: center;
     margin-bottom: 2.5rem;
 }
-
+ 
 .cabecera-carrito h1 {
     font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
     font-size: 2.4rem;
     margin-bottom: 0.4rem;
 }
-
+ 
 .cabecera-carrito p {
     font-size: 0.88rem;
     color: rgba(43, 43, 43, 0.5);
 }
-
+ 
 /* ════════════════════════════════
    TARJETA CRISTAL (base)
 ════════════════════════════════ */
@@ -40,7 +41,7 @@
     padding: 1.8rem;
     box-shadow: 0 8px 32px var(--cristal-sombra);
 }
-
+ 
 /* ════════════════════════════════
    LAYOUT GRID
 ════════════════════════════════ */
@@ -50,7 +51,7 @@
     gap: 1.5rem;
     align-items: start;
 }
-
+ 
 /* ════════════════════════════════
    CARRITO VACÍO
 ════════════════════════════════ */
@@ -63,25 +64,25 @@
     align-items: center;
     gap: 1.2rem;
 }
-
+ 
 .carrito-vacio svg {
     width: 72px;
     color: var(--rojo-japones);
     opacity: 0.55;
 }
-
+ 
 .carrito-vacio h2 {
     font-family: 'CooperBold', sans-serif;
     color: var(--rojo-japones);
     font-size: 1.5rem;
 }
-
+ 
 .carrito-vacio p {
     font-size: 0.9rem;
     color: rgba(43, 43, 43, 0.5);
     line-height: 1.5;
 }
-
+ 
 /* ════════════════════════════════
    LISTA DE PRODUCTOS
 ════════════════════════════════ */
@@ -95,13 +96,13 @@
     margin-bottom: 1.2rem;
     border-bottom: 1px solid rgba(244, 43, 29, 0.15);
 }
-
+ 
 .lista-productos ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
-
+ 
 .item-carrito {
     display: flex;
     justify-content: space-between;
@@ -110,31 +111,31 @@
     border-bottom: 1px solid rgba(200, 200, 200, 0.15);
     transition: background 0.2s ease;
 }
-
+ 
 .item-carrito:last-child {
     border-bottom: none;
     padding-bottom: 0;
 }
-
+ 
 .item-info h4 {
     margin: 0 0 3px 0;
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--texto-principal);
 }
-
+ 
 .item-precio {
     font-size: 0.78rem;
     color: rgba(43, 43, 43, 0.48);
 }
-
+ 
 .item-subtotal {
     font-family: 'CooperBold', sans-serif;
     font-size: 1.1rem;
     color: var(--verde-pastel-oscuro);
     white-space: nowrap;
 }
-
+ 
 /* ════════════════════════════════
    RESUMEN DEL PEDIDO
 ════════════════════════════════ */
@@ -148,7 +149,7 @@
     padding: 1rem 1.2rem;
     margin-bottom: 1.5rem;
 }
-
+ 
 .fila-total > span:first-child {
     font-size: 0.72rem;
     letter-spacing: 1.5px;
@@ -156,14 +157,14 @@
     color: rgba(43, 43, 43, 0.45);
     font-weight: 700;
 }
-
+ 
 .precio-total {
     font-family: 'CooperBold', sans-serif;
     font-size: 1.8rem;
     color: var(--rojo-japones);
     line-height: 1;
 }
-
+ 
 /* ════════════════════════════════
    FORMULARIO CHECKOUT
 ════════════════════════════════ */
@@ -172,13 +173,13 @@
     flex-direction: column;
     gap: 0;
 }
-
+ 
 /* Campo mesa con floating label */
 .cajas {
     position: relative;
     margin-bottom: 1.2rem;
 }
-
+ 
 .cajas input[type="number"] {
     width: 100%;
     padding: 1rem 1rem 0.4rem;
@@ -193,16 +194,16 @@
     appearance: none;
     -moz-appearance: textfield;
 }
-
+ 
 .cajas input[type="number"]::-webkit-inner-spin-button,
 .cajas input[type="number"]::-webkit-outer-spin-button {
     opacity: 1;
 }
-
+ 
 .cajas input[type="number"]:focus {
     border-color: rgba(244, 43, 29, 0.4);
 }
-
+ 
 .cajas label {
     position: absolute;
     left: 1rem;
@@ -213,7 +214,7 @@
     pointer-events: none;
     transition: all 0.18s ease;
 }
-
+ 
 .cajas input:focus ~ label,
 .cajas input:not(:placeholder-shown) ~ label {
     top: 0.45rem;
@@ -223,7 +224,7 @@
     text-transform: uppercase;
     color: var(--rojo-japones);
 }
-
+ 
 /* ════════════════════════════════
    BOTONES
 ════════════════════════════════ */
@@ -248,18 +249,18 @@
     transition: all 0.2s ease;
     box-shadow: 0 4px 16px rgba(244, 43, 29, 0.25);
 }
-
+ 
 .btn-principal:hover {
     background: var(--rojo-oscuro);
     transform: translateY(-2px);
     box-shadow: 0 8px 22px rgba(244, 43, 29, 0.32);
 }
-
+ 
 .btn-principal:active {
     transform: translateY(0);
     box-shadow: 0 4px 12px rgba(244, 43, 29, 0.2);
 }
-
+ 
 .btn-peligro {
     display: flex;
     align-items: center;
@@ -278,17 +279,17 @@
     margin-top: 0.8rem;
     transition: all 0.2s ease;
 }
-
+ 
 .btn-peligro:hover {
     background: rgba(200, 60, 60, 0.07);
     border-color: rgba(200, 60, 60, 0.6);
     color: rgba(180, 40, 40, 1);
 }
-
+ 
 .w-100 {
     width: 100%;
 }
-
+ 
 /* ════════════════════════════════
    MENSAJE DE ERROR
 ════════════════════════════════ */
@@ -304,7 +305,7 @@
     font-size: 0.88rem;
     border: 1px solid rgba(245, 198, 203, 0.8);
 }
-
+ 
 /* ════════════════════════════════
    RESPONSIVE
 ════════════════════════════════ */
@@ -312,25 +313,25 @@
     .carrito-container {
         margin-top: 100px;
     }
-
+ 
     .carrito-layout {
         grid-template-columns: 1fr;
     }
-
+ 
     .resumen-pedido {
         order: -1;
     }
-
+ 
     .precio-total {
         font-size: 1.5rem;
     }
 }
-
+ 
 @media (max-width: 480px) {
     .cabecera-carrito h1 {
         font-size: 1.9rem;
     }
-
+ 
     .tarjeta-cristal {
         padding: 1.3rem;
     }
