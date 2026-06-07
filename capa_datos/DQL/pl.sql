@@ -382,6 +382,47 @@ BEGIN
 END //
 
 
+DROP PROCEDURE IF EXISTS sp_canjear_recompensa //
+CREATE PROCEDURE sp_canjear_recompensa(IN p_id_usuario INT, IN p_id_recompensa INT)
+BEGIN
+    DECLARE v_id_cliente INT;
+    DECLARE v_puntos_cliente INT;
+    DECLARE v_coste INT;
+    DECLARE v_tipo VARCHAR(20);
+    DECLARE v_stock INT;
+
+    SELECT ID_CLIENTE, PUNTOS INTO v_id_cliente, v_puntos_cliente
+    FROM CLIENTES WHERE ID_USUARIO = p_id_usuario;
+
+    SELECT COSTE_PUNTOS, TIPO, STOCK INTO v_coste, v_tipo, v_stock
+    FROM RECOMPENSAS WHERE ID_RECOMPENSA = p_id_recompensa;
+
+    IF v_id_cliente IS NULL THEN
+        SELECT 'error' AS status, 'cliente_no_encontrado' AS motivo;
+    ELSEIF v_coste IS NULL THEN
+        SELECT 'error' AS status, 'recompensa_no_encontrada' AS motivo;
+    ELSEIF v_puntos_cliente < v_coste THEN
+        SELECT 'error' AS status, 'puntos_insuficientes' AS motivo;
+    ELSEIF v_tipo = 'PRODUCTO' AND v_stock <= 0 THEN
+        SELECT 'error' AS status, 'sin_stock' AS motivo;
+    ELSE
+        UPDATE CLIENTES SET PUNTOS = PUNTOS - v_coste WHERE ID_CLIENTE = v_id_cliente;
+
+        IF v_tipo = 'PRODUCTO' THEN
+            UPDATE RECOMPENSAS SET STOCK = STOCK - 1 WHERE ID_RECOMPENSA = p_id_recompensa;
+        END IF;
+
+        INSERT INTO CANJES (ID_CLIENTE, ID_RECOMPENSA, PUNTOS_GASTADOS)
+        VALUES (v_id_cliente, p_id_recompensa, v_coste);
+
+        INSERT INTO HISTORIAL_PUNTOS (ID_CLIENTE, TIPO_MOVIMIENTO, CANTIDAD, MOTIVO)
+        VALUES (v_id_cliente, 'RESTA', v_coste, 'Canje de recompensa');
+
+        SELECT 'ok' AS status, 'canje_realizado' AS motivo;
+    END IF;
+END //
+
+
 DROP PROCEDURE IF EXISTS sp_cliente_obtener_perfil //
 CREATE PROCEDURE sp_cliente_obtener_perfil(IN p_id_usuario INT)
 BEGIN

@@ -55,7 +55,25 @@ $conn->close();
     <section class="header-puntos">
         <h1>Centro de Recompensas</h1>
         <p>Canjea tus Daily Points por productos gratis y descuentos exclusivos.</p>
-        
+
+        <?php if (isset($_GET['canje'])): ?>
+            <?php if ($_GET['canje'] === 'ok'): ?>
+                <div class="aviso-canje aviso-ok">¡Canje realizado con éxito! Tus puntos han sido actualizados.</div>
+            <?php else: ?>
+                <?php
+                    $motivos = [
+                        'puntos_insuficientes' => 'No tienes suficientes puntos para esta recompensa.',
+                        'sin_stock' => 'Esta recompensa no tiene stock disponible.',
+                        'recompensa_no_encontrada' => 'La recompensa seleccionada no existe.',
+                        'cliente_no_encontrado' => 'No se pudo identificar tu cuenta de cliente.',
+                        'datos_invalidos' => 'No se han recibido los datos correctos para el canje.',
+                    ];
+                    $motivo = $_GET['motivo'] ?? '';
+                ?>
+                <div class="aviso-canje aviso-error"><?= htmlspecialchars($motivos[$motivo] ?? 'No se ha podido realizar el canje.') ?></div>
+            <?php endif; ?>
+        <?php endif; ?>
+
         <?php if ($esta_logueado): ?>
             <div class="marcador-puntos">
                 <?= htmlspecialchars($puntos_actuales) ?>
