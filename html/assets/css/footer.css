@@ -2,11 +2,13 @@ footer {
   position: relative;
   z-index: 6;
   margin-top: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(128, 0, 0, 0.2) 0%,
-    rgba(128, 0, 0, 0.6) 100%
-  );
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(128, 0, 0, 0.2) 0%,
+      rgba(128, 0, 0, 0.6) 100%
+    ),
+    var(--fondo);
   color: var(--texto-principal);
   text-align: center;
   padding: 3rem 0 2rem 0; 

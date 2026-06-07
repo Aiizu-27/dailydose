@@ -29,7 +29,7 @@
     font-size: 0.55rem;
     letter-spacing: 2.5px;
     text-transform: uppercase;
-    color: rgba(43, 43, 43, 0.38);
+    color: color-mix(in srgb, var(--texto-principal) 38%, transparent);
     font-weight: 700;
     padding: 0 0.3rem;
     margin-bottom: 0.5rem;

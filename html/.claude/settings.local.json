@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '170,180p' \"C:\\\\Users\\\\lucii\\\\Documents\\\\dailydose\\\\html\\\\carta.php\")",
+      "Bash(sed -n '1,15p' \"C:\\\\Users\\\\lucii\\\\Documents\\\\dailydose\\\\html\\\\includes\\\\footer.php\")",
+      "Bash(sed -n '278,290p' assets/css/carrito.css)",
+      "Bash(sed -n '48,80p' assets/css/mis_pedidos.css)",
+      "Bash(sed -n '130,140p' assets/css/promociones.css)"
+    ]
+  }
+}

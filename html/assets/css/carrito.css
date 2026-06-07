@@ -144,7 +144,7 @@
     font-size: 0.72rem;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(43, 43, 43, 0.45);
+    color: color-mix(in srgb, var(--texto-principal) 45%, transparent);
     font-weight: 700;
 }
  
@@ -198,7 +198,7 @@
     top: 50%;
     transform: translateY(-50%);
     font-size: 0.85rem;
-    color: rgba(43, 43, 43, 0.45);
+    color: color-mix(in srgb, var(--texto-principal) 45%, transparent);
     pointer-events: none;
     transition: all 0.18s ease;
 }
