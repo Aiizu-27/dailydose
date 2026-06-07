@@ -1,6 +1,6 @@
 # Daily Dose - Plataforma Transaccional Web y Persistencia Relacional a Medida
 
-## 📋 Descripción del Proyecto
+## Descripción del Proyecto
 
 **Daily Dose** es una solución de software a medida diseñada para la transformación digital y gestión operativa integral de una pyme del sector hostelero. A diferencia de las arquitecturas comerciales rígidas, este sistema implementa un entorno desacoplado y transaccional que administra flujos críticos de negocio: autenticación centralizada, control de comandas y mesas en sala, optimización de inventario, pasarela de pagos simulada y un motor de fidelización de clientes basado en recompensas acumulativas (*Daily Points*).
 
@@ -24,7 +24,7 @@ La plataforma se despliega sobre una infraestructura distribuida en tres capas i
 
 ---
 
-## ⚙️ Características Técnicas y Bastionado
+## Características Técnicas y Bastionado
 
 ### 1. Ingeniería de Datos y Normalización (3FN)
 La base de datos relacional ha sido modelada e implementada desde cero, aplicando un riguroso proceso de normalización hasta la **Tercera Forma Normal (3FN)** para eliminar redundancias y dependencias anómalas. La integridad referencial del negocio está blindada a nivel de motor mediante restricciones explícitas de claves ajenas (*Foreign Keys*) asociadas a directivas automatizadas como `ON DELETE CASCADE` y `ON DELETE SET NULL`.
@@ -41,7 +41,7 @@ El intercambio de información entre el frontend y el backend se realiza en segu
 
 ---
 
-## 🗄️ Estructura del Modelo Relacional
+## Estructura del Modelo Relacional
 
 El esquema de persistencia se compone de tablas interconectadas que segmentan las operaciones del negocio:
 
@@ -52,7 +52,7 @@ El esquema de persistencia se compone de tablas interconectadas que segmentan la
 
 ---
 
-## 🚀 Despliegue e Infraestructura Cloud
+## Despliegue e Infraestructura Cloud
 
 La aplicación está optimizada para su explotación en producción dentro de un entorno virtualizado seguro:
 * **Alojamiento:** Servidor Privado Virtual (VPS) con sistema operativo Linux Ubuntu Server alojado en **AWS Lightsail**.
