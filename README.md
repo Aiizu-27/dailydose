@@ -8,7 +8,7 @@ Este proyecto constituye el núcleo de desarrollo técnico y persistencia de dat
 
 <p align="center">
   <a href="https://daily-dose.es" target="_blank">
-    <img src="https://img.shields.io/badge/DailyDose-Abrir%20Web-00E5FF?style=for-the-badge&logo=googlechrome&logoColor=white" />
+    <img src="https://img.shields.io/badge/DailyDose-Abrir%20Web-f42b1d?style=for-the-badge&logo=googlechrome&logoColor=white" />
   </a>
 </p>
 
