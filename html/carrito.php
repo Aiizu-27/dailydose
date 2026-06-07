@@ -9,6 +9,14 @@ if (!isset($_SESSION['ROL'])) {
 
 $carrito = isset($_SESSION['carrito']) ? $_SESSION['carrito'] : [];
 $total_pedido = 0;
+
+$stmt = $conn->prepare("CALL sp_obtener_mesas()");
+$stmt->execute();
+$res_mesas = $stmt->get_result();
+$mesas = [];
+while ($mesa = $res_mesas->fetch_assoc()) { $mesas[] = $mesa; }
+while ($stmt->more_results()) $stmt->next_result();
+$stmt->close();
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +97,16 @@ $total_pedido = 0;
 
                 <form action="actions/procesar_carrito.php" method="POST" class="form-checkout">
                     <div class="cajas">
-                        <input type="number" name="numero_mesa" id="numero_mesa" placeholder=" " min="1" max="50">
+                        <select name="numero_mesa" id="numero_mesa">
+                            <option value="">Para llevar / Sin mesa</option>
+                            <?php foreach ($mesas as $m):
+                                $libre = ($m['ESTADO'] === 'LIBRE');
+                            ?>
+                                <option value="<?= $m['NUMERO_MESA'] ?>" <?= $libre ? '' : 'disabled' ?>>
+                                    Mesa <?= $m['NUMERO_MESA'] ?><?= $libre ? '' : ' (ocupada)' ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
                         <label for="numero_mesa">Nº de Mesa (Solo local)</label>
                     </div>
 

@@ -168,7 +168,8 @@
     margin-bottom: 1.2rem;
 }
  
-.cajas input[type="number"] {
+.cajas input[type="number"],
+.cajas select {
     width: 100%;
     padding: 1rem 1rem 0.4rem;
     font-size: 0.95rem;
@@ -181,6 +182,18 @@
     transition: border-color 0.2s ease;
     appearance: none;
     -moz-appearance: textfield;
+}
+
+.cajas select:focus {
+    border-color: rgba(244, 43, 29, 0.4);
+}
+
+.cajas select ~ label {
+    top: 0.45rem;
+    transform: none;
+    font-size: 0.62rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
  
 .cajas input[type="number"]::-webkit-inner-spin-button,

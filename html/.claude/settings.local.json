@@ -10,7 +10,9 @@
       "Bash(ls -la secure_config)",
       "Bash(find . -iname \"config.php\")",
       "Bash(where mysql *)",
-      "Bash(xargs grep -l \"CREATE TABLE PEDIDOS\")"
+      "Bash(xargs grep -l \"CREATE TABLE PEDIDOS\")",
+      "Bash(sed -n '62,75p' insercion_datos.sql)",
+      "Bash(sed -n '31,44p' inserts_maestros.sql)"
     ]
   }
 }
