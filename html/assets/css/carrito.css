@@ -26,6 +26,7 @@
  
 .cabecera-carrito p {
     font-size: 0.88rem;
+    font-weight: 600;
     color: var(--texto-principal);
 }
  
@@ -118,6 +119,7 @@
  
 .item-precio {
     font-size: 0.78rem;
+    font-weight: 600;
     color: var(--texto-principal);
 }
  

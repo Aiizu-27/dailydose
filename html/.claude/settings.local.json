@@ -12,7 +12,8 @@
       "Bash(where mysql *)",
       "Bash(xargs grep -l \"CREATE TABLE PEDIDOS\")",
       "Bash(sed -n '62,75p' insercion_datos.sql)",
-      "Bash(sed -n '31,44p' inserts_maestros.sql)"
+      "Bash(sed -n '31,44p' inserts_maestros.sql)",
+      "Bash(grep -n \"^p \\\\|^p{\\\\|^p,\\\\|color:\" assets/css/style.css)"
     ]
   }
 }

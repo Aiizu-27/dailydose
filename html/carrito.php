@@ -32,7 +32,7 @@ $stmt->close();
 
     <link rel="stylesheet" href="assets/css/header.css">
     <link rel="stylesheet" href="assets/css/footer.css">
-    <link rel="stylesheet" href="assets/css/carrito.css">
+    <link rel="stylesheet" href="assets/css/carrito.css?v=2">
 </head>
 
 <body>
