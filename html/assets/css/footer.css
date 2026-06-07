@@ -80,6 +80,7 @@ footer {
   transform: scale(1.2);
 }
 
+/* Sección de Copyright */
 .footer-cristal .footer-copy {
   margin-top: 2rem;
   text-align: center;
@@ -90,22 +91,27 @@ footer {
   width: 100%;
 }
 
-@media (max-width: 768px) {
-  .footer-cristal .footer-contenido {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer-cristal .iconos-redes {
-    justify-content: center;
-  }
-  
-  .footer-digitalizador {
-    align-items: center !important;
-  }
+/* NUEVO: Enlaces de políticas y términos */
+.footer-cristal .footer-legales {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.8rem;
+  color: var(--texto-secundario); /* Da color a los puntos separadores '·' */
 }
 
+.footer-cristal .footer-legales a {
+  color: var(--texto-secundario);
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.footer-cristal .footer-legales a:hover {
+  color: var(--rojo-japones);
+}
+
+/* Redes Sociales e Iconos */
 .iconos-redes {
     display: flex;
     gap: 15px; 
@@ -129,6 +135,7 @@ footer {
     transform: translateY(-3px); 
 }
 
+/* Digitalizador */
 .footer-digitalizador {
     display: flex;
     flex-direction: column;
@@ -158,4 +165,32 @@ footer {
     height: auto;
     display: block;
     border-radius: 6px;
+}
+
+/* Responsive / Media Queries */
+@media (max-width: 768px) {
+  .footer-cristal .footer-contenido {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-cristal .iconos-redes {
+    justify-content: center;
+  }
+  
+  .footer-digitalizador {
+    align-items: center !important;
+  }
+
+  /* Mejora el comportamiento de los textos legales en móviles */
+  .footer-cristal .footer-legales {
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  
+  /* Oculta los puntos divisorios en móvil al ponerse en formato lista */
+  .footer-cristal .footer-legales span.separador {
+    display: none;
+  }
 }

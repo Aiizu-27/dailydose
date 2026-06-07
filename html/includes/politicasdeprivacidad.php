@@ -1,29 +1,45 @@
-# Política de Privacidad de DAILY DOSE
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Política de Privacidad · DAILY DOSE</title>
+    <link rel="stylesheet" href="tu-estilo-principal.css">
+    <link rel="stylesheet" href="legal.css">
+</head>
+<body class="bg-legal">
 
-En DAILY DOSE nos comprometemos a proteger tu información personal y a usarla únicamente para ofrecerte nuestro servicio de manera segura.
+    <main class="contenedor-legal">
+        <a href="index.php" class="enlace-logo-cds enlace-volver">← Volver al inicio</a>
+        
+        <h1 class="titulo-legal">Política de Privacidad</h1>
+        <p class="subtitulo-legal">Última actualización: Junio 2026</p>
 
-## Información que recopilamos
-Recopilamos únicamente los datos necesarios para tu cuenta y el funcionamiento del servicio, como:
-- Nombre de usuario
-- Correo electrónico
-- Información necesaria para recuperar tu cuenta
-- Datos técnicos (dirección IP, navegador, etc.) para mejorar el servicio
+        <section class="seccion-legal">
+            <h2>Responsable del Tratamiento</h2>
+            <p>En <strong>DAILY DOSE</strong>, nos tomamos muy en serio la privacidad de tus datos. El responsable del tratamiento de los datos recolectados en este sitio web es DAILY DOSE, con domicilio en Calle del Café, 12 · Madrid, y correo electrónico de contacto: <a href="mailto:contacto@daily-dose.es">contacto@daily-dose.es</a>.</p>
+        </section>
 
-## Uso de la información
-Los datos se utilizan para:
-- Verificar y gestionar tu cuenta
-- Recuperación de contraseñas
-- Envío de notificaciones importantes del sistema
-- Mejorar el servicio
+        <section class="seccion-legal">
+            <h2>Datos que Recopilamos</h2>
+            <p>Únicamente recopilamos los datos que nos facilitas voluntariamente a través de nuestros formularios de contacto o correos electrónicos, los cuales incluyen:</p>
+            <ul>
+                <li>Nombre y apellidos.</li>
+                <li>Dirección de correo electrónico.</li>
+                <li>Cualquier otra información que decidas incluir en tu mensaje.</li>
+            </ul>
+        </section>
 
-## Compartición de datos
-No compartimos tu información con terceros salvo que sea necesario para cumplir la ley o para el funcionamiento del servicio.
+        <section class="seccion-legal">
+            <h2>Finalidad del Tratamiento</h2>
+            <p>Tus datos personales se utilizarán exclusivamente para gestionar tus solicitudes de información, responder a tus dudas y, en caso de que lo solicites de forma explícita, enviarte novedades relacionadas con nuestra cafetería.</p>
+        </section>
 
-## Seguridad
-Adoptamos medidas razonables para proteger tu información frente a accesos no autorizados.
+        <section class="seccion-legal">
+            <h2>Tus Derechos</h2>
+            <p>Tienes derecho a acceder, rectificar, limitar o solicitar la eliminación de tus datos en cualquier momento. Solo tienes que enviarnos un correo electrónico detallando tu solicitud a <a href="mailto:contacto@daily-dose.es">contacto@daily-dose.es</a>.</p>
+        </section>
+    </main>
 
-## Derechos del usuario
-Puedes solicitar la modificación o eliminación de tus datos personales contactando con el administrador del servicio.
-
-## Cambios en la política
-Esta política puede actualizarse ocasionalmente. Los cambios se publicarán en esta página.
+</body>
+</html>

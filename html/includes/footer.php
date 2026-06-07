@@ -23,7 +23,7 @@
         </div>
 
         <div class="footer-digitalizador">
-            <span class="texto-digitalizador">Solución por:</span>
+            <span class="texto-digitalizador">Creado por:</span>
             <a href="https://cds-advance.es" target="_blank" class="enlace-logo-cds">
                 <img src="../assets/img/logo_CDS.png" alt="Logo Empresa Digitalizadora" class="logo-cds">
             </a>
@@ -33,5 +33,12 @@
 
     <div class="footer-copy">
         <p>&copy; 2026 DAILY DOSE · Todos los derechos reservados</p>
+        <div class="footer-legales">
+            <a href="politicasdeprivacidad.php">Política de Privacidad</a>
+            <span class="separador">·</span> 
+            <a href="terminosdeuso.php">Términos de Uso</a>
+            <span class="separador">·</span> 
+            <a href="politicadecorreoelectronico.php">Política de Correo Electrónico</a>
+        </div>
     </div>
 </footer>

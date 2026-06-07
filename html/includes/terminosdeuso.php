@@ -1,20 +1,40 @@
-# Términos de Uso de DAILY DOSE
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos de Uso · DAILY DOSE</title>
+    <link rel="stylesheet" href="tu-estilo-principal.css">
+    <link rel="stylesheet" href="legal.css">
+</head>
+<body class="bg-legal">
 
-Al usar DAILY DOSE aceptas los siguientes términos:
+    <main class="contenedor-legal">
+        <a href="index.php" class="enlace-volver">← Volver al inicio</a>
+        
+        <h1 class="titulo-legal">Términos de Uso</h1>
+        <p class="subtitulo-legal">Última actualización: Junio 2026</p>
 
-## Uso del servicio
-El usuario se compromete a usar la plataforma de forma responsable y conforme a la ley.
+        <section class="seccion-legal">
+            <h2>Aceptación de los Términos</h2>
+            <p>El acceso y uso de este sitio web atribuye la condición de usuario e implica la aceptación total de todas las condiciones incluidas en este documento. Si no estás de acuerdo, te rogamos que no utilices esta web.</p>
+        </section>
 
-No está permitido:
-- Usar el servicio para actividades ilegales
-- Intentar vulnerar la seguridad del sistema
-- Usar el servicio para enviar spam o contenido no autorizado
+        <section class="seccion-legal">
+            <h2>Propiedad Intelectual</h2>
+            <p>Todos los contenidos mostrados en esta web (textos, logotipos, imágenes, diseños gráficos y combinaciones de colores) están protegidos por derechos de propiedad intelectual e industrial. Queda prohibida su reproducción, distribución o modificación sin autorización previa por escrito de <strong>DAILY DOSE</strong>.</p>
+        </section>
 
-## Cuentas de usuario
-Cada usuario es responsable de mantener segura su cuenta y de la información proporcionada al registrarse.
+        <section class="seccion-legal">
+            <h2>Responsabilidad del Usuario</h2>
+            <p>Como usuario, te comprometes a hacer un uso adecuado y lícito de la web, absteniéndote de realizar cualquier acción que pueda causar daños a los sistemas informáticos de DAILY DOSE o de terceros.</p>
+        </section>
 
-## Disponibilidad del servicio
-El servicio puede modificarse o interrumpirse temporalmente por mantenimiento o mejoras.
+        <section class="seccion-legal">
+            <h2>Modificaciones</h2>
+            <p>DAILY DOSE se reserva el derecho de actualizar, modificar o eliminar la información contenida en esta web, así como la configuración o presentación de la misma, en cualquier momento y sin previo aviso.</p>
+        </section>
+    </main>
 
-## Limitación de responsabilidad
-DAILY DOSE se ofrece "tal cual" y no garantiza disponibilidad continua ni ausencia de errores.
+</body>
+</html>
