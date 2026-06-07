@@ -261,7 +261,10 @@ $stmt->close();
                         <option value="<?= $emp['ID_EMPLEADO'] ?>"><?= htmlspecialchars($emp['NOMBRE'] . ' ' . $emp['APELLIDOS'] . ' - ' . $emp['PUESTO']) ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="date" name="fecha_turno" value="<?= date('Y-m-d') ?>" required>
+                <label style="display:flex; flex-direction:column; gap:4px; font-size:0.8rem; opacity:0.8;">
+                    Semana a partir del (lunes)
+                    <input type="date" name="fecha_inicio" value="<?= date('Y-m-d', strtotime('monday this week')) ?>" required>
+                </label>
                 <select name="bloque_turno" required>
                     <option value="MAÑANA">Mañana</option>
                     <option value="TARDE">Tarde</option>
@@ -346,8 +349,8 @@ document.addEventListener('DOMContentLoaded', () => {
         e.preventDefault();
         fetch('../actions/admin_add_turno.php', { method: 'POST', body: new FormData(this) })
         .then(res => res.json()).then(data => {
-            if(data.status === 'ok') { alert('Cuadrante guardado y publicado.'); }
-            else { alert('Error al registrar turno.'); }
+            if(data.status === 'ok') { alert('Cuadrante semanal guardado y publicado (Lunes a Domingo).'); }
+            else { alert('Error al registrar el cuadrante semanal.'); }
         });
     });
 });
