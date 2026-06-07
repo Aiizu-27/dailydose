@@ -1,9 +1,11 @@
-CREATE EVENT ev_auto_liberar_mesas_60min
+DROP EVENT IF EXISTS ev_auto_liberar_mesas_60min;
+
+CREATE EVENT ev_auto_liberar_mesas_90min
 ON SCHEDULE EVERY 5 MINUTE
 DO
     UPDATE MESAS m
     JOIN PEDIDOS p ON m.ID_MESA = p.ID_MESA
     SET m.ESTADO = 'LIBRE'
-    WHERE m.ESTADO = 'OCUPADA' 
+    WHERE m.ESTADO = 'OCUPADA'
       AND p.ESTADO = 'ENTREGADO'
-      AND TIMESTAMPDIFF(MINUTE, p.FECHA, NOW()) >= 60;
+      AND TIMESTAMPDIFF(MINUTE, p.FECHA, NOW()) >= 90;

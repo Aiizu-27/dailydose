@@ -141,13 +141,20 @@ CREATE PROCEDURE sp_cambiar_estado_pedido(
 )
 BEGIN
     IF p_nuevo_estado = 'EN_PREPARACION' AND p_id_empleado IS NOT NULL THEN
-        UPDATE PEDIDOS 
-        SET ESTADO = p_nuevo_estado, ID_EMPLEADO = p_id_empleado 
+        UPDATE PEDIDOS
+        SET ESTADO = p_nuevo_estado, ID_EMPLEADO = p_id_empleado
         WHERE ID_PEDIDO = p_id_pedido;
     ELSE
-        UPDATE PEDIDOS 
+        UPDATE PEDIDOS
         SET ESTADO = p_nuevo_estado
         WHERE ID_PEDIDO = p_id_pedido;
+    END IF;
+
+    IF p_nuevo_estado = 'CANCELADO' THEN
+        UPDATE MESAS
+        SET ESTADO = 'LIBRE'
+        WHERE ID_MESA = (SELECT ID_MESA FROM PEDIDOS WHERE ID_PEDIDO = p_id_pedido)
+          AND ID_MESA IS NOT NULL;
     END IF;
 
     SELECT ROW_COUNT() AS filas_afectadas;
